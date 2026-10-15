@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pödüfü.online — Ücretsiz ve Güvenli PDF Araçları</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div style="display: flex; align-items: center; gap: 0.75rem;">
+      <a href="#" class="brand">
+        <div class="brand-icon">
+          <svg width="34" height="34" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="podufu-grad" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#5B5CE5" />
+                <stop offset="100%" stop-color="#4647CA" />
+              </linearGradient>
+              <linearGradient id="paper-grad" x1="6" y1="4" x2="28" y2="32" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#FFFFFF" />
+                <stop offset="100%" stop-color="#F5F4FD" />
+              </linearGradient>
+            </defs>
+            <rect width="36" height="36" rx="9" fill="url(#podufu-grad)"/>
+            <rect x="7" y="6" width="18" height="23" rx="2.5" fill="#FFFFFF" fill-opacity="0.32" transform="rotate(-6 16 17)"/>
+            <path d="M10 6C9.44772 6 9 6.44772 9 7V29C9 29.5523 9.44772 30 10 30H26C26.5523 30 27 29.5523 27 29V12.5L20.5 6H10Z" fill="url(#paper-grad)"/>
+            <path d="M20.5 6V11.5C20.5 12.0523 20.9477 12.5 21.5 12.5H27L20.5 6Z" fill="#D3D2FD"/>
+            <rect x="12" y="15.5" width="8" height="2" rx="1" fill="#B4B5F6"/>
+            <rect x="12" y="19" width="12" height="2" rx="1" fill="#C9CAFB"/>
+            <rect x="11.5" y="23" width="13" height="5.2" rx="2" fill="#5B5CE5"/>
+            <text x="18" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="3.7" font-weight="900" fill="#FFFFFF" text-anchor="middle" letter-spacing="0.4">PDF</text>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span>Pödüfü</span><span class="brand-domain">.online</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="header-actions">
+      <button id="theme-toggle-btn" class="theme-toggle-btn" title="Temayı Değiştir" aria-label="Temayı Değiştir">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-container">
+    <!-- Hero Section -->
+    <section class="hero">
+      <h1>PDF Belgelerini <span>Kolayca</span> Yönet</h1>
+      <p>Hızlı, pratik ve tamamen ücretsiz PDF araçları.</p>
+
+      <!-- Cognitive Hero Quick-Dropzone (Larger & More Inviting) -->
+      <div id="hero-dropzone" class="hero-dropzone">
+        <input type="file" id="hero-file-input" style="display: none;">
+        <div class="hero-dropzone-content">
+          <div class="hero-dropzone-icon">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+          </div>
+          <div class="hero-dropzone-text">
+            <h3>Belgenizi buraya sürükleyip bırakın</h3>
+            <p>veya <span class="dropzone-browse-text">dosya seçin</span></p>
+            <div class="supported-formats-pills">
+              <span>PDF</span>
+              <span>Word</span>
+              <span>Excel</span>
+              <span>PowerPoint</span>
+              <span>Görseller</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search & 4 Category Filters -->
+      <div class="search-wrapper">
+        <input type="text" id="search-input" class="search-input" placeholder="Bir araç arayın (örn: word, sıkıştır, birleştir)...">
+      </div>
+
+      <div class="filter-bar">
+        <button class="filter-btn" data-category="organize">Düzenle</button>
+        <button class="filter-btn" data-category="convert">Dönüştür</button>
+        <button class="filter-btn" data-category="optimize">Optimize Et</button>
+        <button class="filter-btn" data-category="security">Güvenlik</button>
+      </div>
+    </section>
+
+    <!-- Tools Grid -->
+    <section id="tools-grid" class="tools-grid">
+      <!-- Injected via JavaScript -->
+    </section>
+  </main>
+
+  <!-- Quick Action Picker Modal (when file is dropped on Hero) -->
+  <div id="quick-action-modal" class="workspace-overlay">
+    <div class="workspace-modal" style="max-width: 600px;">
+      <div class="workspace-header">
+        <div class="workspace-title">
+          <span class="modal-icon-accent">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </span>
+          <h2 id="quick-file-name" style="font-size: 1.15rem;">Dosya Seçildi</h2>
+        </div>
+        <button id="close-quick-modal-btn" class="close-modal-btn" title="Kapat">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="workspace-body" style="padding: 1.25rem;">
+        <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;">Bu belgeyle ne yapmak istersiniz?</p>
+        <div id="quick-action-buttons" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.65rem;">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Active Tool Workspace Overlay / Modal -->
+  <div id="workspace-overlay" class="workspace-overlay">
+    <div class="workspace-modal">
+      <div class="workspace-header">
+        <div class="workspace-title">
+          <span id="modal-icon" class="modal-icon-accent"></span>
+          <h2 id="modal-title">PDF Aracı</h2>
+        </div>
+        <button id="close-modal-btn" class="close-modal-btn" title="Kapat">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Workspace Body (Upload & Configuration) -->
+      <div id="workspace-body" class="workspace-body">
+        <!-- Dropzone -->
+        <div id="dropzone" class="dropzone">
+          <input type="file" id="file-input" style="display: none;">
+          <div class="dropzone-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+          </div>
+          <div>
+            <h4>Dosyalarınızı buraya bırakın</h4>
+            <p>veya bilgisayarınızdan seçmek için tıklayın</p>
+          </div>
+          <button type="button" class="browse-btn">Dosya Seç</button>
+        </div>
+
+        <!-- Selected Files List -->
+        <div id="file-list" class="file-list"></div>
+
+        <!-- Visual Page Grid (Organize Tool) -->
+        <div id="page-grid-container" class="page-grid-container" style="display: none;">
+          <h4 style="margin-bottom: 0.65rem; font-size: 0.9rem; font-weight: 700;">Sayfaları Düzenleyin:</h4>
+          <div id="page-grid" class="page-grid"></div>
+        </div>
+
+        <!-- Tool Specific Options -->
+        <div id="tool-options" class="tool-options" style="display: none;"></div>
+      </div>
+
+      <!-- Result Screen (Completed & Ready to Download) -->
+      <div id="result-screen" class="result-screen" style="display: none;">
+        <div class="success-icon-badge">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <h3 style="font-size: 1.4rem; font-weight: 800;">Belgeniz Hazır!</h3>
+        <p style="color: var(--text-secondary); max-width: 420px; font-size: 0.92rem;">İşleminiz başarıyla tamamlandı. Dosyanızı hemen indirebilirsiniz.</p>
+        <div style="display: flex; gap: 0.75rem; margin-top: 0.5rem;">
+          <a id="download-link" href="#" class="download-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Dosyayı İndir
+          </a>
+          <button id="reset-tool-btn" class="reset-tool-btn">Yeni İşlem Yap</button>
+        </div>
+      </div>
+
+      <!-- Workspace Footer -->
+      <div id="workspace-footer" class="workspace-footer">
+        <span style="font-size: 0.82rem; color: var(--text-secondary);">
+          🔒 Güvenli bağlantı ile korunmaktadır.
+        </span>
+        <button id="action-submit-btn" class="action-submit-btn" disabled>
+          <span id="submit-spinner" class="spinner" style="display: none;"></span>
+          <span id="submit-btn-text">İşlemi Başlat</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Legal / Compliance Modal -->
+  <div id="legal-modal" class="workspace-overlay">
+    <div class="workspace-modal" style="max-width: 680px;">
+      <div class="workspace-header">
+        <h2 id="legal-modal-title" style="font-size: 1.15rem; font-weight: 700;">Bilgilendirme</h2>
+        <button id="close-legal-modal-btn" class="close-modal-btn" title="Kapat">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div id="legal-modal-body" class="workspace-body" style="padding: 1.5rem; font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary);">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Footer (Single Clean Strip) -->
+  <footer class="app-footer">
+    <div class="footer-strip">
+      <div class="footer-left">
+        <span class="footer-brand-name"><strong>Pödüfü</strong>.online</span>
+        <span class="footer-dot">•</span>
+        <span class="footer-community">Bu araç MeadSocial topluluğu için geliştirilmiştir.</span>
+        <span class="footer-dot">•</span>
+        <span class="footer-powered">powered by <strong>@meadsocial.</strong></span>
+      </div>
+      <div class="footer-links">
+        <a href="#" onclick="openLegalModal('privacy'); return false;">Gizlilik</a>
+        <span class="footer-dot">•</span>
+        <a href="#" onclick="openLegalModal('terms'); return false;">Koşullar</a>
+        <span class="footer-dot">•</span>
+        <a href="#" onclick="openLegalModal('cookies'); return false;">Çerezler</a>
+        <span class="footer-dot">•</span>
+        <a href="#" onclick="openLegalModal('contact'); return false;">İletişim</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
