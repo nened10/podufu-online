@@ -169,13 +169,14 @@ def render_localized_index(lang: str = "en", tool_id: str | None = None) -> HTML
         "url": "https://podufu.onrender.com/{lang}/{t_id}"
       }}''')
                     
+                    items_joined = ",\n".join(sitelinks_items)
                     sitelinks_schema = f'''  <script type="application/ld+json">
   {{
     "@context": "https://schema.org",
     "@type": "ItemList",
     "name": "Pödüfü PDF Tools",
     "itemListElement": [
-{",\n".join(sitelinks_items)}
+{items_joined}
     ]
   }}
   </script>'''
