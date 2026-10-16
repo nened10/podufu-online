@@ -31,29 +31,18 @@ app.add_middleware(
 )
 
 # Include API Router
-import time
 from starlette.requests import Request
 from app.core.telemetry import track_operation
 
 @app.middleware("http")
 async def telemetry_middleware(request: Request, call_next):
-    start = time.time()
     response = await call_next(request)
     if request.method == "POST" and request.url.path.startswith("/api/"):
         endpoint = request.url.path.replace("/api/", "")
         if endpoint not in ["inspect"]:
             if response.status_code == 200:
                 content_length = int(request.headers.get("content-length", 0))
-                duration_ms = int((time.time() - start) * 1000)
-                user_agent = request.headers.get("user-agent", "")
-                country = request.headers.get("cf-ipcountry", "TR")
-                track_operation(
-                    tool_id=endpoint,
-                    file_size_bytes=content_length,
-                    duration_ms=duration_ms,
-                    user_agent=user_agent,
-                    country=country
-                )
+                track_operation(endpoint, content_length)
     return response
 
 app.include_router(api_router)

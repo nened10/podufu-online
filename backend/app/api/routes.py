@@ -46,8 +46,8 @@ TOOLS_CATALOG = [
     },
     {
         "id": "organize",
-        "title": "Sayfaları Sırala & Döndür",
-        "description": "Sayfaları görsel olarak sürükleyip sıralayın, döndürün veya istemediklerinizi silin.",
+        "title": "Sayfaları Düzenle",
+        "description": "Sayfaları görsel olarak sıralayın, döndürün veya istemediklerinizi silin.",
         "category": "organize",
         "icon": "layout-grid",
         "multiple_files": False,
@@ -65,7 +65,7 @@ TOOLS_CATALOG = [
     {
         "id": "word-to-pdf",
         "title": "Word'den PDF'e",
-        "description": "DOCX ve DOC Word belgelerinizi orijinal düzeniyle PDF'e dönüştürün.",
+        "description": "Word belgelerinizi orijinal düzeniyle PDF'e dönüştürün.",
         "category": "convert",
         "icon": "file-text",
         "multiple_files": False,
@@ -74,7 +74,7 @@ TOOLS_CATALOG = [
     {
         "id": "ppt-to-pdf",
         "title": "PowerPoint'ten PDF'e",
-        "description": "PPTX ve PPT slayt sunumlarınızı yüksek çözünürlüklü PDF'e çevirin.",
+        "description": "Sunum slaytlarınızı yüksek çözünürlüklü PDF'e çevirin.",
         "category": "convert",
         "icon": "presentation",
         "multiple_files": False,
@@ -83,7 +83,7 @@ TOOLS_CATALOG = [
     {
         "id": "excel-to-pdf",
         "title": "Excel'den PDF'e",
-        "description": "XLSX ve XLS tablolarınızı nizami sayfa sınırlarıyla PDF yapın.",
+        "description": "Tablolarınızı nizami sayfa sınırlarıyla PDF yapın.",
         "category": "convert",
         "icon": "table",
         "multiple_files": False,
@@ -92,7 +92,7 @@ TOOLS_CATALOG = [
     {
         "id": "pdf-to-word",
         "title": "PDF'ten Word'e",
-        "description": "PDF belgelerinizi düzenlenebilir DOCX formatına dönüştürün.",
+        "description": "PDF belgelerinizi düzenlenebilir Word formatına dönüştürün.",
         "category": "convert",
         "icon": "file-text",
         "multiple_files": False,
@@ -101,7 +101,7 @@ TOOLS_CATALOG = [
     {
         "id": "images-to-pdf",
         "title": "Görselden PDF'e",
-        "description": "JPG, PNG, WebP görsellerini tek bir PDF belgesine dönüştürün.",
+        "description": "Görselleri tek bir PDF belgesine dönüştürün.",
         "category": "convert",
         "icon": "image",
         "multiple_files": True,
@@ -110,7 +110,7 @@ TOOLS_CATALOG = [
     {
         "id": "pdf-to-images",
         "title": "PDF'ten Görsele",
-        "description": "PDF'in her sayfasını yüksek çözünürlüklü PNG/JPG resimlere dönüştürün.",
+        "description": "PDF sayfalarını yüksek çözünürlüklü resimlere dönüştürün.",
         "category": "convert",
         "icon": "images",
         "multiple_files": False,
@@ -118,8 +118,8 @@ TOOLS_CATALOG = [
     },
     {
         "id": "pdf-to-text",
-        "title": "PDF'ten Metne / MD",
-        "description": "Belgedeki tüm metinleri biçimlendirilmiş Markdown veya TXT olarak çıkarın.",
+        "title": "PDF'ten Metne",
+        "description": "Belgedeki metinleri Markdown veya TXT olarak çıkarın.",
         "category": "convert",
         "icon": "code",
         "multiple_files": False,
@@ -146,7 +146,7 @@ TOOLS_CATALOG = [
     {
         "id": "watermark",
         "title": "Filigran Ekle",
-        "description": "Belge sayfalarına özel metin veya mühür filigranı yerleştirin.",
+        "description": "Belge sayfalarına özel metin filigranı yerleştirin.",
         "category": "organize",
         "icon": "stamp",
         "multiple_files": False,
@@ -155,7 +155,7 @@ TOOLS_CATALOG = [
     {
         "id": "page-numbers",
         "title": "Sayfa Numarası Ekle",
-        "description": "İstediğiniz konumda ve biçimde sayfa numaraları basın.",
+        "description": "İstediğiniz konumda sayfa numaraları basın.",
         "category": "organize",
         "icon": "hash",
         "multiple_files": False,
@@ -164,7 +164,7 @@ TOOLS_CATALOG = [
     {
         "id": "redact",
         "title": "Hassas Bilgi Sansürle",
-        "description": "TC Kimlik, telefon, ad soyad gibi terimleri kalıcı olarak PDF'ten kazıyın.",
+        "description": "Gizli verileri kalıcı olarak PDF'ten silin.",
         "category": "security",
         "icon": "eye-off",
         "multiple_files": False,
@@ -173,7 +173,7 @@ TOOLS_CATALOG = [
     {
         "id": "repair",
         "title": "PDF Onar",
-        "description": "Bozuk veya hasarlı PDF belgelerinin indekslerini ve yapısını tamir edin.",
+        "description": "Bozuk veya hasarlı PDF belgelerinin yapısını tamir edin.",
         "category": "optimize",
         "icon": "wrench",
         "multiple_files": False,
@@ -240,7 +240,7 @@ async def handle_merge(files: List[UploadFile] = File(...)):
         await save_upload_file(f, target)
         saved_paths.append(target)
         
-    out_path = workspace / "merged_podufu.online.pdf"
+    out_path = workspace / "merged_podufu.pdf"
     merge_pdfs(saved_paths, out_path)
     
     return FileResponse(
@@ -268,10 +268,10 @@ async def handle_split(
         return FileResponse(
             output_files[0],
             media_type="application/pdf",
-            filename=f"{input_path.stem}_split_podufu.online.pdf"
+            filename=f"{input_path.stem}_podufu.pdf"
         )
     else:
-        zip_path = workspace / f"{input_path.stem}_split_podufu.online.zip"
+        zip_path = workspace / f"{input_path.stem}_split_podufu.zip"
         create_zip_archive(output_files, zip_path)
         return FileResponse(
             zip_path,
@@ -295,7 +295,7 @@ async def handle_organize(
     except Exception:
         raise HTTPException(status_code=400, detail="Geçersiz sayfa düzeni verisi.")
         
-    out_path = workspace / f"{input_path.stem}_organized_podufu.online.pdf"
+    out_path = workspace / f"{input_path.stem}_organized_podufu.pdf"
     organize_and_rotate_pages(input_path, parsed_instructions, out_path)
     
     return FileResponse(
@@ -315,7 +315,7 @@ async def handle_compress(
     input_path = workspace / sanitize_filename(file.filename)
     await save_upload_file(file, input_path)
     
-    out_path = workspace / f"{input_path.stem}_compressed_podufu.online.pdf"
+    out_path = workspace / f"{input_path.stem}_compressed_podufu.pdf"
     compress_pdf(input_path, out_path, level=level)
     
     return FileResponse(
@@ -332,7 +332,7 @@ async def handle_word_to_pdf(file: UploadFile = File(...)):
     input_path = workspace / sanitize_filename(file.filename)
     await save_upload_file(file, input_path)
     
-    out_path = workspace / f"{input_path.stem}_podufu.online.pdf"
+    out_path = workspace / f"{input_path.stem}_podufu.pdf"
     try:
         word_to_pdf(input_path, out_path)
     except Exception as e:
@@ -352,7 +352,7 @@ async def handle_ppt_to_pdf(file: UploadFile = File(...)):
     input_path = workspace / sanitize_filename(file.filename)
     await save_upload_file(file, input_path)
     
-    out_path = workspace / f"{input_path.stem}_podufu.online.pdf"
+    out_path = workspace / f"{input_path.stem}_podufu.pdf"
     try:
         powerpoint_to_pdf(input_path, out_path)
     except Exception as e:
@@ -372,7 +372,7 @@ async def handle_excel_to_pdf(file: UploadFile = File(...)):
     input_path = workspace / sanitize_filename(file.filename)
     await save_upload_file(file, input_path)
     
-    out_path = workspace / f"{input_path.stem}_podufu.online.pdf"
+    out_path = workspace / f"{input_path.stem}_podufu.pdf"
     try:
         excel_to_pdf(input_path, out_path)
     except Exception as e:
@@ -399,7 +399,7 @@ async def handle_images_to_pdf(files: List[UploadFile] = File(...)):
         await save_upload_file(f, target)
         saved_images.append(target)
         
-    out_path = workspace / "images_podufu.online.pdf"
+    out_path = workspace / "images_podufu.pdf"
     images_to_pdf(saved_images, out_path)
     
     return FileResponse(
@@ -421,7 +421,7 @@ async def handle_pdf_to_images(
     await save_upload_file(file, input_path)
     
     images = pdf_to_images(input_path, workspace, dpi=dpi, img_format=img_format)
-    zip_path = workspace / f"{input_path.stem}_images_podufu.online.zip"
+    zip_path = workspace / f"{input_path.stem}_images_podufu.zip"
     create_zip_archive(images, zip_path)
     
     return FileResponse(
@@ -438,7 +438,7 @@ async def handle_pdf_to_word(file: UploadFile = File(...)):
     input_path = workspace / sanitize_filename(file.filename)
     await save_upload_file(file, input_path)
     
-    out_path = workspace / f"{input_path.stem}_podufu.online.docx"
+    out_path = workspace / f"{input_path.stem}_podufu.docx"
     try:
         pdf_to_docx_file(input_path, out_path)
     except Exception as e:
@@ -458,7 +458,7 @@ async def handle_pdf_to_text(file: UploadFile = File(...)):
     input_path = workspace / sanitize_filename(file.filename)
     await save_upload_file(file, input_path)
     
-    out_path = workspace / f"{input_path.stem}_extracted_podufu.online.md"
+    out_path = workspace / f"{input_path.stem}_text_podufu.md"
     pdf_to_markdown_or_text(input_path, out_path)
     
     return FileResponse(
@@ -478,7 +478,7 @@ async def handle_protect(
     input_path = workspace / sanitize_filename(file.filename)
     await save_upload_file(file, input_path)
     
-    out_path = workspace / f"{input_path.stem}_protected_podufu.online.pdf"
+    out_path = workspace / f"{input_path.stem}_protected_podufu.pdf"
     try:
         protect_pdf(input_path, out_path, user_password=password)
     except Exception as e:
@@ -501,7 +501,7 @@ async def handle_unlock(
     input_path = workspace / sanitize_filename(file.filename)
     await save_upload_file(file, input_path)
     
-    out_path = workspace / f"{input_path.stem}_unlocked_podufu.online.pdf"
+    out_path = workspace / f"{input_path.stem}_unlocked_podufu.pdf"
     try:
         unlock_pdf(input_path, out_path, password=password)
     except Exception as e:
@@ -516,10 +516,10 @@ async def handle_unlock(
 @router.post("/watermark")
 async def handle_watermark(
     file: UploadFile = File(...),
-    text: str = Form("CONFIDENTIAL"),
+    text: str = Form("GİZLİ"),
     opacity: float = Form(0.25),
     rotation: int = Form(45),
-    color: str = Form("#FF0000"),
+    color: str = Form("#5B5CE5"),
     font_size: int = Form(40)
 ):
     """Adds a text watermark across all pages."""
@@ -528,7 +528,7 @@ async def handle_watermark(
     input_path = workspace / sanitize_filename(file.filename)
     await save_upload_file(file, input_path)
     
-    out_path = workspace / f"{input_path.stem}_watermarked_podufu.online.pdf"
+    out_path = workspace / f"{input_path.stem}_watermarked_podufu.pdf"
     add_watermark_text(
         input_path,
         out_path,
@@ -549,7 +549,7 @@ async def handle_watermark(
 async def handle_page_numbers(
     file: UploadFile = File(...),
     position: str = Form("bottom-center"),
-    pattern: str = Form("Page {n} / {total}")
+    pattern: str = Form("Sayfa {n} / {total}")
 ):
     """Adds page numbers to PDF."""
     job_id = uuid.uuid4().hex
@@ -557,7 +557,7 @@ async def handle_page_numbers(
     input_path = workspace / sanitize_filename(file.filename)
     await save_upload_file(file, input_path)
     
-    out_path = workspace / f"{input_path.stem}_numbered_podufu.online.pdf"
+    out_path = workspace / f"{input_path.stem}_numbered_podufu.pdf"
     add_page_numbers(input_path, out_path, position=position, format_pattern=pattern)
     
     return FileResponse(
@@ -577,7 +577,7 @@ async def handle_redact(
     input_path = workspace / sanitize_filename(file.filename)
     await save_upload_file(file, input_path)
     
-    out_path = workspace / f"{input_path.stem}_redacted_podufu.online.pdf"
+    out_path = workspace / f"{input_path.stem}_redacted_podufu.pdf"
     try:
         _, count = redact_text_occurrences(input_path, out_path, search_term=search_term)
     except Exception as e:
@@ -598,7 +598,7 @@ async def handle_repair(file: UploadFile = File(...)):
     input_path = workspace / sanitize_filename(file.filename)
     await save_upload_file(file, input_path)
     
-    out_path = workspace / f"{input_path.stem}_repaired_podufu.online.pdf"
+    out_path = workspace / f"{input_path.stem}_repaired_podufu.pdf"
     try:
         repair_pdf(input_path, out_path)
     except Exception as e:

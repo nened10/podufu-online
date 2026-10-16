@@ -43,20 +43,20 @@ const resetToolBtn = document.getElementById("reset-tool-btn");
 const themeToggleBtn = document.getElementById("theme-toggle-btn");
 const toastContainer = document.getElementById("toast-container");
 
-// Progress & Queue DOM References
+// Progress & Queue Elements
 const progressContainer = document.getElementById("progress-container");
-const progressStatus = document.getElementById("progress-status");
-const progressPercent = document.getElementById("progress-percent");
+const progressStatusLabel = document.getElementById("progress-status-label");
+const progressPercentageLabel = document.getElementById("progress-percentage-label");
 const progressBarFill = document.getElementById("progress-bar-fill");
-const progressSubtext = document.getElementById("progress-subtext");
-const minimizeModalBtn = document.getElementById("minimize-modal-btn");
-const floatingQueueDock = document.getElementById("floating-queue-dock");
-const queueDockText = document.getElementById("queue-dock-text");
-const queueDockViewBtn = document.getElementById("queue-dock-view-btn");
+const minimizeTaskBtn = document.getElementById("minimize-task-btn");
+const queueDock = document.getElementById("queue-dock");
+const queueDockTitle = document.getElementById("queue-dock-title");
+const queueDockItems = document.getElementById("queue-dock-items");
+const queueDockToggleBtn = document.getElementById("queue-dock-toggle-btn");
 
-let isOperationRunning = false;
-let activeTaskInfo = null;
-let processingInterval = null;
+// Queue State
+let taskQueue = [];
+let activeTask = null;
 
 // Icon mapping
 const ICONS = {
@@ -79,7 +79,8 @@ const ICONS = {
   trash: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>`,
   rotate: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6"/><path d="M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>`,
   arrowLeft: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>`,
-  arrowRight: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`
+  arrowRight: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`,
+  check: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>`
 };
 
 const CATEGORY_NAMES = {
@@ -87,7 +88,7 @@ const CATEGORY_NAMES = {
   optimize: "Optimize Et",
   convert: "Dönüştür",
   security: "Güvenlik",
-  edit: "Düzenle / Ekle"
+  edit: "Düzenle"
 };
 
 // Initialize App
@@ -196,49 +197,30 @@ function openToolModal(tool) {
   pageGridContainer.style.display = "none";
   pageGrid.innerHTML = "";
   fileList.innerHTML = "";
-  fileList.style.display = "flex";
-  dropzone.style.display = "flex";
   actionSubmitBtn.disabled = true;
+  submitBtnText.textContent = "İşlemi Başlat";
+  submitSpinner.style.display = "none";
 
-  // Reset Progress
   if (progressContainer) {
     progressContainer.style.display = "none";
     progressBarFill.style.width = "0%";
-    progressPercent.textContent = "0%";
+    progressBarFill.classList.remove("processing");
   }
+  if (minimizeTaskBtn) minimizeTaskBtn.style.display = "none";
 
   renderToolOptions(tool);
   workspaceOverlay.classList.add("active");
 }
 
-function minimizeToQueue() {
-  workspaceOverlay.classList.remove("active");
-  if (isOperationRunning && activeTaskInfo) {
-    floatingQueueDock.style.display = "flex";
-    queueDockText.textContent = `1 Belge İşleniyor (%${activeTaskInfo.percent || 10})`;
-  }
-}
-
-function restoreFromQueue() {
-  workspaceOverlay.classList.add("active");
-  floatingQueueDock.style.display = "none";
-}
-
 // Close Modal
 function closeModal() {
-  if (isOperationRunning) {
-    minimizeToQueue();
-    showToast("İşleminiz arka planda devam ediyor...", "info");
-    return;
-  }
   workspaceOverlay.classList.remove("active");
   activeTool = null;
   selectedFiles = [];
   organizePages = [];
-  floatingQueueDock.style.display = "none";
 }
 
-// Render Options Panel per Tool
+// Render Options Panel per Tool (Clean & Minimalist)
 function renderToolOptions(tool) {
   toolOptions.innerHTML = "";
   toolOptions.style.display = "none";
@@ -249,12 +231,12 @@ function renderToolOptions(tool) {
       <div class="form-group">
         <label>Bölme Şekli:</label>
         <div class="btn-group">
-          <button type="button" class="btn-option active" onclick="setSplitMode(this, 'all')">Her Sayfayı Ayrı Dosya Yap</button>
-          <button type="button" class="btn-option" onclick="setSplitMode(this, 'custom')">Özel Sayfa Aralıkları</button>
+          <button type="button" class="btn-option active" onclick="setSplitMode(this, 'all')">Tüm Sayfaları Ayır</button>
+          <button type="button" class="btn-option" onclick="setSplitMode(this, 'custom')">Belirli Aralıklar</button>
         </div>
       </div>
       <div class="form-group" id="split-range-group" style="display: none;">
-        <label>Sayfa Aralıkları (Örn: 1-3, 5, 8-12):</label>
+        <label>Sayfa Aralıkları:</label>
         <input type="text" id="split-ranges" class="form-control" placeholder="1-3, 5, 8-12" value="1-2">
       </div>
     `;
@@ -264,9 +246,9 @@ function renderToolOptions(tool) {
       <div class="form-group">
         <label>Sıkıştırma Seviyesi:</label>
         <div class="btn-group">
-          <button type="button" class="btn-option" onclick="setOptionActive(this, 'compress-level', 'low')">Düşük (Hafif)</button>
-          <button type="button" class="btn-option active" onclick="setOptionActive(this, 'compress-level', 'medium')">Orta (Önerilen)</button>
-          <button type="button" class="btn-option" onclick="setOptionActive(this, 'compress-level', 'high')">Yüksek (Maksimum)</button>
+          <button type="button" class="btn-option" onclick="setOptionActive(this, 'compress-level', 'low')">Düşük</button>
+          <button type="button" class="btn-option active" onclick="setOptionActive(this, 'compress-level', 'medium')">Orta</button>
+          <button type="button" class="btn-option" onclick="setOptionActive(this, 'compress-level', 'high')">Yüksek</button>
         </div>
         <input type="hidden" id="compress-level" value="medium">
       </div>
@@ -275,16 +257,16 @@ function renderToolOptions(tool) {
     toolOptions.style.display = "flex";
     toolOptions.innerHTML = `
       <div class="form-group">
-        <label>Belgeyi Açma Şifresi:</label>
-        <input type="password" id="protect-password" class="form-control" placeholder="Güçlü bir şifre girin...">
+        <label>Belge Şifresi:</label>
+        <input type="password" id="protect-password" class="form-control" placeholder="Şifrenizi girin">
       </div>
     `;
   } else if (tool.id === "unlock") {
     toolOptions.style.display = "flex";
     toolOptions.innerHTML = `
       <div class="form-group">
-        <label>Mevcut Belge Şifresi:</label>
-        <input type="password" id="unlock-password" class="form-control" placeholder="Belgenin şifresini girin...">
+        <label>Mevcut Şifre:</label>
+        <input type="password" id="unlock-password" class="form-control" placeholder="Belgenin şifresini girin">
       </div>
     `;
   } else if (tool.id === "watermark") {
@@ -292,20 +274,20 @@ function renderToolOptions(tool) {
     toolOptions.innerHTML = `
       <div class="form-group">
         <label>Filigran Metni:</label>
-        <input type="text" id="watermark-text" class="form-control" value="GİZLİ / KOPYALANAMAZ">
+        <input type="text" id="watermark-text" class="form-control" value="GİZLİ">
       </div>
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
         <div class="form-group">
-          <label>Açı (°):</label>
+          <label>Açı:</label>
           <select id="watermark-rotation" class="form-control">
-            <option value="45" selected>45° (Çapraz)</option>
-            <option value="0">0° (Yatay)</option>
-            <option value="90">90° (Dikey)</option>
+            <option value="45" selected>45°</option>
+            <option value="0">0°</option>
+            <option value="90">90°</option>
           </select>
         </div>
         <div class="form-group">
-          <label>Renk & Şeffaflık:</label>
-          <input type="color" id="watermark-color" class="form-control" value="#6366F1" style="height: 42px; padding: 2px;">
+          <label>Renk:</label>
+          <input type="color" id="watermark-color" class="form-control" value="#5B5CE5" style="height: 42px; padding: 2px;">
         </div>
       </div>
     `;
@@ -323,17 +305,17 @@ function renderToolOptions(tool) {
         </select>
       </div>
       <div class="form-group">
-        <label>Biçim Deseni:</label>
-        <input type="text" id="page-num-pattern" class="form-control" value="Sayfa {n} / {total}">
+        <label>Biçim:</label>
+        <input type="text" id="page-num-pattern" class="form-control" value="{n} / {total}">
       </div>
     `;
   } else if (tool.id === "redact") {
     toolOptions.style.display = "flex";
     toolOptions.innerHTML = `
       <div class="form-group">
-        <label>Sansürlenecek Kelime / İfade:</label>
-        <input type="text" id="redact-term" class="form-control" placeholder="Örn: 12345678901 veya Ahmet Yılmaz">
-        <small style="color: var(--text-secondary); margin-top: 0.25rem;">Bu ifade belgeden kalıcı olarak silinir ve üzerine siyah sansür bandı çekilir.</small>
+        <label>Sansürlenecek Metin:</label>
+        <input type="text" id="redact-term" class="form-control" placeholder="Örn: 12345678901">
+        <small style="color: var(--text-secondary); margin-top: 0.25rem;">Bu ifade belgeden kalıcı olarak silinir.</small>
       </div>
     `;
   } else if (tool.id === "pdf-to-images") {
@@ -343,16 +325,16 @@ function renderToolOptions(tool) {
         <div class="form-group">
           <label>Format:</label>
           <select id="img-format" class="form-control">
-            <option value="png" selected>PNG (Kayıpsız)</option>
-            <option value="jpg">JPG (Daha Küçük)</option>
+            <option value="png" selected>PNG</option>
+            <option value="jpg">JPG</option>
           </select>
         </div>
         <div class="form-group">
-          <label>Çözünürlük (DPI):</label>
+          <label>Çözünürlük:</label>
           <select id="img-dpi" class="form-control">
-            <option value="150">150 DPI (Standart)</option>
-            <option value="200" selected>200 DPI (Net - Önerilen)</option>
-            <option value="300">300 DPI (Baskı Kalitesi)</option>
+            <option value="150">150 DPI</option>
+            <option value="200" selected>200 DPI</option>
+            <option value="300">300 DPI</option>
           </select>
         </div>
       </div>
@@ -567,13 +549,9 @@ function handleHeroFile(file) {
   quickActionModal.classList.add("active");
 }
 
-// Submit Operation to API
-async function submitOperation() {
+// Submit Operation to Task Queue
+function submitOperation() {
   if (!activeTool || selectedFiles.length === 0) return;
-
-  actionSubmitBtn.disabled = true;
-  submitBtnText.textContent = "İşlem Yapılıyor...";
-  submitSpinner.style.display = "block";
 
   const formData = new FormData();
   let endpoint = `/api/${activeTool.id}`;
@@ -622,159 +600,206 @@ async function submitOperation() {
       formData.append("img_format", document.getElementById("img-format").value);
       formData.append("dpi", document.getElementById("img-dpi").value);
     } else {
-      // General single-file tools (word-to-pdf, ppt-to-pdf, excel-to-pdf, pdf-to-word, pdf-to-text, repair)
       formData.append("file", selectedFiles[0]);
     }
-
-    // Processing UI state
-    isOperationRunning = true;
-    actionSubmitBtn.disabled = true;
-    submitSpinner.style.display = "inline-block";
-    submitBtnText.textContent = "İşleniyor...";
-
-    dropzone.style.display = "none";
-    fileList.style.display = "none";
-    toolOptions.style.display = "none";
-    pageGridContainer.style.display = "none";
-
-    progressContainer.style.display = "flex";
-    progressStatus.textContent = "Dosya sunucuya aktarılıyor...";
-    progressPercent.textContent = "0%";
-    progressBarFill.style.width = "0%";
-    progressSubtext.textContent = "Yükleme başlatılıyor...";
-
-    // Trigger in-modal targeted ad
-    if (window.PödufuAds && typeof window.PödufuAds.renderWaitingAd === "function") {
-      window.PödufuAds.renderWaitingAd();
-    }
-
-    const firstFileName = selectedFiles[0].name;
-    const totalBytes = selectedFiles.reduce((acc, f) => acc + f.size, 0);
-    const totalMB = (totalBytes / 1048576).toFixed(1);
-
-    activeTaskInfo = {
-      filename: firstFileName,
-      percent: 0,
-      totalMB
-    };
-
-    // Perform upload via XMLHttpRequest to monitor exact progress
-    const result = await new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.open("POST", endpoint, true);
-      xhr.responseType = "blob";
-
-      xhr.upload.onprogress = (e) => {
-        if (e.lengthComputable) {
-          const uploadPercent = Math.round((e.loaded / e.total) * 100);
-          // Scale upload progress to 0% - 65%
-          const scaled = Math.round(uploadPercent * 0.65);
-          activeTaskInfo.percent = scaled;
-
-          const loadedMB = (e.loaded / 1048576).toFixed(1);
-          progressPercent.textContent = `${scaled}%`;
-          progressBarFill.style.width = `${scaled}%`;
-          progressSubtext.textContent = `${loadedMB} MB / ${totalMB} MB aktarıldı (%${uploadPercent})`;
-
-          if (floatingQueueDock.style.display !== "none") {
-            queueDockText.textContent = `Yükleniyor: ${firstFileName} (%${scaled})`;
-          }
-
-          if (uploadPercent >= 100) {
-            progressStatus.textContent = "PDF İşleniyor & Optimize Ediliyor...";
-            progressSubtext.textContent = "İşlem yapılıyor, lütfen bekleyin...";
-
-            // Heartbeat ticker advancing 65% -> 92% smoothly
-            let fakeProgress = 65;
-            if (processingInterval) clearInterval(processingInterval);
-            processingInterval = setInterval(() => {
-              if (fakeProgress < 92) {
-                fakeProgress += 1;
-                activeTaskInfo.percent = fakeProgress;
-                progressPercent.textContent = `${fakeProgress}%`;
-                progressBarFill.style.width = `${fakeProgress}%`;
-                if (floatingQueueDock.style.display !== "none") {
-                  queueDockText.textContent = `İşleniyor: ${firstFileName} (%${fakeProgress})`;
-                }
-              }
-            }, 300);
-          }
-        }
-      };
-
-      xhr.onload = () => {
-        if (processingInterval) clearInterval(processingInterval);
-        if (xhr.status >= 200 && xhr.status < 300) {
-          progressPercent.textContent = "100%";
-          progressBarFill.style.width = "100%";
-          progressStatus.textContent = "Tamamlandı!";
-          activeTaskInfo.percent = 100;
-
-          const disposition = xhr.getResponseHeader("content-disposition") || "";
-          let filename = "podufu.online_belge.pdf";
-          const match = disposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
-          if (match && match[1]) {
-            filename = match[1].replace(/['"]/g, "");
-          } else {
-            filename = firstFileName.replace(/\.[^/.]+$/, "") + "_podufu.online.pdf";
-          }
-
-          resolve({ blob: xhr.response, filename });
-        } else {
-          const reader = new FileReader();
-          reader.onload = () => {
-            try {
-              const err = JSON.parse(reader.result);
-              reject(new Error(err.detail || "İşlem sırasında sunucu hatası oluştu."));
-            } catch (e) {
-              reject(new Error(`Sunucu hatası: HTTP ${xhr.status}`));
-            }
-          };
-          reader.readAsText(xhr.response);
-        }
-      };
-
-      xhr.onerror = () => {
-        if (processingInterval) clearInterval(processingInterval);
-        reject(new Error("Sunucuya bağlanılamadı. Lütfen bağlantınızı kontrol edin."));
-      };
-
-      xhr.send(formData);
-    });
-
-    // Processing finished successfully
-    const downloadUrl = window.URL.createObjectURL(result.blob);
-
-    workspaceBody.style.display = "none";
-    workspaceFooter.style.display = "none";
-    resultScreen.style.display = "flex";
-
-    downloadLink.href = downloadUrl;
-    downloadLink.download = result.filename;
-
-    if (floatingQueueDock.style.display !== "none") {
-      queueDockText.textContent = `✅ ${result.filename} Hazır!`;
-      showToast(`✅ "${result.filename}" hazır! Tıklayarak indirebilirsiniz.`, "success");
-    } else {
-      showToast("İşlem başarıyla tamamlandı! Dosyanız hazır.", "success");
-    }
-
   } catch (err) {
-    if (processingInterval) clearInterval(processingInterval);
-    showToast(err.message || "İşlem başarısız.", "error");
-
-    dropzone.style.display = "flex";
-    fileList.style.display = "flex";
-    toolOptions.style.display = "flex";
-    progressContainer.style.display = "none";
-    floatingQueueDock.style.display = "none";
-  } finally {
-    isOperationRunning = false;
-    actionSubmitBtn.disabled = false;
-    submitBtnText.textContent = "İşlemi Başlat";
-    submitSpinner.style.display = "none";
+    showToast(err.message, "error");
+    return;
   }
+
+  const taskId = "task_" + Math.random().toString(36).substring(2, 9);
+  const task = {
+    id: taskId,
+    toolId: activeTool.id,
+    toolTitle: activeTool.title,
+    fileName: selectedFiles[0]?.name || activeTool.title,
+    formData: formData,
+    endpoint: endpoint,
+    status: "waiting", // "waiting", "uploading", "processing", "completed", "error"
+    progress: 0,
+    downloadUrl: null,
+    downloadName: null
+  };
+
+  enqueueTask(task);
 }
+
+function enqueueTask(task) {
+  taskQueue.push(task);
+  renderQueueDock();
+
+  // Update Modal State
+  actionSubmitBtn.disabled = true;
+  submitBtnText.textContent = "İşlem Başlatıldı...";
+  submitSpinner.style.display = "block";
+  if (minimizeTaskBtn) minimizeTaskBtn.style.display = "inline-block";
+
+  if (progressContainer) {
+    progressContainer.style.display = "block";
+    progressStatusLabel.textContent = "Hazırlanıyor...";
+    progressPercentageLabel.textContent = "0%";
+    progressBarFill.style.width = "0%";
+    progressBarFill.classList.remove("processing");
+  }
+
+  showToast(`${task.fileName} sıraya eklendi!`, "info");
+  processQueue();
+}
+
+function processQueue() {
+  if (activeTask) return; // Process 1 by 1 sequentially to keep memory usage low
+
+  const next = taskQueue.find(t => t.status === "waiting");
+  if (!next) {
+    renderQueueDock();
+    return;
+  }
+
+  activeTask = next;
+  activeTask.status = "uploading";
+  renderQueueDock();
+
+  // If modal is currently displaying this tool
+  if (workspaceOverlay.classList.contains("active") && activeTool?.id === activeTask.toolId) {
+    submitBtnText.textContent = "İşlem Yapılıyor...";
+    progressStatusLabel.textContent = "Yükleniyor...";
+  }
+
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", activeTask.endpoint, true);
+  xhr.responseType = "blob";
+
+  xhr.upload.onprogress = (e) => {
+    if (e.lengthComputable) {
+      const percent = Math.round((e.loaded / e.total) * 100);
+      activeTask.progress = Math.min(percent, 99);
+
+      if (workspaceOverlay.classList.contains("active") && activeTool?.id === activeTask.toolId) {
+        progressPercentageLabel.textContent = `${activeTask.progress}%`;
+        progressBarFill.style.width = `${activeTask.progress}%`;
+      }
+      renderQueueDock();
+    }
+  };
+
+  xhr.upload.onload = () => {
+    activeTask.status = "processing";
+    if (workspaceOverlay.classList.contains("active") && activeTool?.id === activeTask.toolId) {
+      progressStatusLabel.textContent = "İşleniyor...";
+      progressPercentageLabel.textContent = "";
+      progressBarFill.classList.add("processing");
+    }
+    renderQueueDock();
+  };
+
+  xhr.onload = () => {
+    if (xhr.status === 200) {
+      const disposition = xhr.getResponseHeader("content-disposition");
+      let filename = `${activeTask.toolId}_podufu.pdf`;
+      if (disposition && disposition.includes("filename=")) {
+        const match = disposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
+        if (match && match[1]) {
+          filename = match[1].replace(/['"]/g, "");
+        }
+      }
+
+      const blob = xhr.response;
+      const downloadUrl = window.URL.createObjectURL(blob);
+
+      activeTask.status = "completed";
+      activeTask.progress = 100;
+      activeTask.downloadUrl = downloadUrl;
+      activeTask.downloadName = filename;
+
+      // If modal is still open on this tool
+      if (workspaceOverlay.classList.contains("active") && activeTool?.id === activeTask.toolId) {
+        workspaceBody.style.display = "none";
+        workspaceFooter.style.display = "none";
+        resultScreen.style.display = "flex";
+        downloadLink.href = downloadUrl;
+        downloadLink.download = filename;
+      }
+
+      // Auto trigger download & notify
+      triggerDownload(downloadUrl, filename);
+      showToast(`${filename} hazır, indirildi!`, "success");
+    } else {
+      activeTask.status = "error";
+      showToast("İşlem sırasında sunucu hatası oluştu.", "error");
+    }
+
+    activeTask = null;
+    renderQueueDock();
+    processQueue();
+  };
+
+  xhr.onerror = () => {
+    activeTask.status = "error";
+    showToast("Bağlantı hatası oluştu.", "error");
+    activeTask = null;
+    renderQueueDock();
+    processQueue();
+  };
+
+  xhr.send(activeTask.formData);
+}
+
+function triggerDownload(url, filename) {
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => a.remove(), 100);
+}
+
+function renderQueueDock() {
+  if (!queueDock || !queueDockItems) return;
+
+  const total = taskQueue.length;
+  if (total === 0) {
+    queueDock.style.display = "none";
+    return;
+  }
+
+  queueDock.style.display = "block";
+  const activeCount = taskQueue.filter(t => t.status !== "completed" && t.status !== "error").length;
+  queueDockTitle.textContent = activeCount > 0 ? `İşlemler (${activeCount} aktif)` : `İşlemler (${total})`;
+
+  queueDockItems.innerHTML = "";
+  taskQueue.slice(-4).reverse().forEach(task => {
+    const item = document.createElement("div");
+    item.className = "queue-item";
+
+    let statusText = "Sırada bekliyor...";
+    let statusColor = "var(--text-secondary)";
+
+    if (task.status === "uploading") {
+      statusText = `Yükleniyor %${task.progress}`;
+      statusColor = "var(--brand-primary)";
+    } else if (task.status === "processing") {
+      statusText = "İşleniyor...";
+      statusColor = "var(--brand-primary)";
+    } else if (task.status === "completed") {
+      statusText = "Tamamlandı";
+      statusColor = "var(--accent-green)";
+    } else if (task.status === "error") {
+      statusText = "Hata";
+      statusColor = "var(--accent-red)";
+    }
+
+    item.innerHTML = `
+      <div class="queue-item-header">
+        <span class="queue-item-name" title="${task.fileName}">${task.fileName}</span>
+        <span class="queue-item-status" style="color: ${statusColor};">${statusText}</span>
+      </div>
+      <div class="queue-item-progress-track">
+        <div class="queue-item-progress-fill" style="width: ${task.progress}%; background: ${statusColor};"></div>
+      </div>
+    `;
+
+    queueDockItems.appendChild(item);
+  });
 }
 
 // Reset tool modal back to file upload
@@ -804,15 +829,15 @@ function setupEventListeners() {
   });
 
   closeModalBtn.addEventListener("click", closeModal);
-  if (minimizeModalBtn) {
-    minimizeModalBtn.addEventListener("click", minimizeToQueue);
-  }
-  if (queueDockViewBtn) {
-    queueDockViewBtn.addEventListener("click", restoreFromQueue);
-  }
   closeQuickModalBtn.addEventListener("click", () => quickActionModal.classList.remove("active"));
   resetToolBtn.addEventListener("click", resetActiveTool);
   actionSubmitBtn.addEventListener("click", submitOperation);
+  if (minimizeTaskBtn) minimizeTaskBtn.addEventListener("click", closeModal);
+  if (queueDockToggleBtn) {
+    queueDockToggleBtn.addEventListener("click", () => {
+      queueDock.style.display = "none";
+    });
+  }
 
   // Hero Dropzone Events
   heroDropzone.addEventListener("click", () => heroFileInput.click());

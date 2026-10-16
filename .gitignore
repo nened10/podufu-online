@@ -29,9 +29,10 @@ workspaces/
 
 # Local Stats & Logs
 stats.json
-*.db
-*.sqlite3
 *.log
+*.db
+*.sqlite
+*.sqlite3
 
 # IDE & OS
 .vscode/
