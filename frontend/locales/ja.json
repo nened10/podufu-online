@@ -1,0 +1,153 @@
+{
+  "meta": {
+    "title": "Pödüfü 💜 - 100%無料・安全・高速なオンラインPDFツール",
+    "description": "PDF結合、分割、圧縮、Word変換、パスワード保護、ページ編集が完全無料で利用可能。登録不要で安全に処理。"
+  },
+  "nav": {
+    "all_tools": "すべてのツール",
+    "faq": "よくある質問",
+    "privacy": "プライバシー",
+    "terms": "利用規約"
+  },
+  "hero": {
+    "badge": "100%無料・セキュアなオンラインPDFツール",
+    "title": "PDF作業を、もっとシンプルに。",
+    "subtitle": "会員登録なしで、PDFの結合・圧縮・変換・編集が数秒で完了します。",
+    "dropzone_title": "ファイルをここにドラッグ＆ドロップ",
+    "dropzone_subtitle": "PDF、Word、Excel、PowerPoint、画像に対応",
+    "select_btn": "ファイルを選択",
+    "instant_badge": "⚡ 高速処理"
+  },
+  "filters": {
+    "all": "すべてのツール",
+    "organize": "ページ整理",
+    "convert": "変換",
+    "edit": "編集",
+    "optimize": "最適化",
+    "security": "セキュリティ",
+    "search_placeholder": "ツールを検索 (例: 結合, 圧縮, word)..."
+  },
+  "tools": {
+    "merge": {
+      "title": "PDF結合",
+      "description": "複数のPDFファイルを指定した順序で1つのファイルにまとめます。"
+    },
+    "split": {
+      "title": "PDF分割",
+      "description": "ページ範囲を指定して、PDFを個別のファイルに分割・抽出します。"
+    },
+    "compress": {
+      "title": "PDF圧縮",
+      "description": "文書の品質を維持しながら、ファイルサイズを大幅に削減します。"
+    },
+    "pdf-to-word": {
+      "title": "PDF Word 変換",
+      "description": "PDFを高精度で編集可能なWord文書 (.docx) に変換します。"
+    },
+    "word-to-pdf": {
+      "title": "Word PDF 変換",
+      "description": "DOCおよびDOCX文書を標準的なPDF形式に変換します。"
+    },
+    "excel-to-pdf": {
+      "title": "Excel PDF 変換",
+      "description": "XLSXおよびXLSスプレッドシートをきれいなPDFに変換します。"
+    },
+    "ppt-to-pdf": {
+      "title": "PPT PDF 変換",
+      "description": "PowerPointプレゼンテーションスライドを素早くPDF形式に出力します。"
+    },
+    "images-to-pdf": {
+      "title": "画像 PDF 変換",
+      "description": "JPG、PNG、WebP画像を1つのPDFファイルにまとめます。"
+    },
+    "pdf-to-images": {
+      "title": "PDF 画像 変換",
+      "description": "PDFの各ページを高解像度のJPGまたはPNG画像として書き出します。"
+    },
+    "pdf-to-text": {
+      "title": "PDF テキスト抽出",
+      "description": "文書内のすべてのテキストをMarkdownまたはTXT形式で抽出します。"
+    },
+    "protect": {
+      "title": "PDF保護 (暗号化)",
+      "description": "強固なAES-256暗号化とパスワードでファイルを安全に保護します。"
+    },
+    "unlock": {
+      "title": "パスワード解除",
+      "description": "保護されたPDFファイルのパスワードと制限を解除します。"
+    },
+    "watermark": {
+      "title": "透かし追加",
+      "description": "任意の文字や機密スタンプの透かしをページに配置します。"
+    },
+    "page-numbers": {
+      "title": "ページ番号挿入",
+      "description": "ヘッダーやフッターにカスタマイズ可能なページ番号を付けます。"
+    },
+    "redact": {
+      "title": "墨消し (黒塗り)",
+      "description": "個人情報や機密テキストを不可逆的に黒塗り・削除します。"
+    },
+    "organize": {
+      "title": "ページ並べ替え",
+      "description": "ページの回転、順序の入れ替え、不要なページの削除を行います。"
+    },
+    "repair": {
+      "title": "PDF修復",
+      "description": "破損して開けないPDFファイルを自動的に修復・復元します。"
+    }
+  },
+  "workspace": {
+    "drop_prompt": "ファイルをここにドラッグするか、クリックして選択",
+    "start_btn": "処理を開始する",
+    "background_btn": "バックグラウンドで実行",
+    "uploading": "アップロード中...",
+    "processing": "処理中...",
+    "ready_title": "ドキュメントの準備が完了しました！",
+    "ready_subtitle": "処理が正常に完了しました。すぐにファイルをダウンロードできます。",
+    "download_btn": "ファイルをダウンロード",
+    "new_action_btn": "別のファイルを処理する",
+    "secure_note": "安全な暗号化通信で保護されています。"
+  },
+  "queue": {
+    "title_active": "タスク ({count}件 実行中)",
+    "title_all": "タスク ({count}件)",
+    "waiting": "順番待ち...",
+    "uploading": "アップロード中 {percent}%",
+    "processing": "処理中...",
+    "completed": "完了",
+    "error": "エラー"
+  },
+  "seo": {
+    "heading": "完全無料・高速・安心のオンラインPDFツールスイート",
+    "p1": "Pödüfü.online は、ビジネスや学習、日々のドキュメント作業のために作られた快適なWebPDFツールです。契約書の結合、資料のファイルサイズ圧縮、WordやExcelからのPDF変換など、アカウント登録不要・透かし広告なしで快適にご利用いただけます。",
+    "p2": "利用者のプライバシー保護を最優先としています。アップロードされたすべてのファイルは隔離された一時領域で安全に処理され、処理完了後に自動で完全削除されます。第三者への提供やAI学習への利用は一切行われません。"
+  },
+  "faq": {
+    "heading": "よくある質問 (FAQ)",
+    "q1": "Pödüfü.online は本当に無料で利用できますか？",
+    "a1": "はい、すべてのツールが完全無料です。隠れた課金やページ数制限、生成ファイルへの広告ロゴ付加などは一切ありません。",
+    "q2": "ファイルの安全性や個人情報は守られていますか？",
+    "a2": "はい、すべての通信は最新のHTTPS/SSLで暗号化されています。ファイルは処理期間中のみ一時保存され、処理完了後に自動的に完全消去されます。",
+    "q3": "スマートフォンやタブレットでも使えますか？",
+    "a3": "はい！Pödüfüはモバイルに完全対応しており、iPhone、iPad、Android端末のブラウザからスムーズにご利用いただけます。"
+  },
+  "footer": {
+    "community": "このツールはMeadSocialコミュニティ向けに開発されました。",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約",
+    "cookies": "Cookieポリシー",
+    "contact": "お問い合わせ",
+    "rights": "All rights reserved."
+  },
+  "legal": {
+    "privacy_title": "プライバシーポリシー",
+    "privacy_body": "<p><strong>Pödüfü.online</strong> では、ユーザーの個人情報保護とドキュメントの安全性を最優先事項としています。</p><br><p><strong>1. ファイルの安全性:</strong> アップロードされたデータは、ご依頼いただいた処理の目的のみに使用されます。</p><br><p><strong>2. データの即時削除:</strong> サーバーへの恒久的なデータ保存は行われません。一時作業フォルダは処理完了後（最長1時間以内）に自動削除されます。</p><br><p><strong>3. 第三者提供の禁止:</strong> ファイルが第三者に提供されたり、AIの学習に利用されたりすることは一切ありません。</p>",
+    "terms_title": "利用規約",
+    "terms_body": "<p><strong>Pödüfü.online</strong> のご利用にあたり、以下の事項に同意いただくものとします。</p><br><p><strong>1. 無料提供:</strong> 当プラットフォームは個人および法人向けに無償で提供されます。</p><br><p><strong>2. 免責事項:</strong> サービスの継続的な提供に努めますが、システム障害等による損害について運営者は責任を負いかねます。</p>",
+    "cookies_title": "Cookieポリシー",
+    "cookies_body": "<p><strong>1. 必須設定の保存:</strong> テーマ（ライト/ダーク）や言語設定を記憶するため、ブラウザのローカルストレージ（localStorage）のみを使用します。</p><br><p><strong>2. 追跡クッキーの不使用:</strong> 行動追跡を目的とした侵入的なトラッキングCookieは使用しません。</p>",
+    "contact_title": "お問い合わせ & コミュニティ",
+    "contact_body": "<p>Pödüfü.online は <strong>MeadSocial</strong> コミュニティ向けのプロジェクトです。</p><br><p>🌐 <strong>コミュニティ:</strong> @meadsocial</p><p>✉️ <strong>メール:</strong> contact@meadsocial.com</p>"
+  }
+}

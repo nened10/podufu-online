@@ -1,0 +1,43 @@
+# Pödüfü.online
+
+> Pödüfü.online is a 100% free, fast, private, and secure web-based PDF utility platform created for the MeadSocial community and global users. It operates with zero mandatory user registration, no watermarks, no file count limits, and enforces immediate ephemeral deletion of processed files.
+
+## Website & Canonical URLs
+- Main website: https://podufu.onrender.com/
+- English: https://podufu.onrender.com/en/
+- Deutsch (German): https://podufu.onrender.com/de/
+- Español (Spanish): https://podufu.onrender.com/es/
+- Français (French): https://podufu.onrender.com/fr/
+- Português (Portuguese): https://podufu.onrender.com/pt/
+- Türkçe (Turkish): https://podufu.onrender.com/tr/
+- Русский (Russian): https://podufu.onrender.com/ru/
+- 日本語 (Japanese): https://podufu.onrender.com/ja/
+- العربية (Arabic): https://podufu.onrender.com/ar/
+
+## Core Features & Tools
+- Merge PDF: Combine multiple PDFs in custom order into a single document.
+- Split PDF: Extract page ranges or burst PDF into individual documents.
+- Compress PDF: Lossless and high-efficiency file size reduction.
+- PDF to Word: Convert PDFs into editable .docx Word documents.
+- Word to PDF: Convert DOC and DOCX documents into clean PDFs.
+- Excel to PDF: Transform XLSX spreadsheets into printable PDFs.
+- PowerPoint to PDF: Convert PPT and PPTX slide presentations to PDF.
+- Images to PDF: Merge JPG, PNG, and WebP images into a consolidated PDF.
+- PDF to Images: Export pages as high-resolution PNG or JPG image files.
+- PDF to Text / Markdown: Extract raw text and structure as clean Markdown or TXT.
+- Protect PDF: Add strong AES-256 encryption and password access controls.
+- Unlock PDF: Remove passwords and permission restrictions from known PDFs.
+- Watermark PDF: Stamp custom text or confidentiality watermarks on pages.
+- Page Numbers: Add header and footer page numbering.
+- Redact Text: Irreversibly black out and redact confidential text.
+- Organize Pages: Rotate, reorder, and remove individual pages.
+- Repair PDF: Automatically reconstruct corrupted or damaged PDF documents.
+
+## Privacy & Security Principles
+- Strict ephemeral processing: uploaded documents are stored in sandboxed temporary job workspaces and permanently purged within 1 hour or immediately upon completion.
+- Zero data retention: files are never analyzed, shared with third parties, or used for machine learning / AI model training.
+- Complete GDPR / DSGVO, LGPD, and KVKK compliance.
+- No invasive tracking cookies or user fingerprinting.
+
+## Community & Credits
+Developed independently for the MeadSocial community (@meadsocial). Contact: contact@meadsocial.com

@@ -100,14 +100,17 @@ const LANG_CONFIG = {
   es: { code: "ES", flag: "🇪🇸", name: "Español" },
   fr: { code: "FR", flag: "🇫🇷", name: "Français" },
   pt: { code: "PT", flag: "🇧🇷", name: "Português" },
-  tr: { code: "TR", flag: "🇹🇷", name: "Türkçe" }
+  tr: { code: "TR", flag: "🇹🇷", name: "Türkçe" },
+  ru: { code: "RU", flag: "🇷🇺", name: "Русский" },
+  ja: { code: "JA", flag: "🇯🇵", name: "日本語" },
+  ar: { code: "AR", flag: "🇸🇦", name: "العربية", dir: "rtl" }
 };
 
 let currentLang = "en";
 let currentLocale = null;
 
 async function setupLanguage() {
-  // 1. Detect language from URL pathname (e.g. /de/, /es/)
+  // 1. Detect language from URL pathname (e.g. /de/, /es/, /ru/, /ja/, /ar/)
   const segments = window.location.pathname.split("/").filter(Boolean);
   if (segments.length > 0 && LANG_CONFIG[segments[0]]) {
     currentLang = segments[0];
@@ -119,7 +122,7 @@ async function setupLanguage() {
     } else {
       // 3. Browser language
       const navLang = (navigator.language || navigator.userLanguage || "en").toLowerCase();
-      for (const k of ["de", "es", "fr", "pt", "tr"]) {
+      for (const k of ["de", "es", "fr", "pt", "tr", "ru", "ja", "ar"]) {
         if (navLang.startsWith(k)) {
           currentLang = k;
           break;
@@ -149,6 +152,12 @@ function updateLanguageUI(lang) {
   const codeEl = document.getElementById("current-lang-code");
   if (flagEl) flagEl.textContent = conf.flag;
   if (codeEl) codeEl.textContent = conf.code;
+
+  if (conf.dir === "rtl") {
+    document.documentElement.setAttribute("dir", "rtl");
+  } else {
+    document.documentElement.removeAttribute("dir");
+  }
 
   document.querySelectorAll(".lang-opt").forEach(opt => {
     if (opt.getAttribute("data-lang") === lang) {
@@ -560,6 +569,15 @@ async function handleFiles(files) {
   renderFileList();
   actionSubmitBtn.disabled = selectedFiles.length === 0;
 
+  if (window.podufuTelemetry && selectedFiles.length > 0) {
+    const f = selectedFiles[0];
+    window.podufuTelemetry.send("file_selected", {
+      tool_id: activeTool ? activeTool.id : "unknown",
+      file_size_mb: parseFloat((f.size / (1024 * 1024)).toFixed(2)),
+      file_type: f.type || f.name.split('.').pop()
+    });
+  }
+
   if (activeTool.id === "organize" && selectedFiles.length > 0) {
     await setupOrganizeGrid(selectedFiles[0]);
   }
@@ -813,6 +831,7 @@ function submitOperation() {
 }
 
 function enqueueTask(task) {
+  task.startTime = performance.now();
   taskQueue.push(task);
   renderQueueDock();
 
@@ -899,6 +918,16 @@ function processQueue() {
       activeTask.downloadUrl = downloadUrl;
       activeTask.downloadName = filename;
 
+      // Send conversion_success telemetry
+      const duration = activeTask.startTime ? parseFloat(((performance.now() - activeTask.startTime) / 1000).toFixed(2)) : 0;
+      if (window.podufuTelemetry) {
+        window.podufuTelemetry.send("conversion_success", {
+          tool_id: activeTask.toolId,
+          duration_seconds: duration,
+          file_name: filename
+        });
+      }
+
       // If modal is still open on this tool
       if (workspaceOverlay.classList.contains("active") && activeTool?.id === activeTask.toolId) {
         workspaceBody.style.display = "none";
@@ -933,6 +962,9 @@ function processQueue() {
 }
 
 function triggerDownload(url, filename) {
+  if (window.podufuTelemetry) {
+    window.podufuTelemetry.send("file_downloaded", { filename: filename });
+  }
   const a = document.createElement("a");
   a.href = url;
   a.download = filename;

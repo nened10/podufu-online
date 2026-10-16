@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- Root URL -->
+  <url>
+    <loc>https://podufu.onrender.com/</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://podufu.onrender.com/en/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://podufu.onrender.com/de/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://podufu.onrender.com/es/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://podufu.onrender.com/fr/" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://podufu.onrender.com/pt/" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://podufu.onrender.com/tr/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://podufu.onrender.com/ru/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://podufu.onrender.com/ja/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://podufu.onrender.com/ar/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://podufu.onrender.com/en/" />
+  </url>
+
+  <!-- English -->
+  <url>
+    <loc>https://podufu.onrender.com/en/</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://podufu.onrender.com/en/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://podufu.onrender.com/de/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://podufu.onrender.com/es/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://podufu.onrender.com/fr/" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://podufu.onrender.com/pt/" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://podufu.onrender.com/tr/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://podufu.onrender.com/ru/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://podufu.onrender.com/ja/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://podufu.onrender.com/ar/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://podufu.onrender.com/en/" />
+  </url>
+
+  <!-- German (High RPM) -->
+  <url>
+    <loc>https://podufu.onrender.com/de/</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://podufu.onrender.com/de/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://podufu.onrender.com/en/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://podufu.onrender.com/es/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://podufu.onrender.com/fr/" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://podufu.onrender.com/pt/" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://podufu.onrender.com/tr/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://podufu.onrender.com/ru/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://podufu.onrender.com/ja/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://podufu.onrender.com/ar/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://podufu.onrender.com/en/" />
+  </url>
+
+  <!-- Spanish (High Volume) -->
+  <url>
+    <loc>https://podufu.onrender.com/es/</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://podufu.onrender.com/es/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://podufu.onrender.com/en/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://podufu.onrender.com/de/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://podufu.onrender.com/fr/" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://podufu.onrender.com/pt/" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://podufu.onrender.com/tr/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://podufu.onrender.com/ru/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://podufu.onrender.com/ja/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://podufu.onrender.com/ar/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://podufu.onrender.com/en/" />
+  </url>
+
+  <!-- French -->
+  <url>
+    <loc>https://podufu.onrender.com/fr/</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://podufu.onrender.com/fr/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://podufu.onrender.com/en/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://podufu.onrender.com/de/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://podufu.onrender.com/es/" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://podufu.onrender.com/pt/" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://podufu.onrender.com/tr/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://podufu.onrender.com/ru/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://podufu.onrender.com/ja/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://podufu.onrender.com/ar/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://podufu.onrender.com/en/" />
+  </url>
+
+  <!-- Portuguese -->
+  <url>
+    <loc>https://podufu.onrender.com/pt/</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://podufu.onrender.com/pt/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://podufu.onrender.com/en/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://podufu.onrender.com/de/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://podufu.onrender.com/es/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://podufu.onrender.com/fr/" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://podufu.onrender.com/tr/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://podufu.onrender.com/ru/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://podufu.onrender.com/ja/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://podufu.onrender.com/ar/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://podufu.onrender.com/en/" />
+  </url>
+
+  <!-- Turkish -->
+  <url>
+    <loc>https://podufu.onrender.com/tr/</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://podufu.onrender.com/tr/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://podufu.onrender.com/en/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://podufu.onrender.com/de/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://podufu.onrender.com/es/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://podufu.onrender.com/fr/" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://podufu.onrender.com/pt/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://podufu.onrender.com/ru/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://podufu.onrender.com/ja/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://podufu.onrender.com/ar/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://podufu.onrender.com/en/" />
+  </url>
+
+  <!-- Russian (Cyrillic) -->
+  <url>
+    <loc>https://podufu.onrender.com/ru/</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://podufu.onrender.com/ru/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://podufu.onrender.com/en/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://podufu.onrender.com/de/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://podufu.onrender.com/es/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://podufu.onrender.com/fr/" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://podufu.onrender.com/pt/" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://podufu.onrender.com/tr/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://podufu.onrender.com/ja/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://podufu.onrender.com/ar/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://podufu.onrender.com/en/" />
+  </url>
+
+  <!-- Japanese (Eastern) -->
+  <url>
+    <loc>https://podufu.onrender.com/ja/</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://podufu.onrender.com/ja/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://podufu.onrender.com/en/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://podufu.onrender.com/de/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://podufu.onrender.com/es/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://podufu.onrender.com/fr/" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://podufu.onrender.com/pt/" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://podufu.onrender.com/tr/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://podufu.onrender.com/ru/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://podufu.onrender.com/ar/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://podufu.onrender.com/en/" />
+  </url>
+
+  <!-- Arabic (Eastern) -->
+  <url>
+    <loc>https://podufu.onrender.com/ar/</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://podufu.onrender.com/ar/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://podufu.onrender.com/en/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://podufu.onrender.com/de/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://podufu.onrender.com/es/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://podufu.onrender.com/fr/" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://podufu.onrender.com/pt/" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://podufu.onrender.com/tr/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://podufu.onrender.com/ru/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://podufu.onrender.com/ja/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://podufu.onrender.com/en/" />
+  </url>
+</urlset>

@@ -1,0 +1,40 @@
+# Robots.txt for Pödüfü.online
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /temp_workspace/
+
+# Allow major search engine crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# Allow AI & LLM Assistants (ChatGPT, Claude, Perplexity, Gemini)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Sitemaps and AI specifications
+Sitemap: https://podufu.onrender.com/sitemap.xml

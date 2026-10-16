@@ -4,6 +4,52 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pödüfü 💜</title>
+
+  <!-- SEO & Social Sharing (Open Graph & Twitter Cards) -->
+  <meta property="og:site_name" content="Pödüfü.online">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Pödüfü 💜 - 100% Free, Secure & Fast Online PDF Tools">
+  <meta property="og:description" content="Merge, split, compress, convert, protect, unlock and edit PDFs online for free. Fast, 100% private with no file size limits.">
+  <meta property="og:url" content="https://podufu.onrender.com/">
+  <meta property="og:image" content="https://podufu.onrender.com/assets/logo.svg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Pödüfü 💜 - 100% Free Online PDF Suite">
+  <meta name="twitter:description" content="Merge, split, compress, convert and edit PDFs online for free without registration.">
+  <meta name="twitter:image" content="https://podufu.onrender.com/assets/logo.svg">
+
+  <!-- Google Search Console Verification Placeholder -->
+  <!-- <meta name="google-site-verification" content="PASTE_YOUR_SEARCH_CONSOLE_CODE_HERE" /> -->
+
+  <!-- Google Analytics 4 (GA4) Placeholder -->
+  <!--
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  -->
+
+  <!-- Schema.org SoftwareApplication JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Pödüfü.online",
+    "url": "https://podufu.onrender.com/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript. Requires HTML5.",
+    "description": "100% free, private and secure online PDF tools suite to merge, split, compress, and convert documents.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
   <!-- SEO_HREFLANG_PLACEHOLDER -->
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
@@ -57,6 +103,9 @@
           <button class="lang-opt" data-lang="fr"><span>🇫🇷</span> Français</button>
           <button class="lang-opt" data-lang="pt"><span>🇧🇷</span> Português</button>
           <button class="lang-opt" data-lang="tr"><span>🇹🇷</span> Türkçe</button>
+          <button class="lang-opt" data-lang="ru"><span>🇷🇺</span> Русский</button>
+          <button class="lang-opt" data-lang="ja"><span>🇯🇵</span> 日本語</button>
+          <button class="lang-opt" data-lang="ar"><span>🇸🇦</span> العربية</button>
         </div>
       </div>
 
@@ -368,6 +417,54 @@
       </div>
     </div>
   </footer>
+
+  <!-- Ultra-Lightweight Zero-Cookie Native Telemetry Engine (~0.8 KB, sendBeacon) -->
+  <script>
+    (function () {
+      const getDeviceInfo = () => {
+        const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        return {
+          screen_w: window.screen ? window.screen.width : null,
+          screen_h: window.screen ? window.screen.height : null,
+          viewport_w: window.innerWidth,
+          viewport_h: window.innerHeight,
+          dpr: window.devicePixelRatio || 1,
+          cpu_cores: navigator.hardwareConcurrency || null,
+          ram_gb: navigator.deviceMemory || null,
+          conn_type: conn ? conn.effectiveType : 'unknown',
+          lang: navigator.language || navigator.userLanguage || 'unknown',
+          is_mobile: /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent),
+          platform: navigator.userAgentData ? navigator.userAgentData.platform : navigator.platform
+        };
+      };
+
+      window.podufuTelemetry = {
+        send: function (eventName, eventData = {}) {
+          try {
+            const payload = JSON.stringify({
+              event: eventName,
+              timestamp: Date.now(),
+              url: window.location.pathname,
+              device: getDeviceInfo(),
+              data: eventData
+            });
+
+            const endpoint = "/api/telemetry";
+            if (navigator.sendBeacon) {
+              const blob = new Blob([payload], { type: "application/json" });
+              navigator.sendBeacon(endpoint, blob);
+            } else {
+              fetch(endpoint, { method: "POST", body: payload, headers: { "Content-Type": "application/json" }, keepalive: true }).catch(() => {});
+            }
+          } catch (e) {}
+        }
+      };
+
+      window.addEventListener("DOMContentLoaded", () => {
+        window.podufuTelemetry.send("page_view");
+      });
+    })();
+  </script>
 
   <script src="/js/app.js"></script>
 </body>
