@@ -6,10 +6,26 @@ from pathlib import Path
 
 # Paths
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-FRONTEND_DIR = BASE_DIR / "frontend"
-TEMP_WORKSPACE_DIR = BASE_DIR / "temp_workspace"
 
-TEMP_WORKSPACE_DIR.mkdir(parents=True, exist_ok=True)
+# Robust FRONTEND_DIR detection for both local dev and Docker container
+possible_frontend_dirs = [
+    BASE_DIR / "frontend",
+    Path(__file__).resolve().parent.parent / "frontend",
+    Path("/app/frontend"),
+    Path("/frontend")
+]
+FRONTEND_DIR = possible_frontend_dirs[0]
+for p in possible_frontend_dirs:
+    if p.exists() and (p / "index.html").exists():
+        FRONTEND_DIR = p
+        break
+
+try:
+    TEMP_WORKSPACE_DIR = BASE_DIR / "temp_workspace"
+    TEMP_WORKSPACE_DIR.mkdir(parents=True, exist_ok=True)
+except Exception:
+    TEMP_WORKSPACE_DIR = Path(tempfile.gettempdir()) / "podufu_workspace"
+    TEMP_WORKSPACE_DIR.mkdir(parents=True, exist_ok=True)
 
 # File settings
 MAX_UPLOAD_SIZE_MB = 500  # 500 MB per file

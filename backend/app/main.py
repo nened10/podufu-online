@@ -45,6 +45,13 @@ async def telemetry_middleware(request: Request, call_next):
 
 app.include_router(api_router)
 
+# Mount static subdirectories FIRST so /css, /js, /assets, /locales are served immediately
+if FRONTEND_DIR.exists():
+    for sub in ["css", "js", "assets", "locales"]:
+        sub_dir = FRONTEND_DIR / sub
+        if sub_dir.exists():
+            app.mount(f"/{sub}", StaticFiles(directory=str(sub_dir)), name=sub)
+
 # Native Client Telemetry Beacon Endpoint
 @app.post("/api/telemetry")
 async def client_telemetry_beacon(request: Request):
@@ -251,12 +258,10 @@ async def lang_or_tool_index(lang_or_tool: str, request: Request):
 async def localized_tool_index(lang: str, tool: str):
     if lang in SUPPORTED_LANGS and tool in VALID_TOOL_IDS:
         return render_localized_index(lang, tool_id=tool)
+    static_file = FRONTEND_DIR / lang / tool
+    if static_file.is_file():
+        return FileResponse(static_file)
     raise HTTPException(status_code=404)
 
-# Mount static subdirectories
 if FRONTEND_DIR.exists():
-    for sub in ["css", "js", "assets", "locales"]:
-        sub_dir = FRONTEND_DIR / sub
-        if sub_dir.exists():
-            app.mount(f"/{sub}", StaticFiles(directory=str(sub_dir)), name=sub)
     app.mount("/", StaticFiles(directory=str(FRONTEND_DIR), html=False), name="frontend")
