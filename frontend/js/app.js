@@ -91,9 +91,187 @@ const CATEGORY_NAMES = {
   edit: "Düzenle"
 };
 
+// ============================================================
+// i18n & Localization Engine
+// ============================================================
+const LANG_CONFIG = {
+  en: { code: "EN", flag: "🇬🇧", name: "English" },
+  de: { code: "DE", flag: "🇩🇪", name: "Deutsch" },
+  es: { code: "ES", flag: "🇪🇸", name: "Español" },
+  fr: { code: "FR", flag: "🇫🇷", name: "Français" },
+  pt: { code: "PT", flag: "🇧🇷", name: "Português" },
+  tr: { code: "TR", flag: "🇹🇷", name: "Türkçe" }
+};
+
+let currentLang = "en";
+let currentLocale = null;
+
+async function setupLanguage() {
+  // 1. Detect language from URL pathname (e.g. /de/, /es/)
+  const segments = window.location.pathname.split("/").filter(Boolean);
+  if (segments.length > 0 && LANG_CONFIG[segments[0]]) {
+    currentLang = segments[0];
+  } else {
+    // 2. LocalStorage
+    const saved = localStorage.getItem("podufu_lang");
+    if (saved && LANG_CONFIG[saved]) {
+      currentLang = saved;
+    } else {
+      // 3. Browser language
+      const navLang = (navigator.language || navigator.userLanguage || "en").toLowerCase();
+      for (const k of ["de", "es", "fr", "pt", "tr"]) {
+        if (navLang.startsWith(k)) {
+          currentLang = k;
+          break;
+        }
+      }
+    }
+  }
+
+  // Load locale dictionary
+  try {
+    const res = await fetch(`/locales/${currentLang}.json`);
+    if (res.ok) {
+      currentLocale = await res.json();
+      applyTranslations(currentLocale);
+    }
+  } catch (e) {
+    console.warn("Could not load locale:", e);
+  }
+
+  // Update header language button display
+  updateLanguageUI(currentLang);
+}
+
+function updateLanguageUI(lang) {
+  const conf = LANG_CONFIG[lang] || LANG_CONFIG.en;
+  const flagEl = document.getElementById("current-lang-flag");
+  const codeEl = document.getElementById("current-lang-code");
+  if (flagEl) flagEl.textContent = conf.flag;
+  if (codeEl) codeEl.textContent = conf.code;
+
+  document.querySelectorAll(".lang-opt").forEach(opt => {
+    if (opt.getAttribute("data-lang") === lang) {
+      opt.classList.add("active");
+    } else {
+      opt.classList.remove("active");
+    }
+  });
+}
+
+function applyTranslations(loc) {
+  if (!loc) return;
+
+  // Page title
+  if (loc.meta?.title) document.title = loc.meta.title;
+
+  // Hero
+  const heroBadge = document.getElementById("hero-badge");
+  const heroTitle = document.getElementById("hero-title");
+  const heroSubtitle = document.getElementById("hero-subtitle");
+  const heroDropTitle = document.getElementById("hero-dropzone-title");
+  const heroDropSub = document.getElementById("hero-dropzone-subtitle");
+  const searchInp = document.getElementById("search-input");
+
+  if (heroBadge && loc.hero?.badge) heroBadge.textContent = loc.hero.badge;
+  if (heroTitle && loc.hero?.title) heroTitle.innerHTML = loc.hero.title;
+  if (heroSubtitle && loc.hero?.subtitle) heroSubtitle.textContent = loc.hero.subtitle;
+  if (heroDropTitle && loc.hero?.dropzone_title) heroDropTitle.textContent = loc.hero.dropzone_title;
+  if (heroDropSub && loc.hero?.dropzone_subtitle) heroDropSub.innerHTML = `veya <span class="dropzone-browse-text" id="hero-browse-text">${loc.hero.select_btn || "Dosya Seçin"}</span>`;
+  if (searchInp && loc.filters?.search_placeholder) searchInp.placeholder = loc.filters.search_placeholder;
+
+  // Filters
+  const fOrganize = document.getElementById("filter-organize");
+  const fConvert = document.getElementById("filter-convert");
+  const fOptimize = document.getElementById("filter-optimize");
+  const fSecurity = document.getElementById("filter-security");
+  if (fOrganize && loc.filters?.organize) fOrganize.textContent = loc.filters.organize;
+  if (fConvert && loc.filters?.convert) fConvert.textContent = loc.filters.convert;
+  if (fOptimize && loc.filters?.optimize) fOptimize.textContent = loc.filters.optimize;
+  if (fSecurity && loc.filters?.security) fSecurity.textContent = loc.filters.security;
+
+  // Category names mapping
+  if (loc.filters) {
+    CATEGORY_NAMES.organize = loc.filters.organize || CATEGORY_NAMES.organize;
+    CATEGORY_NAMES.convert = loc.filters.convert || CATEGORY_NAMES.convert;
+    CATEGORY_NAMES.edit = loc.filters.edit || CATEGORY_NAMES.edit;
+    CATEGORY_NAMES.optimize = loc.filters.optimize || CATEGORY_NAMES.optimize;
+    CATEGORY_NAMES.security = loc.filters.security || CATEGORY_NAMES.security;
+  }
+
+  // Workspace & Ready Screen
+  const wsDropTitle = document.getElementById("workspace-drop-title");
+  const subBtnText = document.getElementById("submit-btn-text");
+  const minBtn = document.getElementById("minimize-task-btn");
+  const readyTitle = document.getElementById("ready-title");
+  const readySubtitle = document.getElementById("ready-subtitle");
+  const dlBtnText = document.getElementById("download-btn-text");
+  const resetBtn = document.getElementById("reset-tool-btn");
+  const secNote = document.getElementById("secure-note-text");
+
+  if (wsDropTitle && loc.workspace?.drop_prompt) wsDropTitle.textContent = loc.workspace.drop_prompt;
+  if (subBtnText && loc.workspace?.start_btn) subBtnText.textContent = loc.workspace.start_btn;
+  if (minBtn && loc.workspace?.background_btn) minBtn.textContent = loc.workspace.background_btn;
+  if (readyTitle && loc.workspace?.ready_title) readyTitle.textContent = loc.workspace.ready_title;
+  if (readySubtitle && loc.workspace?.ready_subtitle) readySubtitle.textContent = loc.workspace.ready_subtitle;
+  if (dlBtnText && loc.workspace?.download_btn) dlBtnText.textContent = loc.workspace.download_btn;
+  if (resetBtn && loc.workspace?.new_action_btn) resetBtn.textContent = loc.workspace.new_action_btn;
+  if (secNote && loc.workspace?.secure_note) secNote.textContent = `🔒 ${loc.workspace.secure_note}`;
+
+  // SEO Section
+  const seoH = document.getElementById("seo-heading");
+  const seoP1 = document.getElementById("seo-p1");
+  const seoP2 = document.getElementById("seo-p2");
+  if (seoH && loc.seo?.heading) seoH.textContent = loc.seo.heading;
+  if (seoP1 && loc.seo?.p1) seoP1.textContent = loc.seo.p1;
+  if (seoP2 && loc.seo?.p2) seoP2.textContent = loc.seo.p2;
+
+  // FAQ Section
+  const faqH = document.getElementById("faq-heading");
+  const faqQ1 = document.getElementById("faq-q1");
+  const faqA1 = document.getElementById("faq-a1");
+  const faqQ2 = document.getElementById("faq-q2");
+  const faqA2 = document.getElementById("faq-a2");
+  const faqQ3 = document.getElementById("faq-q3");
+  const faqA3 = document.getElementById("faq-a3");
+
+  if (faqH && loc.faq?.heading) faqH.textContent = loc.faq.heading;
+  if (faqQ1 && loc.faq?.q1) faqQ1.textContent = loc.faq.q1;
+  if (faqA1 && loc.faq?.a1) faqA1.textContent = loc.faq.a1;
+  if (faqQ2 && loc.faq?.q2) faqQ2.textContent = loc.faq.q2;
+  if (faqA2 && loc.faq?.a2) faqA2.textContent = loc.faq.a2;
+  if (faqQ3 && loc.faq?.q3) faqQ3.textContent = loc.faq.q3;
+  if (faqA3 && loc.faq?.a3) faqA3.textContent = loc.faq.a3;
+
+  // Footer Links & Community
+  const footerComm = document.getElementById("footer-community-text");
+  const linkPriv = document.getElementById("link-privacy");
+  const linkTerms = document.getElementById("link-terms");
+  const linkCookies = document.getElementById("link-cookies");
+  const linkContact = document.getElementById("link-contact");
+
+  if (footerComm && loc.footer?.community) footerComm.textContent = loc.footer.community;
+  if (linkPriv && loc.footer?.privacy) linkPriv.textContent = loc.footer.privacy;
+  if (linkTerms && loc.footer?.terms) linkTerms.textContent = loc.footer.terms;
+  if (linkCookies && loc.footer?.cookies) linkCookies.textContent = loc.footer.cookies;
+  if (linkContact && loc.footer?.contact) linkContact.textContent = loc.footer.contact;
+
+  // Localize loaded tools
+  if (allTools.length > 0 && loc.tools) {
+    allTools.forEach(tool => {
+      if (loc.tools[tool.id]) {
+        tool.title = loc.tools[tool.id].title;
+        tool.description = loc.tools[tool.id].description;
+      }
+    });
+    renderTools(allTools);
+  }
+}
+
 // Initialize App
 async function init() {
   setupTheme();
+  await setupLanguage();
   setupEventListeners();
   await loadTools();
 }
@@ -104,6 +282,16 @@ async function loadTools() {
     const res = await fetch("/api/tools");
     const data = await res.json();
     allTools = data.tools || [];
+    
+    // Apply translations if locale is loaded
+    if (currentLocale?.tools) {
+      allTools.forEach(tool => {
+        if (currentLocale.tools[tool.id]) {
+          tool.title = currentLocale.tools[tool.id].title;
+          tool.description = currentLocale.tools[tool.id].description;
+        }
+      });
+    }
     renderTools(allTools);
   } catch (err) {
     showToast("Araçlar yüklenirken hata oluştu: " + err.message, "error");
@@ -900,6 +1088,36 @@ function setupEventListeners() {
       if (quickActionModal.classList.contains("active")) quickActionModal.classList.remove("active");
     }
   });
+
+  // Language Dropdown Events
+  const langBtn = document.getElementById("lang-btn");
+  const langDropdown = document.getElementById("lang-dropdown");
+  if (langBtn && langDropdown) {
+    langBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      langDropdown.classList.toggle("active");
+    });
+    document.addEventListener("click", () => {
+      langDropdown.classList.remove("active");
+    });
+    document.querySelectorAll(".lang-opt").forEach(opt => {
+      opt.addEventListener("click", () => {
+        const selected = opt.getAttribute("data-lang");
+        if (selected && selected !== currentLang) {
+          localStorage.setItem("podufu_lang", selected);
+          window.location.href = `/${selected}/`;
+        }
+      });
+    });
+  }
+
+  // FAQ Accordion Events
+  document.querySelectorAll(".faq-question").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const item = btn.closest(".faq-item");
+      if (item) item.classList.toggle("active");
+    });
+  });
 }
 
 // Theme handling
@@ -941,6 +1159,19 @@ if (legalModal) {
 function openLegalModal(type) {
   if (!legalModal) return;
 
+  // Use current locale legal text if available
+  if (currentLocale?.legal) {
+    const tKey = `${type}_title`;
+    const bKey = `${type}_body`;
+    if (currentLocale.legal[tKey] && currentLocale.legal[bKey]) {
+      legalModalTitle.textContent = currentLocale.legal[tKey];
+      legalModalBody.innerHTML = currentLocale.legal[bKey];
+      legalModal.classList.add("active");
+      return;
+    }
+  }
+
+  // Fallback defaults
   if (type === "privacy") {
     legalModalTitle.textContent = "Gizlilik Politikası";
     legalModalBody.innerHTML = `

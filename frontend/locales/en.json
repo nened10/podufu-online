@@ -1,0 +1,153 @@
+{
+  "meta": {
+    "title": "Pödüfü 💜 - 100% Free, Secure & Fast Online PDF Tools",
+    "description": "Merge, split, compress, convert, protect, unlock and edit PDFs online for free. Fast, 100% private with no file size limits or registration required."
+  },
+  "nav": {
+    "all_tools": "All Tools",
+    "faq": "FAQ",
+    "privacy": "Privacy",
+    "terms": "Terms"
+  },
+  "hero": {
+    "badge": "100% Free & Secure Online PDF Suite",
+    "title": "Work with PDF files with ease.",
+    "subtitle": "Convert, merge, compress and edit your PDF documents in seconds without registration.",
+    "dropzone_title": "Drag & drop files here",
+    "dropzone_subtitle": "PDF, Word, Excel, PowerPoint or Images supported",
+    "select_btn": "Choose File",
+    "instant_badge": "⚡ Instant Processing"
+  },
+  "filters": {
+    "all": "All Tools",
+    "organize": "Organize",
+    "convert": "Convert",
+    "edit": "Edit",
+    "optimize": "Optimize",
+    "security": "Security",
+    "search_placeholder": "Search PDF tools (e.g., merge, compress, word)..."
+  },
+  "tools": {
+    "merge": {
+      "title": "Merge PDF",
+      "description": "Combine multiple PDF files into a single document in any order."
+    },
+    "split": {
+      "title": "Split PDF",
+      "description": "Separate one or more pages from your PDF into individual files."
+    },
+    "compress": {
+      "title": "Compress PDF",
+      "description": "Reduce PDF file size while maintaining the highest possible quality."
+    },
+    "pdf-to-word": {
+      "title": "PDF to Word",
+      "description": "Convert PDF documents into editable Word (.docx) files accurately."
+    },
+    "word-to-pdf": {
+      "title": "Word to PDF",
+      "description": "Convert DOC and DOCX Word documents into standard PDF files."
+    },
+    "excel-to-pdf": {
+      "title": "Excel to PDF",
+      "description": "Convert XLSX and XLS spreadsheets into clean PDF documents."
+    },
+    "ppt-to-pdf": {
+      "title": "PowerPoint to PDF",
+      "description": "Convert PPTX and PPT slide presentations into PDF format."
+    },
+    "images-to-pdf": {
+      "title": "Images to PDF",
+      "description": "Convert JPG, PNG, and WebP images into a single consolidated PDF."
+    },
+    "pdf-to-images": {
+      "title": "PDF to Images",
+      "description": "Convert every page of your PDF into high-resolution PNG or JPG images."
+    },
+    "pdf-to-text": {
+      "title": "PDF to Text / MD",
+      "description": "Extract all text from your document as formatted Markdown or TXT."
+    },
+    "protect": {
+      "title": "Protect PDF",
+      "description": "Encrypt and password-protect your PDF document with AES-256."
+    },
+    "unlock": {
+      "title": "Unlock PDF",
+      "description": "Remove password security from your protected PDF documents."
+    },
+    "watermark": {
+      "title": "Add Watermark",
+      "description": "Stamp custom text or confidential watermarks across your PDF pages."
+    },
+    "page-numbers": {
+      "title": "Page Numbers",
+      "description": "Add customizable page numbering and headers to your PDF."
+    },
+    "redact": {
+      "title": "Redact Text",
+      "description": "Permanently black out and censor sensitive text across all pages."
+    },
+    "organize": {
+      "title": "Organize Pages",
+      "description": "Rotate, reorder, or delete individual pages within your PDF."
+    },
+    "repair": {
+      "title": "Repair PDF",
+      "description": "Fix corrupted, damaged, or unreadable PDF files automatically."
+    }
+  },
+  "workspace": {
+    "drop_prompt": "Drag & drop files here, or click to browse",
+    "start_btn": "Start Process",
+    "background_btn": "Continue in Background",
+    "uploading": "Uploading...",
+    "processing": "Processing...",
+    "ready_title": "Your Document is Ready!",
+    "ready_subtitle": "Your operation has completed successfully. You can download your file now.",
+    "download_btn": "Download File",
+    "new_action_btn": "Process Another File",
+    "secure_note": "Protected with secure connection."
+  },
+  "queue": {
+    "title_active": "Tasks ({count} active)",
+    "title_all": "Tasks ({count})",
+    "waiting": "Waiting in queue...",
+    "uploading": "Uploading {percent}%",
+    "processing": "Processing...",
+    "completed": "Completed",
+    "error": "Error"
+  },
+  "seo": {
+    "heading": "Complete, Free & Privacy-First PDF Toolkit",
+    "p1": "Pödüfü.online offers a full suite of cloud-free, lightning-fast PDF tools designed for professionals, students, and everyday users. Whether you need to merge business contracts, compress large lecture slides, or convert spreadsheets to PDF, our platform handles your tasks seamlessly without registration or annoying watermarks.",
+    "p2": "Privacy is at the core of Pödüfü. Your uploaded documents are processed within isolated temporary sandboxes and automatically purged right after download. We never store, inspect, or share your sensitive documents."
+  },
+  "faq": {
+    "heading": "Frequently Asked Questions",
+    "q1": "Is Pödüfü.online really 100% free?",
+    "a1": "Yes, completely free. There are no hidden subscription tiers, no page count restrictions, and no watermarks added to your converted documents.",
+    "q2": "Are my files and data safe?",
+    "a2": "Absolutely. All file transfers are encrypted with HTTPS/SSL. Files are held in temporary sandboxes solely for the duration of the conversion and are permanently purged immediately after.",
+    "q3": "Can I use Pödüfü on my smartphone or tablet?",
+    "a3": "Yes! Pödüfü is fully responsive and optimized for mobile browsers across iOS (iPhone, iPad) and Android devices."
+  },
+  "footer": {
+    "community": "This tool was developed for the MeadSocial community.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "cookies": "Cookie Policy",
+    "contact": "Contact",
+    "rights": "All rights reserved."
+  },
+  "legal": {
+    "privacy_title": "Privacy Policy",
+    "privacy_body": "<p><strong>Pödüfü.online</strong> values user privacy and document security above all else.</p><br><p><strong>1. Document Security:</strong> All uploaded files (PDF, Word, Excel, images) are processed strictly to perform the requested conversion or editing task.</p><br><p><strong>2. Zero Permanent Storage:</strong> Your documents are never permanently stored on our servers. Workspaces are automatically deleted immediately after completion (within a maximum of 1 hour).</p><br><p><strong>3. No Third-Party Sharing:</strong> Your documents are never shared with third parties, advertisers, or AI training datasets.</p><br><p><strong>4. GDPR & Privacy Compliance:</strong> Our service complies with the European General Data Protection Regulation (GDPR).</p>",
+    "terms_title": "Terms of Service",
+    "terms_body": "<p>By using <strong>Pödüfü.online</strong>, you agree to the following terms:</p><br><p><strong>1. Free Service:</strong> The platform is provided free of charge for personal and commercial use.</p><br><p><strong>2. User Responsibility:</strong> Users declare that they hold lawful rights or authorization for documents uploaded. Processing unlawful or copyright-infringing material is prohibited.</p><br><p><strong>3. Service Availability:</strong> The platform is provided 'as is' without warranties of uninterrupted uptime.</p>",
+    "cookies_title": "Cookie Policy",
+    "cookies_body": "<p><strong>1. Necessary Preferences:</strong> Pödüfü.online uses local browser storage (localStorage) exclusively to remember your theme preferences (Light/Dark) and language choice.</p><br><p><strong>2. No Tracking Cookies:</strong> We do not deploy invasive third-party tracking cookies that profile or follow your browsing across the web.</p>",
+    "contact_title": "Contact & Community",
+    "contact_body": "<p>Pödüfü.online is an independent project developed for the <strong>MeadSocial</strong> community.</p><br><p>For inquiries, feedback, or support, feel free to reach out:</p><br><p>🌐 <strong>Community:</strong> @meadsocial</p><p>✉️ <strong>Email:</strong> contact@meadsocial.com</p>"
+  }
+}

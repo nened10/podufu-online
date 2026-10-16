@@ -1233,3 +1233,197 @@ body {
     font-size: 0.78rem;
   }
 }
+
+/* ============================================================
+   Language Picker (i18n)
+   ============================================================ */
+.lang-picker {
+  position: relative;
+}
+
+.lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.42rem 0.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.lang-btn:hover {
+  border-color: var(--brand-primary);
+  background: var(--bg-hover);
+}
+
+.lang-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  padding: 0.35rem;
+  min-width: 145px;
+  display: none;
+  flex-direction: column;
+  gap: 0.2rem;
+  z-index: 1000;
+}
+
+.lang-dropdown.active {
+  display: flex;
+}
+
+.lang-opt {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: all var(--transition-fast);
+}
+
+.lang-opt:hover {
+  background: var(--bg-hover);
+  color: var(--brand-primary);
+}
+
+.lang-opt.active {
+  background: var(--brand-primary-light);
+  color: var(--brand-primary);
+  font-weight: 700;
+}
+
+/* ============================================================
+   Organic SEO Content Section
+   ============================================================ */
+.seo-section {
+  max-width: 900px;
+  margin: 3.5rem auto 1.5rem auto;
+  padding: 2.2rem 2.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.seo-heading {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.seo-p {
+  font-size: 0.93rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 0.9rem;
+}
+
+.seo-p:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================================
+   FAQ Accordion Section (Schema.org Ready)
+   ============================================================ */
+.faq-section {
+  max-width: 900px;
+  margin: 1.5rem auto 3.5rem auto;
+}
+
+.faq-heading {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.faq-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.faq-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color var(--transition-fast);
+}
+
+.faq-item:hover {
+  border-color: var(--brand-primary);
+}
+
+.faq-question {
+  width: 100%;
+  padding: 1.1rem 1.3rem;
+  background: transparent;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  cursor: pointer;
+  text-align: left;
+}
+
+.faq-chevron {
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+  color: var(--text-secondary);
+}
+
+.faq-item.active .faq-chevron {
+  transform: rotate(180deg);
+  color: var(--brand-primary);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  padding: 0 1.3rem;
+}
+
+.faq-item.active .faq-answer {
+  max-height: 250px;
+  padding: 0 1.3rem 1.15rem 1.3rem;
+}
+
+@media (max-width: 768px) {
+  .seo-section {
+    padding: 1.5rem 1.25rem;
+    margin: 2rem auto 1rem auto;
+  }
+  .seo-heading { font-size: 1.15rem; }
+  .seo-p { font-size: 0.88rem; }
+  .faq-section { margin-bottom: 2rem; }
+  .faq-heading { font-size: 1.15rem; }
+  .faq-question { padding: 0.95rem 1.1rem; font-size: 0.88rem; }
+}

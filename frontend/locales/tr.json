@@ -1,0 +1,153 @@
+{
+  "meta": {
+    "title": "Pödüfü 💜 - %100 Ücretsiz, Güvenli ve Hızlı Online PDF Araçları",
+    "description": "PDF birleştirme, bölme, sıkıştırma, Word'e çevirme, şifreleme ve düzenleme araçları. Tamamen ücretsiz, güvenli ve dosya sınırı olmadan anında dönüştürün."
+  },
+  "nav": {
+    "all_tools": "Tüm Araçlar",
+    "faq": "S.S.S.",
+    "privacy": "Gizlilik",
+    "terms": "Koşullar"
+  },
+  "hero": {
+    "badge": "%100 Ücretsiz ve Güvenli Online PDF Paketi",
+    "title": "PDF dosyalarıyla çalışmanın en tatlı yolu.",
+    "subtitle": "Kayıt olmadan, sınır olmadan belgelerinizi saniyeler içinde dönüştürün, birleştirin ve düzenleyin.",
+    "dropzone_title": "Dosyaları buraya sürükleyip bırakın",
+    "dropzone_subtitle": "PDF, Word, Excel, PowerPoint veya Görseller desteklenir",
+    "select_btn": "Dosya Seçin",
+    "instant_badge": "⚡ Anında İşlem"
+  },
+  "filters": {
+    "all": "Tüm Araçlar",
+    "organize": "Düzenle",
+    "convert": "Dönüştür",
+    "edit": "Ekle & Yaz",
+    "optimize": "Optimize Et",
+    "security": "Güvenlik",
+    "search_placeholder": "PDF araçlarında ara (örn: birleştir, sıkıştır, word)..."
+  },
+  "tools": {
+    "merge": {
+      "title": "PDF Birleştir",
+      "description": "Birden çok PDF belgesini dilediğiniz sırada tek bir dosyada birleştirin."
+    },
+    "split": {
+      "title": "PDF Böl",
+      "description": "Sayfa aralıklarını belirterek PDF'i parçalara veya tek sayfalara ayırın."
+    },
+    "compress": {
+      "title": "PDF Sıkıştır",
+      "description": "Belge kalitesini koruyarak dosya boyutunu maksimum oranda küçültün."
+    },
+    "pdf-to-word": {
+      "title": "PDF'ten Word'e",
+      "description": "PDF belgelerinizi düzenlenebilir Word (.docx) dosyasına dönüştürün."
+    },
+    "word-to-pdf": {
+      "title": "Word'den PDF'e",
+      "description": "DOC ve DOCX Word belgelerinizi standart PDF formatına aktarın."
+    },
+    "excel-to-pdf": {
+      "title": "Excel'den PDF'e",
+      "description": "XLSX ve XLS tablolarınızı biçimlendirilmiş PDF belgelerine çevirin."
+    },
+    "ppt-to-pdf": {
+      "title": "PPT'den PDF'e",
+      "description": "PowerPoint sunum slaytlarınızı tek tıkla PDF formatına aktarın."
+    },
+    "images-to-pdf": {
+      "title": "Görselden PDF'e",
+      "description": "JPG, PNG, WebP görsellerini tek bir PDF belgesinde toplayın."
+    },
+    "pdf-to-images": {
+      "title": "PDF'ten Görsele",
+      "description": "PDF sayfalarını yüksek çözünürlüklü PNG veya JPG resimlerine çevirin."
+    },
+    "pdf-to-text": {
+      "title": "PDF'ten Metne / MD",
+      "description": "Belgedeki tüm metinleri biçimlendirilmiş Markdown veya TXT olarak çıkarın."
+    },
+    "protect": {
+      "title": "PDF Şifrele",
+      "description": "Belgenizi güçlü AES-256 şifreleme ve parola ile koruma altına alın."
+    },
+    "unlock": {
+      "title": "Şifre Kaldır",
+      "description": "Şifresini bildiğiniz PDF'lerin parolasını kalıcı olarak kaldırın."
+    },
+    "watermark": {
+      "title": "Filigran Ekle",
+      "description": "Belge sayfalarına özel metin veya gizlilik mührü yerleştirin."
+    },
+    "page-numbers": {
+      "title": "Sayfa Numarası",
+      "description": "Sayfa altlarına veya üstlerine özel formatta numaralar ekleyin."
+    },
+    "redact": {
+      "title": "Metin Sansürle",
+      "description": "Hassas kelimeleri ve kişisel verileri kalıcı olarak karartın."
+    },
+    "organize": {
+      "title": "Sayfa Düzenle",
+      "description": "Sayfaları döndürün, sırasını değiştirin veya gereksizleri silin."
+    },
+    "repair": {
+      "title": "PDF Onar",
+      "description": "Bozulmuş veya açılamayan hasarlı PDF dosyalarını tamir edin."
+    }
+  },
+  "workspace": {
+    "drop_prompt": "Dosyaları buraya sürükleyin veya göz atmak için tıklayın",
+    "start_btn": "İşlemi Başlat",
+    "background_btn": "Arka Planda Devam Et",
+    "uploading": "Yükleniyor...",
+    "processing": "İşleniyor...",
+    "ready_title": "Belgeniz Hazır!",
+    "ready_subtitle": "İşleminiz başarıyla tamamlandı. Dosyanızı hemen indirebilirsiniz.",
+    "download_btn": "Dosyayı İndir",
+    "new_action_btn": "Yeni İşlem Yap",
+    "secure_note": "Güvenli bağlantı ile korunmaktadır."
+  },
+  "queue": {
+    "title_active": "İşlemler ({count} aktif)",
+    "title_all": "İşlemler ({count})",
+    "waiting": "Sırada bekliyor...",
+    "uploading": "Yükleniyor %{percent}",
+    "processing": "İşleniyor...",
+    "completed": "Tamamlandı",
+    "error": "Hata"
+  },
+  "seo": {
+    "heading": "Hızlı, Ücretsiz ve Gizlilik Odaklı Online PDF Çözümleri",
+    "p1": "Pödüfü.online, öğrenciler, ofis çalışanları ve günlük kullanıcılar için geliştirilmiş modern bir web tabanlı PDF yönetim merkezidir. Sözleşmeleri birleştirirken, büyük sunumları sıkıştırırken ya da Word belgelerini PDF'e dönüştürürken kayıt olma zorunluluğu, sayfa kısıtlaması veya can sıkıcı filigranlarla uğraşmazsınız.",
+    "p2": "Kullanıcı gizliliği temel önceliğimizdir. Yüklediğiniz tüm belgeler izole geçici çalışma alanlarında işlenir ve dönüştürme tamamlandıktan hemen sonra kalıcı olarak silinir. Belgeleriniz asla depolanmaz, incelenmez veya üçüncü taraflarla paylaşılmaz."
+  },
+  "faq": {
+    "heading": "Sıkça Sorulan Sorular",
+    "q1": "Pödüfü.online gerçekten tamamen ücretsiz mi?",
+    "a1": "Evet, tüm araçlarımız %100 ücretsizdir. Hiçbir gizli ücret, abonelik paketi veya dönüştürülen dosyalara eklenen reklam filigranı yoktur.",
+    "q2": "Yüklediğim dosyalar ve verilerim güvende mi?",
+    "a2": "Kesinlikle. Tüm dosya transferleri HTTPS/SSL şifrelemesi ile korunur. Belgeleriniz yalnızca işlem süresince sunucuda geçici olarak tutulur ve işlem bittiğinde otomatik olarak silinir.",
+    "q3": "Telefonda veya tablette kullanabilir miyim?",
+    "a3": "Evet! Pödüfü tamamen mobil uyumludur. iPhone, iPad ve Android cihazlarınızdaki tarayıcılarla sorunsuz çalışır."
+  },
+  "footer": {
+    "community": "Bu araç MeadSocial topluluğu için geliştirilmiştir.",
+    "privacy": "Gizlilik Politikası",
+    "terms": "Kullanım Koşulları",
+    "cookies": "Çerez Politikası",
+    "contact": "İletişim",
+    "rights": "Tüm hakları saklıdır."
+  },
+  "legal": {
+    "privacy_title": "Gizlilik Politikası",
+    "privacy_body": "<p><strong>Pödüfü.online</strong> olarak kullanıcılarımızın gizliliğine ve belge güvenliğine en üst düzeyde önem veriyoruz.</p><br><p><strong>1. Belge Güvenliği:</strong> Yüklediğiniz tüm PDF, Word, Excel ve görsel dosyaları yalnızca talep ettiğiniz dönüştürme ve düzenleme işleminin gerçekleştirilmesi amacıyla geçici olarak işlenir.</p><br><p><strong>2. Kalıcı Saklama Yoktur:</strong> Dosyalarınız kalıcı olarak sunucuda depolanmaz. İşlem tamamlandıktan sonra geçici çalışma alanları otomatik olarak temizlenir (maksimum 1 saat içinde tamamen silinir).</p><br><p><strong>3. Üçüncü Taraflarla Paylaşım:</strong> Belgeleriniz hiçbir üçüncü taraf kişi, kurum veya yapay zeka eğitim havuzuyla paylaşılmaz.</p><br><p><strong>4. KVKK & GDPR Uyumu:</strong> Hizmetimiz Avrupa Genel Veri Koruma Tüzüğü (GDPR) ve 6698 sayılı KVKK ilkelerine tam uyumludur.</p>",
+    "terms_title": "Kullanım Koşulları",
+    "terms_body": "<p><strong>Pödüfü.online</strong> hizmetini kullanarak aşağıdaki şartları kabul etmiş sayılırsınız:</p><br><p><strong>1. Ücretsiz Hizmet:</strong> Platform tüm bireysel ve kurumsal kullanıcılara ücretsiz olarak sunulmaktadır.</p><br><p><strong>2. Yasal Sorumluluk:</strong> Kullanıcılar platforma yükledikleri belgelerin yasal mülkiyetine veya yetkisine sahip olduklarını beyan ederler. Yasadışı veya telif hakkı ihlali içeren materyallerin işlenmesi yasaktır.</p><br><p><strong>3. Hizmet Sürekliliği:</strong> Hizmet 'olduğu gibi' sunulmakta olup, olası teknik aksaklıklardan doğabilecek durumlardan platform sorumlu tutulamaz.</p>",
+    "cookies_title": "Çerez Politikası",
+    "cookies_body": "<p><strong>1. Zorunlu Tercihler:</strong> Pödüfü.online yalnızca platformun doğru çalışabilmesi ve tema tercihinizin (Açık/Koyu Mod) hatırlanabilmesi için yerel tarayıcı depolamasını (localStorage) kullanır.</p><br><p><strong>2. Takip Çerezi Yoktur:</strong> Sitemizde kişisel verilerinizi toplayan, kimliğinizi tespit eden veya sizi web genelinde takip eden agresif üçüncü taraf reklam takip çerezleri kullanılmaz.</p>",
+    "contact_title": "İletişim & Topluluk",
+    "contact_body": "<p>Pödüfü.online, <strong>MeadSocial</strong> topluluğu için geliştirilmiş bağımsız bir projedir.</p><br><p>Görüş, öneri, hata bildirimi veya iş birliği talepleriniz için topluluk kanallarımızdan bize ulaşabilirsiniz:</p><br><p>🌐 <strong>Topluluk:</strong> @meadsocial</p><p>✉️ <strong>E-Posta:</strong> iletisim@meadsocial.com</p>"
+  }
+}

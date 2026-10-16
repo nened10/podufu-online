@@ -1,0 +1,153 @@
+{
+  "meta": {
+    "title": "Pödüfü 💜 - Outils PDF en Ligne 100% Gratuits, Sécurisés et Rapides",
+    "description": "Fusionner, diviser, compresser, convertir en Word, protéger et modifier vos PDF en ligne. 100% gratuit, sans inscription et dans le respect total de votre vie privée."
+  },
+  "nav": {
+    "all_tools": "Tous les outils",
+    "faq": "FAQ",
+    "privacy": "Confidentialité",
+    "terms": "Conditions"
+  },
+  "hero": {
+    "badge": "Suite PDF en Ligne 100% Gratuite et Sécurisée",
+    "title": "Travaillez simplement avec vos fichiers PDF.",
+    "subtitle": "Convertissez, fusionnez, compressez et modifiez vos documents en quelques secondes sans inscription.",
+    "dropzone_title": "Glissez et déposez vos fichiers ici",
+    "dropzone_subtitle": "Prend en charge PDF, Word, Excel, PowerPoint et Images",
+    "select_btn": "Choisir un fichier",
+    "instant_badge": "⚡ Traitement Instantané"
+  },
+  "filters": {
+    "all": "Tous les outils",
+    "organize": "Organiser",
+    "convert": "Convertir",
+    "edit": "Modifier",
+    "optimize": "Optimiser",
+    "security": "Sécurité",
+    "search_placeholder": "Rechercher des outils PDF (ex: fusionner, compresser)..."
+  },
+  "tools": {
+    "merge": {
+      "title": "Fusionner PDF",
+      "description": "Combinez plusieurs fichiers PDF en un seul document dans l'ordre souhaité."
+    },
+    "split": {
+      "title": "Diviser PDF",
+      "description": "Extrayez des pages ou divisez votre PDF en plusieurs documents séparés."
+    },
+    "compress": {
+      "title": "Compresser PDF",
+      "description": "Réduisez la taille de votre PDF tout en préservant une qualité maximale."
+    },
+    "pdf-to-word": {
+      "title": "PDF en Word",
+      "description": "Convertissez vos PDF en documents Word (.docx) modifiables avec précision."
+    },
+    "word-to-pdf": {
+      "title": "Word en PDF",
+      "description": "Transformez vos documents DOC et DOCX en fichiers PDF conformes et nets."
+    },
+    "excel-to-pdf": {
+      "title": "Excel en PDF",
+      "description": "Convertissez vos feuilles de calcul XLSX et XLS en documents PDF impeccables."
+    },
+    "ppt-to-pdf": {
+      "title": "PowerPoint en PDF",
+      "description": "Exportez vos présentations PPT et PPTX au format PDF en un clic."
+    },
+    "images-to-pdf": {
+      "title": "Images en PDF",
+      "description": "Regroupez vos images JPG, PNG et WebP dans un seul document PDF."
+    },
+    "pdf-to-images": {
+      "title": "PDF en Images",
+      "description": "Extrayez chaque page de votre PDF sous forme d'images PNG ou JPG haute résolution."
+    },
+    "pdf-to-text": {
+      "title": "PDF en Texte / MD",
+      "description": "Extrayez l'intégralité du texte au format Markdown ou texte brut TXT."
+    },
+    "protect": {
+      "title": "Protéger PDF",
+      "description": "Chiffrez et protégez vos documents PDF avec un mot de passe fort AES-256."
+    },
+    "unlock": {
+      "title": "Déverrouiller PDF",
+      "description": "Supprimez définitivement le mot de passe de vos fichiers protégés."
+    },
+    "watermark": {
+      "title": "Ajouter filigrane",
+      "description": "Insérez un texte personnalisé ou un tampon de confidentialité sur vos pages."
+    },
+    "page-numbers": {
+      "title": "Numéros de page",
+      "description": "Ajoutez des numéros de page clairs et personnalisables à vos documents."
+    },
+    "redact": {
+      "title": "Masquer du texte",
+      "description": "Censurez et effacez de manière irréversible les informations sensibles."
+    },
+    "organize": {
+      "title": "Organiser pages",
+      "description": "Pivotez, réordonnez ou supprimez des pages au sein de votre document."
+    },
+    "repair": {
+      "title": "Réparer PDF",
+      "description": "Restaurez et réparez automatiquement les fichiers PDF endommagés ou corrompus."
+    }
+  },
+  "workspace": {
+    "drop_prompt": "Glissez les fichiers ici ou cliquez pour parcourir",
+    "start_btn": "Démarrer le traitement",
+    "background_btn": "Poursuivre en arrière-plan",
+    "uploading": "Téléversement...",
+    "processing": "Traitement en cours...",
+    "ready_title": "Votre document est prêt !",
+    "ready_subtitle": "L'opération s'est terminée avec succès. Vous pouvez télécharger votre fichier.",
+    "download_btn": "Télécharger le fichier",
+    "new_action_btn": "Traiter un autre fichier",
+    "secure_note": "Protégé par une connexion sécurisée."
+  },
+  "queue": {
+    "title_active": "Tâches ({count} actives)",
+    "title_all": "Tâches ({count})",
+    "waiting": "En attente...",
+    "uploading": "Téléversement {percent}%",
+    "processing": "Traitement en cours...",
+    "completed": "Terminé",
+    "error": "Erreur"
+  },
+  "seo": {
+    "heading": "La suite PDF en ligne gratuite, rapide et respectueuse de votre vie privée",
+    "p1": "Pödüfü.online met à votre disposition un ensemble complet d'outils PDF modernes conçus pour les particuliers, les étudiants et les professionnels. Qu'il s'agisse de fusionner des contrats, de compresser de lourdes présentations ou de convertir des tableurs en PDF, profitez d'une solution sans inscription et sans filigranes intrusifs.",
+    "p2": "La confidentialité est au cœur de notre démarche. Vos fichiers sont traités dans des environnements isolés et purgés de façon automatique dès le téléchargement effectué. Nous ne conservons, n'analysons ni ne partageons jamais vos documents personnels."
+  },
+  "faq": {
+    "heading": "Foire aux questions",
+    "q1": "Pödüfü.online est-il réellement 100% gratuit ?",
+    "a1": "Oui, totalement gratuit. Il n'y a aucun abonnement dissimulé, aucune limite du nombre de pages et aucun logo publicitaire apposé sur vos fichiers.",
+    "q2": "Mes données et documents sont-ils protégés ?",
+    "a2": "Absolument. Tous les transferts sont chiffrés via le protocole sécurisé HTTPS/SSL. Vos fichiers ne sont conservés que le temps strict de l'opération et sont effacés immédiatement après.",
+    "q3": "Puis-je l'utiliser sur mobile ou tablette ?",
+    "a3": "Tout à fait ! Pödüfü est entièrement responsive et s'adapte parfaitement à tous les navigateurs iOS (iPhone, iPad) et Android."
+  },
+  "footer": {
+    "community": "Cet outil a été développé pour la communauté MeadSocial.",
+    "privacy": "Politique de confidentialité",
+    "terms": "Conditions d'utilisation",
+    "cookies": "Politique des cookies",
+    "contact": "Contact",
+    "rights": "Tous droits réservés."
+  },
+  "legal": {
+    "privacy_title": "Politique de confidentialité (RGPD)",
+    "privacy_body": "<p>Chez <strong>Pödüfü.online</strong>, nous accordons une importance primordiale à la confidentialité de vos données et à la sécurité de vos fichiers.</p><br><p><strong>1. Sécurité des fichiers :</strong> Vos documents téléversés sont traités exclusivement dans le cadre de l'action de conversion ou d'édition demandée.</p><br><p><strong>2. Aucun stockage durable :</strong> Vos fichiers ne sont jamais stockés de façon permanente. Les répertoires de travail temporaires sont purgés automatiquement (au maximum sous 1 heure).</p><br><p><strong>3. Aucun partage avec des tiers :</strong> Vos documents ne sont ni partagés avec des entités tierces, ni exploités pour l'entraînement d'intelligences artificielles.</p><br><p><strong>4. Conformité RGPD :</strong> Notre plateforme respecte scrupuleusement les exigences du Règlement Général sur la Protection des Données (RGPD) de l'Union européenne.</p>",
+    "terms_title": "Conditions d'utilisation",
+    "terms_body": "<p>En utilisant <strong>Pödüfü.online</strong>, vous acceptez les conditions suivantes :</p><br><p><strong>1. Service gracieux :</strong> La plateforme est mise à disposition gratuitement pour un usage individuel ou professionnel.</p><br><p><strong>2. Responsabilité de l'utilisateur :</strong> L'utilisateur garantit disposer des droits requis sur les fichiers soumis. Le traitement de contenus illicites ou portant atteinte aux droits d'auteur est strictement interdit.</p><br><p><strong>3. Disponibilité :</strong> Le service est fourni 'en l'état' sans garantie de disponibilité continue ininterrompue.</p>",
+    "cookies_title": "Politique des cookies",
+    "cookies_body": "<p><strong>1. Préférences essentielles :</strong> Pödüfü.online utilise le stockage local (localStorage) dans l'unique but de mémoriser votre préférence de thème (Clair/Sombre) et votre choix de langue.</p><br><p><strong>2. Aucun cookie traceur :</strong> Nous n'utilisons aucun traceur publicitaire intrusif visant à suivre votre navigation sur le web.</p>",
+    "contact_title": "Contact & Communauté",
+    "contact_body": "<p>Pödüfü.online est une initiative indépendante créée pour la communauté <strong>MeadSocial</strong>.</p><br><p>Pour toute remarque, suggestion ou demande de contact :</p><br><p>🌐 <strong>Communauté :</strong> @meadsocial</p><p>✉️ <strong>Courriel :</strong> contact@meadsocial.com</p>"
+  }
+}

@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html lang="tr" data-theme="light">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pödüfü 💜</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <!-- SEO_HREFLANG_PLACEHOLDER -->
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
 </head>
 <body>
 
   <!-- App Header -->
   <header class="app-header">
     <div style="display: flex; align-items: center; gap: 0.75rem;">
-      <a href="#" class="brand">
+      <a href="/" class="brand">
         <div class="brand-icon">
           <svg width="34" height="34" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -42,6 +43,23 @@
     </div>
 
     <div class="header-actions">
+      <!-- Language Picker Dropdown -->
+      <div class="lang-picker">
+        <button id="lang-btn" class="lang-btn" title="Language" aria-label="Language Selector">
+          <span id="current-lang-flag" class="lang-flag">🌐</span>
+          <span id="current-lang-code" class="lang-code">EN</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div id="lang-dropdown" class="lang-dropdown">
+          <button class="lang-opt" data-lang="en"><span>🇬🇧</span> English</button>
+          <button class="lang-opt" data-lang="de"><span>🇩🇪</span> Deutsch</button>
+          <button class="lang-opt" data-lang="es"><span>🇪🇸</span> Español</button>
+          <button class="lang-opt" data-lang="fr"><span>🇫🇷</span> Français</button>
+          <button class="lang-opt" data-lang="pt"><span>🇧🇷</span> Português</button>
+          <button class="lang-opt" data-lang="tr"><span>🇹🇷</span> Türkçe</button>
+        </div>
+      </div>
+
       <button id="theme-toggle-btn" class="theme-toggle-btn" title="Temayı Değiştir" aria-label="Temayı Değiştir">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
@@ -67,8 +85,11 @@
   <main class="main-container">
     <!-- Hero Section -->
     <section class="hero">
-      <h1>PDF Belgelerini <span>Kolayca</span> Yönet</h1>
-      <p>Hızlı, pratik ve tamamen ücretsiz PDF araçları.</p>
+      <div id="hero-badge" class="hero-badge-pill" style="display: inline-block; font-size: 0.8rem; font-weight: 700; color: var(--brand-primary); background: var(--brand-primary-light); padding: 0.35rem 0.85rem; border-radius: 999px; margin-bottom: 0.85rem;">
+        %100 Ücretsiz & Güvenli
+      </div>
+      <h1 id="hero-title">PDF Belgelerini <span>Kolayca</span> Yönet</h1>
+      <p id="hero-subtitle">Hızlı, pratik ve tamamen ücretsiz PDF araçları.</p>
 
       <!-- Cognitive Hero Quick-Dropzone (Larger & More Inviting) -->
       <div id="hero-dropzone" class="hero-dropzone">
@@ -82,8 +103,8 @@
             </svg>
           </div>
           <div class="hero-dropzone-text">
-            <h3>Belgenizi buraya sürükleyip bırakın</h3>
-            <p>veya <span class="dropzone-browse-text">dosya seçin</span></p>
+            <h3 id="hero-dropzone-title">Belgenizi buraya sürükleyip bırakın</h3>
+            <p id="hero-dropzone-subtitle">veya <span class="dropzone-browse-text" id="hero-browse-text">dosya seçin</span></p>
             <div class="supported-formats-pills">
               <span>PDF</span>
               <span>Word</span>
@@ -101,16 +122,57 @@
       </div>
 
       <div class="filter-bar">
-        <button class="filter-btn" data-category="organize">Düzenle</button>
-        <button class="filter-btn" data-category="convert">Dönüştür</button>
-        <button class="filter-btn" data-category="optimize">Optimize Et</button>
-        <button class="filter-btn" data-category="security">Güvenlik</button>
+        <button class="filter-btn" data-category="organize" id="filter-organize">Düzenle</button>
+        <button class="filter-btn" data-category="convert" id="filter-convert">Dönüştür</button>
+        <button class="filter-btn" data-category="optimize" id="filter-optimize">Optimize Et</button>
+        <button class="filter-btn" data-category="security" id="filter-security">Güvenlik</button>
       </div>
     </section>
 
     <!-- Tools Grid -->
     <section id="tools-grid" class="tools-grid">
       <!-- Injected via JavaScript -->
+    </section>
+
+    <!-- Organic SEO Content Section -->
+    <section id="seo-section" class="seo-section">
+      <h2 id="seo-heading" class="seo-heading">Hızlı, Ücretsiz ve Gizlilik Odaklı Online PDF Çözümleri</h2>
+      <p id="seo-p1" class="seo-p">Pödüfü.online, öğrenciler, ofis çalışanları ve günlük kullanıcılar için geliştirilmiş modern bir web tabanlı PDF yönetim merkezidir. Sözleşmeleri birleştirirken, büyük sunumları sıkıştırırken ya da Word belgelerini PDF'e dönüştürürken kayıt olma zorunluluğu, sayfa kısıtlaması veya can sıkıcı filigranlarla uğraşmazsınız.</p>
+      <p id="seo-p2" class="seo-p">Kullanıcı gizliliği temel önceliğimizdir. Yüklediğiniz tüm belgeler izole geçici çalışma alanlarında işlenir ve dönüştürme tamamlandıktan hemen sonra kalıcı olarak silinir. Belgeleriniz asla depolanmaz, incelenmez veya üçüncü taraflarla paylaşılmaz.</p>
+    </section>
+
+    <!-- FAQ Accordion Section (Rich Snippet Schema.org Ready) -->
+    <section id="faq-section" class="faq-section">
+      <h2 id="faq-heading" class="faq-heading">Sıkça Sorulan Sorular</h2>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <button class="faq-question" type="button">
+            <span id="faq-q1">Pödüfü.online gerçekten tamamen ücretsiz mi?</span>
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p id="faq-a1">Evet, tüm araçlarımız %100 ücretsizdir. Hiçbir gizli ücret, abonelik paketi veya dönüştürülen dosyalara eklenen reklam filigranı yoktur.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" type="button">
+            <span id="faq-q2">Yüklediğim dosyalar ve verilerim güvende mi?</span>
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p id="faq-a2">Kesinlikle. Tüm dosya transferleri HTTPS/SSL şifrelemesi ile korunur. Belgeleriniz yalnızca işlem süresince sunucuda geçici olarak tutulur ve işlem bittiğinde otomatik olarak silinir.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" type="button">
+            <span id="faq-q3">Telefonda veya tablette kullanabilir miyim?</span>
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p id="faq-a3">Evet! Pödüfü tamamen mobil uyumludur. iPhone, iPad ve Android cihazlarınızdaki tarayıcılarla sorunsuz çalışır.</p>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 
@@ -129,7 +191,7 @@
         </button>
       </div>
       <div class="workspace-body" style="padding: 1.25rem;">
-        <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;">Bu belgeyle ne yapmak istersiniz?</p>
+        <p id="quick-prompt" style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;">Bu belgeyle ne yapmak istersiniz?</p>
         <div id="quick-action-buttons" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.65rem;">
           <!-- Injected via JS -->
         </div>
@@ -155,29 +217,26 @@
 
       <!-- Workspace Body (Upload & Configuration) -->
       <div id="workspace-body" class="workspace-body">
-        <!-- Dropzone -->
+        <!-- Dropzone within workspace -->
         <div id="dropzone" class="dropzone">
           <input type="file" id="file-input" style="display: none;">
           <div class="dropzone-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
               <polyline points="17 8 12 3 7 8"/>
               <line x1="12" y1="3" x2="12" y2="15"/>
             </svg>
           </div>
-          <div>
-            <h4>Dosyalarınızı buraya bırakın</h4>
-            <p>veya bilgisayarınızdan seçmek için tıklayın</p>
-          </div>
-          <button type="button" class="browse-btn">Dosya Seç</button>
+          <h3 id="workspace-drop-title">Dosyaları buraya sürükleyin veya göz atmak için tıklayın</h3>
+          <p id="workspace-drop-desc">Tek veya çoklu PDF belgeleri desteklenir</p>
         </div>
 
         <!-- Selected Files List -->
-        <div id="file-list" class="file-list"></div>
+        <div id="file-list" class="file-list" style="display: none;"></div>
 
-        <!-- Visual Page Grid (Organize Tool) -->
-        <div id="page-grid-container" class="page-grid-container" style="display: none;">
-          <h4 style="margin-bottom: 0.65rem; font-size: 0.9rem; font-weight: 700;">Sayfaları Düzenleyin:</h4>
+        <!-- Page Organizer (for Organize tool) -->
+        <div id="organize-container" style="display: none;">
+          <h4 id="organize-heading" style="margin-bottom: 0.65rem; font-size: 0.9rem; font-weight: 700;">Sayfaları Düzenleyin:</h4>
           <div id="page-grid" class="page-grid"></div>
         </div>
 
@@ -203,8 +262,8 @@
             <polyline points="20 6 9 17 4 12"/>
           </svg>
         </div>
-        <h3 style="font-size: 1.4rem; font-weight: 800;">Belgeniz Hazır!</h3>
-        <p style="color: var(--text-secondary); max-width: 420px; font-size: 0.92rem;">İşleminiz başarıyla tamamlandı. Dosyanızı hemen indirebilirsiniz.</p>
+        <h3 id="ready-title" style="font-size: 1.4rem; font-weight: 800;">Belgeniz Hazır!</h3>
+        <p id="ready-subtitle" style="color: var(--text-secondary); max-width: 420px; font-size: 0.92rem;">İşleminiz başarıyla tamamlandı. Dosyanızı hemen indirebilirsiniz.</p>
         
         <!-- Google AdSense - Result Screen Banner Slot -->
         <div class="ad-slot ad-slot-result">
@@ -225,7 +284,7 @@
               <polyline points="7 10 12 15 17 10"/>
               <line x1="12" y1="15" x2="12" y2="3"/>
             </svg>
-            Dosyayı İndir
+            <span id="download-btn-text">Dosyayı İndir</span>
           </a>
           <button id="reset-tool-btn" class="reset-tool-btn">Yeni İşlem Yap</button>
         </div>
@@ -233,7 +292,7 @@
 
       <!-- Workspace Footer -->
       <div id="workspace-footer" class="workspace-footer">
-        <span style="font-size: 0.82rem; color: var(--text-secondary);">
+        <span id="secure-note-text" style="font-size: 0.82rem; color: var(--text-secondary);">
           🔒 Güvenli bağlantı ile korunmaktadır.
         </span>
         <div style="display: flex; align-items: center; gap: 0.5rem;">
@@ -294,24 +353,22 @@
   <footer class="app-footer">
     <div class="footer-strip">
       <div class="footer-left">
-        <span class="footer-brand-name"><strong>Pödüfü</strong>.online</span>
-        <span class="footer-dot">•</span>
-        <span class="footer-community">Bu araç MeadSocial topluluğu için geliştirilmiştir.</span>
+        <span class="footer-community" id="footer-community-text">Bu araç MeadSocial topluluğu için geliştirilmiştir.</span>
         <span class="footer-dot">•</span>
         <span class="footer-powered">powered by <strong>@meadsocial.</strong></span>
       </div>
       <div class="footer-links">
-        <a href="#" onclick="openLegalModal('privacy'); return false;">Gizlilik</a>
+        <a href="#" id="link-privacy" onclick="openLegalModal('privacy'); return false;">Gizlilik</a>
         <span class="footer-dot">•</span>
-        <a href="#" onclick="openLegalModal('terms'); return false;">Koşullar</a>
+        <a href="#" id="link-terms" onclick="openLegalModal('terms'); return false;">Koşullar</a>
         <span class="footer-dot">•</span>
-        <a href="#" onclick="openLegalModal('cookies'); return false;">Çerezler</a>
+        <a href="#" id="link-cookies" onclick="openLegalModal('cookies'); return false;">Çerezler</a>
         <span class="footer-dot">•</span>
-        <a href="#" onclick="openLegalModal('contact'); return false;">İletişim</a>
+        <a href="#" id="link-contact" onclick="openLegalModal('contact'); return false;">İletişim</a>
       </div>
     </div>
   </footer>
 
-  <script src="js/app.js"></script>
+  <script src="/js/app.js"></script>
 </body>
 </html>
