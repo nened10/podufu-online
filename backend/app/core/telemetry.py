@@ -11,9 +11,12 @@ _lock = Lock()
 
 # Cloud Database configuration (e.g. from Render Environment Variables)
 # Mode 1: Supabase REST API (Free & Zero extra pip drivers required)
-SUPABASE_URL = os.getenv("SUPABASE_URL", "").rstrip("/")
-SUPABASE_KEY = os.getenv("SUPABASE_KEY", "")
-SUPABASE_TABLE = os.getenv("SUPABASE_TABLE", "podufu_telemetry")
+_raw_supabase_url = os.getenv("SUPABASE_URL", "").strip().rstrip("/")
+if _raw_supabase_url.endswith("/rest/v1"):
+    _raw_supabase_url = _raw_supabase_url[:-8].rstrip("/")
+SUPABASE_URL = _raw_supabase_url
+SUPABASE_KEY = os.getenv("SUPABASE_KEY", "").strip()
+SUPABASE_TABLE = os.getenv("SUPABASE_TABLE", "podufu_telemetry").strip()
 
 # Mode 2: Generic Cloud Webhook or Telemetry Ingest URL
 TELEMETRY_WEBHOOK_URL = os.getenv("TELEMETRY_WEBHOOK_URL", "")
