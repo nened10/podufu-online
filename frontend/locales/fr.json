@@ -10,8 +10,7 @@
     "terms": "Conditions"
   },
   "hero": {
-    "badge": "Suite PDF en Ligne 100% Gratuite et Sécurisée",
-    "title": "Travaillez simplement avec vos fichiers PDF.",
+    "title": "Le moyen <span>le plus sûr</span> de travailler avec des fichiers PDF.",
     "subtitle": "Convertissez, fusionnez, compressez et modifiez vos documents en quelques secondes sans inscription.",
     "dropzone_title": "Glissez et déposez vos fichiers ici",
     "dropzone_subtitle": "Prend en charge PDF, Word, Excel, PowerPoint et Images",
@@ -95,6 +94,14 @@
     "repair": {
       "title": "Réparer PDF",
       "description": "Restaurez et réparez automatiquement les fichiers PDF endommagés ou corrompus."
+    },
+    "rotate": {
+      "title": "Faire pivoter le PDF",
+      "description": "Faites pivoter toutes les pages de votre document à 90°, 180° ou 270° de façon permanente."
+    },
+    "metadata": {
+      "title": "Supprimer les métadonnées",
+      "description": "Supprimez l'auteur, le titre et les métadonnées de création pour une confidentialité totale."
     }
   },
   "workspace": {
@@ -149,5 +156,9 @@
     "cookies_body": "<p><strong>1. Préférences essentielles :</strong> Pödüfü.online utilise le stockage local (localStorage) dans l'unique but de mémoriser votre préférence de thème (Clair/Sombre) et votre choix de langue.</p><br><p><strong>2. Aucun cookie traceur :</strong> Nous n'utilisons aucun traceur publicitaire intrusif visant à suivre votre navigation sur le web.</p>",
     "contact_title": "Contact & Communauté",
     "contact_body": "<p>Pödüfü.online est une initiative indépendante créée pour la communauté <strong>MeadSocial</strong>.</p><br><p>Pour toute remarque, suggestion ou demande de contact :</p><br><p>🌐 <strong>Communauté :</strong> @meadsocial</p><p>✉️ <strong>Courriel :</strong> contact@meadsocial.com</p>"
+  },
+  "tab": {
+    "processing": "⏳ Traitement de votre fichier...",
+    "ready": "✅ Fichier prêt !"
   }
 }

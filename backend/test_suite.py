@@ -16,7 +16,7 @@ from reportlab.lib.pagesizes import letter
 # Ensure backend root is in sys.path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from app.core.organizer import merge_pdfs, split_pdf, organize_and_rotate_pages
+from app.core.organizer import merge_pdfs, split_pdf, organize_and_rotate_pages, rotate_all_pages, strip_pdf_metadata
 from app.core.converter import images_to_pdf, pdf_to_images, pdf_to_docx_file, pdf_to_markdown_or_text
 from app.core.optimizer import compress_pdf, repair_pdf
 from app.core.security import protect_pdf, unlock_pdf
@@ -134,6 +134,17 @@ def run_all_tests():
     repair_pdf(pdf1, repaired_pdf)
     assert repaired_pdf.exists()
     print("[OK] 13b. Onarma (Repair) basarili.")
+
+    # 14. Rotate & Metadata
+    rotated_pdf = TEST_DIR / "rotated.pdf"
+    rotate_all_pages(pdf1, angle=90, output_path=rotated_pdf)
+    assert rotated_pdf.exists()
+    print("[OK] 14a. PDF Döndürme (Rotate 90) basarili.")
+
+    clean_meta_pdf = TEST_DIR / "clean_meta.pdf"
+    strip_pdf_metadata(pdf1, output_path=clean_meta_pdf)
+    assert clean_meta_pdf.exists()
+    print("[OK] 14b. Meta Veri Temizleme (Scrub Metadata) basarili.")
 
     print("\n🎉 TUM TESTLER BASARIYLA TAMAMLANDI! SISTEM %100 CALISIYOR.")
 

@@ -7,7 +7,14 @@ from fastapi.responses import FileResponse, JSONResponse
 
 from app.config import create_job_workspace
 from app.utils.file_manager import create_zip_archive, sanitize_filename, save_upload_file
-from app.core.organizer import merge_pdfs, split_pdf, organize_and_rotate_pages, remove_pages
+from app.core.organizer import (
+    merge_pdfs,
+    split_pdf,
+    organize_and_rotate_pages,
+    remove_pages,
+    rotate_all_pages,
+    strip_pdf_metadata
+)
 from app.core.converter import (
     images_to_pdf,
     pdf_to_images,
@@ -176,6 +183,24 @@ TOOLS_CATALOG = [
         "description": "Bozuk veya hasarlı PDF belgelerinin yapısını tamir edin.",
         "category": "optimize",
         "icon": "wrench",
+        "multiple_files": False,
+        "accept": ".pdf"
+    },
+    {
+        "id": "rotate",
+        "title": "PDF Döndür",
+        "description": "Tüm sayfaları veya seçtiğiniz açıda (90°, 180°, 270°) kalıcı olarak döndürün.",
+        "category": "organize",
+        "icon": "rotate",
+        "multiple_files": False,
+        "accept": ".pdf"
+    },
+    {
+        "id": "metadata",
+        "title": "Meta Veri Temizle",
+        "description": "Yazar, başlık ve oluşturucu gibi gizli meta verileri belgeden tamamen kazıyın.",
+        "category": "security",
+        "icon": "shield-check",
         "multiple_files": False,
         "accept": ".pdf"
     }
@@ -609,3 +634,47 @@ async def handle_repair(file: UploadFile = File(...)):
         media_type="application/pdf",
         filename=out_path.name
     )
+
+@router.post("/rotate")
+async def handle_rotate(
+    file: UploadFile = File(...),
+    angle: int = Form(90)
+):
+    """Rotates all pages of PDF by angle degrees (90, 180, 270)."""
+    job_id = uuid.uuid4().hex
+    workspace = create_job_workspace(job_id)
+    input_path = workspace / sanitize_filename(file.filename)
+    await save_upload_file(file, input_path)
+    
+    out_path = workspace / f"{input_path.stem}_rotated_{angle}deg_podufu.pdf"
+    try:
+        rotate_all_pages(input_path, angle, out_path)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Döndürme hatası: {str(e)}")
+        
+    return FileResponse(
+        out_path,
+        media_type="application/pdf",
+        filename=out_path.name
+    )
+
+@router.post("/metadata")
+async def handle_metadata(file: UploadFile = File(...)):
+    """Removes all author, creator, producer and document metadata."""
+    job_id = uuid.uuid4().hex
+    workspace = create_job_workspace(job_id)
+    input_path = workspace / sanitize_filename(file.filename)
+    await save_upload_file(file, input_path)
+    
+    out_path = workspace / f"{input_path.stem}_clean_podufu.pdf"
+    try:
+        strip_pdf_metadata(input_path, out_path)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Meta veri temizleme hatası: {str(e)}")
+        
+    return FileResponse(
+        out_path,
+        media_type="application/pdf",
+        filename=out_path.name
+    )
+

@@ -10,8 +10,7 @@
     "terms": "利用規約"
   },
   "hero": {
-    "badge": "100%無料・セキュアなオンラインPDFツール",
-    "title": "PDF作業を、もっとシンプルに。",
+    "title": "PDFファイルを扱う<span>最も安全な</span>方法。",
     "subtitle": "会員登録なしで、PDFの結合・圧縮・変換・編集が数秒で完了します。",
     "dropzone_title": "ファイルをここにドラッグ＆ドロップ",
     "dropzone_subtitle": "PDF、Word、Excel、PowerPoint、画像に対応",
@@ -95,6 +94,14 @@
     "repair": {
       "title": "PDF修復",
       "description": "破損して開けないPDFファイルを自動的に修復・復元します。"
+    },
+    "rotate": {
+      "title": "PDFを回転",
+      "description": "ドキュメント内のすべてのページを90度、180度、または270度回転します。"
+    },
+    "metadata": {
+      "title": "メタデータを削除",
+      "description": "作成者、タイトル、作成メタデータを削除してプライバシーを保護します。"
     }
   },
   "workspace": {
@@ -149,5 +156,9 @@
     "cookies_body": "<p><strong>1. 必須設定の保存:</strong> テーマ（ライト/ダーク）や言語設定を記憶するため、ブラウザのローカルストレージ（localStorage）のみを使用します。</p><br><p><strong>2. 追跡クッキーの不使用:</strong> 行動追跡を目的とした侵入的なトラッキングCookieは使用しません。</p>",
     "contact_title": "お問い合わせ & コミュニティ",
     "contact_body": "<p>Pödüfü.online は <strong>MeadSocial</strong> コミュニティ向けのプロジェクトです。</p><br><p>🌐 <strong>コミュニティ:</strong> @meadsocial</p><p>✉️ <strong>メール:</strong> contact@meadsocial.com</p>"
+  },
+  "tab": {
+    "processing": "⏳ 処理中...",
+    "ready": "✅ 準備完了！"
   }
 }

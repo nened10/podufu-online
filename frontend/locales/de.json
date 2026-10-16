@@ -10,8 +10,7 @@
     "terms": "Nutzungsbedingungen"
   },
   "hero": {
-    "badge": "100% Kostenlose & Sichere Online-PDF-Suite",
-    "title": "Einfach und sicher mit PDF-Dateien arbeiten.",
+    "title": "Der <span>sicherste</span> Weg, mit PDF-Dateien zu arbeiten.",
     "subtitle": "Konvertieren, zusammenfügen, verkleinern und bearbeiten Sie Ihre Dokumente sekundenschnell ohne Anmeldung.",
     "dropzone_title": "Dateien hierhin ziehen und ablegen",
     "dropzone_subtitle": "PDF, Word, Excel, PowerPoint oder Bilder unterstützt",
@@ -95,6 +94,14 @@
     "repair": {
       "title": "PDF reparieren",
       "description": "Beschädigte oder unleserliche PDF-Dokumente automatisch wiederherstellen."
+    },
+    "rotate": {
+      "title": "PDF drehen",
+      "description": "Drehen Sie alle Seiten Ihres Dokuments dauerhaft um 90°, 180° oder 270°."
+    },
+    "metadata": {
+      "title": "Metadaten entfernen",
+      "description": "Entfernen Sie Autor, Titel und Erstellungs-Metadaten für vollständigen Datenschutz."
     }
   },
   "workspace": {
@@ -149,5 +156,9 @@
     "cookies_body": "<p><strong>1. Notwendige Einstellungen:</strong> Pödüfü.online nutzt den lokalen Browser-Speicher (localStorage) ausschließlich zur Speicherung Ihrer Design-Präferenzen (Hell/Dunkel) sowie der Sprachauswahl.</p><br><p><strong>2. Keine Tracking-Cookies:</strong> Wir setzen keine invasiven Tracking-Cookies ein, die Ihr Surfverhalten über Webseiten hinweg analysieren.</p>",
     "contact_title": "Kontakt & Community",
     "contact_body": "<p>Pödüfü.online ist ein unabhängiges Projekt, das für die <strong>MeadSocial</strong>-Community entwickelt wurde.</p><br><p>Bei Fragen, Feedback oder Vorschlägen erreichen Sie uns über:</p><br><p>🌐 <strong>Community:</strong> @meadsocial</p><p>✉️ <strong>E-Mail:</strong> contact@meadsocial.com</p>"
+  },
+  "tab": {
+    "processing": "⏳ Ihre Datei wird verarbeitet...",
+    "ready": "✅ Datei ist fertig!"
   }
 }

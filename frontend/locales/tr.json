@@ -10,8 +10,7 @@
     "terms": "Koşullar"
   },
   "hero": {
-    "badge": "%100 Ücretsiz ve Güvenli Online PDF Paketi",
-    "title": "PDF dosyalarıyla çalışmanın en tatlı yolu.",
+    "title": "PDF dosyalarıyla çalışmanın <span>en güvenli</span> yolu.",
     "subtitle": "Kayıt olmadan, sınır olmadan belgelerinizi saniyeler içinde dönüştürün, birleştirin ve düzenleyin.",
     "dropzone_title": "Dosyaları buraya sürükleyip bırakın",
     "dropzone_subtitle": "PDF, Word, Excel, PowerPoint veya Görseller desteklenir",
@@ -95,6 +94,14 @@
     "repair": {
       "title": "PDF Onar",
       "description": "Bozulmuş veya açılamayan hasarlı PDF dosyalarını tamir edin."
+    },
+    "rotate": {
+      "title": "PDF Döndür",
+      "description": "Tüm sayfaları veya seçtiğiniz açıda (90°, 180°, 270°) kalıcı olarak döndürün."
+    },
+    "metadata": {
+      "title": "Meta Veri Temizle",
+      "description": "Yazar, başlık ve oluşturucu gibi gizli meta verileri belgeden tamamen kazıyın."
     }
   },
   "workspace": {
@@ -149,5 +156,9 @@
     "cookies_body": "<p><strong>1. Zorunlu Tercihler:</strong> Pödüfü.online yalnızca platformun doğru çalışabilmesi ve tema tercihinizin (Açık/Koyu Mod) hatırlanabilmesi için yerel tarayıcı depolamasını (localStorage) kullanır.</p><br><p><strong>2. Takip Çerezi Yoktur:</strong> Sitemizde kişisel verilerinizi toplayan, kimliğinizi tespit eden veya sizi web genelinde takip eden agresif üçüncü taraf reklam takip çerezleri kullanılmaz.</p>",
     "contact_title": "İletişim & Topluluk",
     "contact_body": "<p>Pödüfü.online, <strong>MeadSocial</strong> topluluğu için geliştirilmiş bağımsız bir projedir.</p><br><p>Görüş, öneri, hata bildirimi veya iş birliği talepleriniz için topluluk kanallarımızdan bize ulaşabilirsiniz:</p><br><p>🌐 <strong>Topluluk:</strong> @meadsocial</p><p>✉️ <strong>E-Posta:</strong> iletisim@meadsocial.com</p>"
+  },
+  "tab": {
+    "processing": "⏳ Dosyanız işleniyor...",
+    "ready": "✅ Belgeniz Hazır!"
   }
 }

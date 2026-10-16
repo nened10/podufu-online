@@ -30,7 +30,7 @@ const dropzone = document.getElementById("dropzone");
 const fileInput = document.getElementById("file-input");
 const fileList = document.getElementById("file-list");
 const toolOptions = document.getElementById("tool-options");
-const pageGridContainer = document.getElementById("page-grid-container");
+const pageGridContainer = document.getElementById("page-grid-container") || document.getElementById("organize-container");
 const pageGrid = document.getElementById("page-grid");
 const actionSubmitBtn = document.getElementById("action-submit-btn");
 const submitBtnText = document.getElementById("submit-btn-text");
@@ -80,7 +80,8 @@ const ICONS = {
   rotate: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6"/><path d="M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>`,
   arrowLeft: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>`,
   arrowRight: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`,
-  check: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>`
+  check: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>`,
+  "shield-check": `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>`
 };
 
 const CATEGORY_NAMES = {
@@ -90,6 +91,31 @@ const CATEGORY_NAMES = {
   security: "Güvenlik",
   edit: "Düzenle"
 };
+
+// ============================================================
+// Dynamic Tab Title Engine (Clean "Pödüfü 💜" + Status Updates)
+// ============================================================
+const BASE_TAB_TITLE = "Pödüfü 💜";
+let tabTitleTimer = null;
+
+function updateTabTitle(status) {
+  if (tabTitleTimer) {
+    clearTimeout(tabTitleTimer);
+    tabTitleTimer = null;
+  }
+  if (status === "processing") {
+    const msg = currentLocale?.tab?.processing || "⏳ Dosyanız işleniyor...";
+    document.title = `${msg} | ${BASE_TAB_TITLE}`;
+  } else if (status === "ready") {
+    const msg = currentLocale?.tab?.ready || "✅ Belgeniz Hazır!";
+    document.title = `${msg} | ${BASE_TAB_TITLE}`;
+    tabTitleTimer = setTimeout(() => {
+      document.title = BASE_TAB_TITLE;
+    }, 6000);
+  } else {
+    document.title = BASE_TAB_TITLE;
+  }
+}
 
 // ============================================================
 // i18n & Localization Engine
@@ -171,18 +197,16 @@ function updateLanguageUI(lang) {
 function applyTranslations(loc) {
   if (!loc) return;
 
-  // Page title
-  if (loc.meta?.title) document.title = loc.meta.title;
+  // Tab title is strictly kept as Pödüfü 💜
+  document.title = BASE_TAB_TITLE;
 
   // Hero
-  const heroBadge = document.getElementById("hero-badge");
   const heroTitle = document.getElementById("hero-title");
   const heroSubtitle = document.getElementById("hero-subtitle");
   const heroDropTitle = document.getElementById("hero-dropzone-title");
   const heroDropSub = document.getElementById("hero-dropzone-subtitle");
   const searchInp = document.getElementById("search-input");
 
-  if (heroBadge && loc.hero?.badge) heroBadge.textContent = loc.hero.badge;
   if (heroTitle && loc.hero?.title) heroTitle.innerHTML = loc.hero.title;
   if (heroSubtitle && loc.hero?.subtitle) heroSubtitle.textContent = loc.hero.subtitle;
   if (heroDropTitle && loc.hero?.dropzone_title) heroDropTitle.textContent = loc.hero.dropzone_title;
@@ -391,8 +415,8 @@ function openToolModal(tool) {
   workspaceBody.style.display = "block";
   workspaceFooter.style.display = "flex";
   resultScreen.style.display = "none";
-  pageGridContainer.style.display = "none";
-  pageGrid.innerHTML = "";
+  if (pageGridContainer) pageGridContainer.style.display = "none";
+  if (pageGrid) pageGrid.innerHTML = "";
   fileList.innerHTML = "";
   actionSubmitBtn.disabled = true;
   submitBtnText.textContent = "İşlemi Başlat";
@@ -536,6 +560,28 @@ function renderToolOptions(tool) {
         </div>
       </div>
     `;
+  } else if (tool.id === "rotate") {
+    toolOptions.style.display = "flex";
+    toolOptions.innerHTML = `
+      <div class="form-group">
+        <label>Döndürme Açısı:</label>
+        <div class="btn-group">
+          <button type="button" class="btn-option active" onclick="setOptionActive(this, 'rotate-angle', '90')">90° Sağ</button>
+          <button type="button" class="btn-option" onclick="setOptionActive(this, 'rotate-angle', '180')">180° Ters</button>
+          <button type="button" class="btn-option" onclick="setOptionActive(this, 'rotate-angle', '270')">90° Sol (270°)</button>
+        </div>
+        <input type="hidden" id="rotate-angle" value="90">
+      </div>
+    `;
+  } else if (tool.id === "metadata") {
+    toolOptions.style.display = "flex";
+    toolOptions.innerHTML = `
+      <div class="form-group" style="background: rgba(91, 92, 229, 0.06); padding: 0.85rem; border-radius: 8px; border: 1px dashed var(--brand-primary);">
+        <p style="margin: 0; font-size: 0.88rem; color: var(--text-primary); font-weight: 500;">
+          🛡️ Belgenizdeki Yazar (Author), Başlık (Title), Konu (Subject), Program Bilgisi (Producer) ve Zaman Damgaları kalıcı olarak silinecektir.
+        </p>
+      </div>
+    `;
   }
 }
 
@@ -619,8 +665,8 @@ function removeFile(index) {
 
 // Setup Page Grid for 'organize' tool
 async function setupOrganizeGrid(file) {
-  pageGridContainer.style.display = "block";
-  pageGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-secondary); padding: 1rem;">Sayfalar taranıyor ve önizlemeler yükleniyor...</p>`;
+  if (pageGridContainer) pageGridContainer.style.display = "block";
+  if (pageGrid) pageGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-secondary); padding: 1rem;">Sayfalar taranıyor ve önizlemeler yükleniyor...</p>`;
 
   const formData = new FormData();
   formData.append("file", file);
@@ -736,7 +782,7 @@ function handleHeroFile(file) {
   quickFileName.textContent = file.name;
   quickActionButtons.innerHTML = "";
 
-  const popularToolIds = ["compress", "pdf-to-word", "split", "organize", "pdf-to-images", "protect", "watermark", "page-numbers"];
+  const popularToolIds = ["compress", "pdf-to-word", "split", "organize", "rotate", "metadata", "pdf-to-images", "protect", "watermark", "page-numbers"];
   popularToolIds.forEach(id => {
     const t = allTools.find(tool => tool.id === id);
     if (t) {
@@ -805,6 +851,12 @@ function submitOperation() {
       formData.append("file", selectedFiles[0]);
       formData.append("img_format", document.getElementById("img-format").value);
       formData.append("dpi", document.getElementById("img-dpi").value);
+    } else if (activeTool.id === "rotate") {
+      formData.append("file", selectedFiles[0]);
+      const angle = document.getElementById("rotate-angle") ? document.getElementById("rotate-angle").value : "90";
+      formData.append("angle", angle);
+    } else if (activeTool.id === "metadata") {
+      formData.append("file", selectedFiles[0]);
     } else {
       formData.append("file", selectedFiles[0]);
     }
@@ -864,6 +916,7 @@ function processQueue() {
 
   activeTask = next;
   activeTask.status = "uploading";
+  updateTabTitle("processing");
   renderQueueDock();
 
   // If modal is currently displaying this tool
@@ -891,6 +944,7 @@ function processQueue() {
 
   xhr.upload.onload = () => {
     activeTask.status = "processing";
+    updateTabTitle("processing");
     if (workspaceOverlay.classList.contains("active") && activeTool?.id === activeTask.toolId) {
       progressStatusLabel.textContent = "İşleniyor...";
       progressPercentageLabel.textContent = "";
@@ -917,6 +971,7 @@ function processQueue() {
       activeTask.progress = 100;
       activeTask.downloadUrl = downloadUrl;
       activeTask.downloadName = filename;
+      updateTabTitle("ready");
 
       // Send conversion_success telemetry
       const duration = activeTask.startTime ? parseFloat(((performance.now() - activeTask.startTime) / 1000).toFixed(2)) : 0;
@@ -942,6 +997,7 @@ function processQueue() {
       showToast(`${filename} hazır, indirildi!`, "success");
     } else {
       activeTask.status = "error";
+      updateTabTitle("idle");
       showToast("İşlem sırasında sunucu hatası oluştu.", "error");
     }
 
@@ -952,6 +1008,7 @@ function processQueue() {
 
   xhr.onerror = () => {
     activeTask.status = "error";
+    updateTabTitle("idle");
     showToast("Bağlantı hatası oluştu.", "error");
     activeTask = null;
     renderQueueDock();

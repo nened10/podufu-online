@@ -119,3 +119,32 @@ def organize_and_rotate_pages(file_path: Path, page_instructions: list[dict], ou
     with open(output_path, "wb") as f_out:
         writer.write(f_out)
     return output_path
+
+def rotate_all_pages(file_path: Path, angle: int, output_path: Path) -> Path:
+    """Rotates all pages in the PDF by angle degrees (90, 180, 270)."""
+    doc = fitz.open(str(file_path))
+    for page in doc:
+        page.set_rotation((page.rotation + angle) % 360)
+    doc.save(str(output_path), garbage=3, deflate=True)
+    doc.close()
+    return output_path
+
+def strip_pdf_metadata(file_path: Path, output_path: Path) -> Path:
+    """Scans and scrubs all author, producer, title, and tracking metadata."""
+    doc = fitz.open(str(file_path))
+    empty_meta = {
+        "title": "",
+        "author": "",
+        "subject": "",
+        "keywords": "",
+        "creator": "",
+        "producer": "",
+        "creationDate": "",
+        "modDate": "",
+        "trapped": ""
+    }
+    doc.set_metadata(empty_meta)
+    doc.save(str(output_path), garbage=4, clean=True, deflate=True)
+    doc.close()
+    return output_path
+
