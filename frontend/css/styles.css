@@ -337,6 +337,8 @@ body {
   position: relative;
   overflow: hidden;
   box-shadow: var(--shadow-card);
+  text-decoration: none;
+  color: inherit;
 }
 
 .tool-card:hover {

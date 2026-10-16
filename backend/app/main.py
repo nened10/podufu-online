@@ -58,45 +58,132 @@ async def client_telemetry_beacon(request: Request):
         pass
     return Response(status_code=204)
 
-# Multi-language i18n & Global SEO Routing (9 languages)
+# Multi-language i18n & Global SEO Routing (9 languages x 19 tools)
 SUPPORTED_LANGS = {"en", "de", "es", "fr", "pt", "tr", "ru", "ja", "ar"}
+VALID_TOOL_IDS = {
+    "merge", "split", "organize", "compress",
+    "word-to-pdf", "ppt-to-pdf", "excel-to-pdf", "pdf-to-word",
+    "images-to-pdf", "pdf-to-images", "pdf-to-text",
+    "protect", "unlock", "watermark", "page-numbers",
+    "redact", "repair", "rotate", "metadata"
+}
+
 LOCALES_DIR = FRONTEND_DIR / "locales"
 INDEX_HTML_PATH = FRONTEND_DIR / "index.html"
 
-def render_localized_index(lang: str = "en") -> HTMLResponse:
+def render_localized_index(lang: str = "en", tool_id: str | None = None) -> HTMLResponse:
     if not INDEX_HTML_PATH.exists():
         raise HTTPException(status_code=404, detail="Index file not found")
         
     html = INDEX_HTML_PATH.read_text(encoding="utf-8")
-    
+    if lang not in SUPPORTED_LANGS:
+        lang = "en"
+        
     locale_file = LOCALES_DIR / f"{lang}.json"
     if locale_file.exists():
         try:
             with open(locale_file, "r", encoding="utf-8") as f:
                 loc = json.load(f)
-                meta_title = loc.get("meta", {}).get("title", "Pödüfü 💜")
-                meta_desc = loc.get("meta", {}).get("description", "")
                 
-                # Replace html lang & title
-                html = html.replace('<html lang="en"', f'<html lang="{lang}"')
-                html = html.replace('<title>Pödüfü 💜</title>', f'<title>{meta_title}</title>')
-                
-                # Canonical & hreflang injections for all 9 languages
-                hreflang_tags = f'''  <meta name="description" content="{meta_desc}">
-  <link rel="canonical" href="https://podufu.onrender.com/{lang}/" />
-  <link rel="alternate" hreflang="en" href="https://podufu.onrender.com/en/" />
-  <link rel="alternate" hreflang="de" href="https://podufu.onrender.com/de/" />
-  <link rel="alternate" hreflang="es" href="https://podufu.onrender.com/es/" />
-  <link rel="alternate" hreflang="fr" href="https://podufu.onrender.com/fr/" />
-  <link rel="alternate" hreflang="pt" href="https://podufu.onrender.com/pt/" />
-  <link rel="alternate" hreflang="tr" href="https://podufu.onrender.com/tr/" />
-  <link rel="alternate" hreflang="ru" href="https://podufu.onrender.com/ru/" />
-  <link rel="alternate" hreflang="ja" href="https://podufu.onrender.com/ja/" />
-  <link rel="alternate" hreflang="ar" href="https://podufu.onrender.com/ar/" />
-  <link rel="alternate" hreflang="x-default" href="https://podufu.onrender.com/en/" />'''
-                html = html.replace('<!-- SEO_HREFLANG_PLACEHOLDER -->', hreflang_tags)
-        except Exception:
-            pass
+                if tool_id and tool_id in VALID_TOOL_IDS:
+                    tool_data = loc.get("tools", {}).get(tool_id, {})
+                    tool_title = tool_data.get("title", tool_id)
+                    tool_desc = tool_data.get("description", "")
+                    
+                    page_title = f"{tool_title} - Pödüfü 💜"
+                    page_desc = f"{tool_title}: {tool_desc} - 100% Free, Private & Secure Online PDF Tools."
+                    canonical_url = f"https://podufu.onrender.com/{lang}/{tool_id}"
+                    
+                    html = html.replace('<html lang="en"', f'<html lang="{lang}"')
+                    html = html.replace('<title>Pödüfü 💜</title>', f'<title>{page_title}</title>')
+                    
+                    hreflang_lines = [f'  <meta name="description" content="{page_desc}">']
+                    hreflang_lines.append(f'  <link rel="canonical" href="{canonical_url}" />')
+                    for l in ["en", "de", "es", "fr", "pt", "tr", "ru", "ja", "ar"]:
+                        hreflang_lines.append(f'  <link rel="alternate" hreflang="{l}" href="https://podufu.onrender.com/{l}/{tool_id}" />')
+                    hreflang_lines.append(f'  <link rel="alternate" hreflang="x-default" href="https://podufu.onrender.com/en/{tool_id}" />')
+                    
+                    tool_schema = f'''  <script type="application/ld+json">
+  {{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Pödüfü",
+        "item": "https://podufu.onrender.com/{lang}/"
+      }},
+      {{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "{tool_title}",
+        "item": "{canonical_url}"
+      }}
+    ]
+  }}
+  </script>
+  <script type="application/ld+json">
+  {{
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "{tool_title} | Pödüfü",
+    "url": "{canonical_url}",
+    "description": "{tool_desc}",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "offers": {{
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }}
+  }}
+  </script>'''
+                    hreflang_lines.append(tool_schema)
+                    html = html.replace('<!-- SEO_HREFLANG_PLACEHOLDER -->', "\n".join(hreflang_lines))
+                    html = html.replace('content="https://podufu.onrender.com/"', f'content="{canonical_url}"')
+                    html = html.replace('content="Pödüfü 💜 - 100% Free, Secure & Fast Online PDF Tools"', f'content="{page_title}"')
+                    html = html.replace('content="Merge, split, compress, convert, protect, unlock and edit PDFs online for free. Fast, 100% private with no file size limits."', f'content="{page_desc}"')
+                else:
+                    meta_title = loc.get("meta", {}).get("title", "Pödüfü 💜")
+                    meta_desc = loc.get("meta", {}).get("description", "")
+                    canonical_url = f"https://podufu.onrender.com/{lang}/"
+                    
+                    html = html.replace('<html lang="en"', f'<html lang="{lang}"')
+                    html = html.replace('<title>Pödüfü 💜</title>', f'<title>{meta_title}</title>')
+                    
+                    hreflang_lines = [f'  <meta name="description" content="{meta_desc}">']
+                    hreflang_lines.append(f'  <link rel="canonical" href="{canonical_url}" />')
+                    for l in ["en", "de", "es", "fr", "pt", "tr", "ru", "ja", "ar"]:
+                        hreflang_lines.append(f'  <link rel="alternate" hreflang="{l}" href="https://podufu.onrender.com/{l}/" />')
+                    hreflang_lines.append(f'  <link rel="alternate" hreflang="x-default" href="https://podufu.onrender.com/en/" />')
+                    
+                    top_tools = ["merge", "compress", "pdf-to-word", "word-to-pdf", "split", "protect", "rotate", "metadata"]
+                    sitelinks_items = []
+                    for idx, t_id in enumerate(top_tools, start=1):
+                        t_name = loc.get("tools", {}).get(t_id, {}).get("title", t_id)
+                        sitelinks_items.append(f'''      {{
+        "@type": "SiteNavigationElement",
+        "position": {idx},
+        "name": "{t_name}",
+        "url": "https://podufu.onrender.com/{lang}/{t_id}"
+      }}''')
+                    
+                    sitelinks_schema = f'''  <script type="application/ld+json">
+  {{
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Pödüfü PDF Tools",
+    "itemListElement": [
+{",\n".join(sitelinks_items)}
+    ]
+  }}
+  </script>'''
+                    hreflang_lines.append(sitelinks_schema)
+                    html = html.replace('<!-- SEO_HREFLANG_PLACEHOLDER -->', "\n".join(hreflang_lines))
+                    html = html.replace('content="https://podufu.onrender.com/"', f'content="{canonical_url}"')
+        except Exception as e:
+            print("Localization injection error:", e)
 
     return HTMLResponse(content=html, media_type="text/html")
 
@@ -112,7 +199,15 @@ async def robots_txt():
 async def sitemap_xml():
     p = FRONTEND_DIR / "sitemap.xml"
     if p.exists():
-        return FileResponse(p, media_type="application/xml")
+        content = p.read_bytes()
+        return Response(
+            content=content,
+            media_type="application/xml; charset=utf-8",
+            headers={
+                "X-Content-Type-Options": "nosniff",
+                "Cache-Control": "public, max-age=3600"
+            }
+        )
     raise HTTPException(status_code=404)
 
 @app.get("/llms.txt")
@@ -132,14 +227,29 @@ async def root_index(request: Request):
             break
     return render_localized_index(detected)
 
-@app.get("/{lang}")
-@app.get("/{lang}/")
-async def lang_index(lang: str):
-    if lang in SUPPORTED_LANGS:
-        return render_localized_index(lang)
-    static_file = FRONTEND_DIR / lang
+@app.get("/{lang_or_tool}")
+@app.get("/{lang_or_tool}/")
+async def lang_or_tool_index(lang_or_tool: str, request: Request):
+    if lang_or_tool in SUPPORTED_LANGS:
+        return render_localized_index(lang_or_tool)
+    if lang_or_tool in VALID_TOOL_IDS:
+        accept_lang = request.headers.get("accept-language", "").lower()
+        detected = "en"
+        for l in ["de", "es", "fr", "pt", "tr", "ru", "ja", "ar"]:
+            if accept_lang.startswith(l) or f",{l}" in accept_lang or f";{l}" in accept_lang:
+                detected = l
+                break
+        return render_localized_index(detected, tool_id=lang_or_tool)
+    static_file = FRONTEND_DIR / lang_or_tool
     if static_file.is_file():
         return FileResponse(static_file)
+    raise HTTPException(status_code=404)
+
+@app.get("/{lang}/{tool}")
+@app.get("/{lang}/{tool}/")
+async def localized_tool_index(lang: str, tool: str):
+    if lang in SUPPORTED_LANGS and tool in VALID_TOOL_IDS:
+        return render_localized_index(lang, tool_id=tool)
     raise HTTPException(status_code=404)
 
 # Mount static subdirectories

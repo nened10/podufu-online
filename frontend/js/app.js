@@ -307,6 +307,40 @@ async function init() {
   await setupLanguage();
   setupEventListeners();
   await loadTools();
+  checkDeepLinkTool();
+  window.addEventListener("popstate", handlePopState);
+}
+
+function checkDeepLinkTool() {
+  const segments = window.location.pathname.split("/").filter(Boolean);
+  let targetId = null;
+  if (segments.length >= 2 && LANG_CONFIG[segments[0]]) {
+    targetId = segments[1];
+  } else if (segments.length === 1 && !LANG_CONFIG[segments[0]]) {
+    targetId = segments[0];
+  }
+  if (targetId) {
+    const tool = allTools.find(t => t.id === targetId);
+    if (tool) {
+      openToolModal(tool, false);
+    }
+  }
+}
+
+function handlePopState() {
+  const segments = window.location.pathname.split("/").filter(Boolean);
+  let targetId = null;
+  if (segments.length >= 2 && LANG_CONFIG[segments[0]]) {
+    targetId = segments[1];
+  } else if (segments.length === 1 && !LANG_CONFIG[segments[0]]) {
+    targetId = segments[0];
+  }
+  if (targetId) {
+    const tool = allTools.find(t => t.id === targetId);
+    if (tool) openToolModal(tool, false);
+  } else {
+    closeModal(false);
+  }
 }
 
 // Fetch Tools Catalog
@@ -340,11 +374,15 @@ function renderTools(tools) {
   }
 
   tools.forEach(tool => {
-    const card = document.createElement("div");
+    const card = document.createElement("a");
     card.className = "tool-card";
+    card.href = `/${currentLang}/${tool.id}`;
 
     // Direct click handler
-    card.onclick = () => openToolModal(tool);
+    card.onclick = (e) => {
+      e.preventDefault();
+      openToolModal(tool);
+    };
 
     // DIRECT DESKTOP DRAG & DROP ONTO THIS CARD!
     card.addEventListener("dragover", (e) => {
@@ -400,11 +438,17 @@ function filterTools() {
 }
 
 // Open Workspace Modal for Tool
-function openToolModal(tool) {
+function openToolModal(tool, updateHistory = true) {
   activeTool = tool;
   selectedFiles = [];
   organizePages = [];
   activeJobId = null;
+
+  if (updateHistory) {
+    try {
+      window.history.pushState({ toolId: tool.id }, "", `/${currentLang}/${tool.id}`);
+    } catch (_) {}
+  }
 
   modalTitle.textContent = tool.title;
   modalIcon.innerHTML = ICONS[tool.icon] || ICONS.combine;
@@ -434,11 +478,19 @@ function openToolModal(tool) {
 }
 
 // Close Modal
-function closeModal() {
+function closeModal(updateHistory = true) {
   workspaceOverlay.classList.remove("active");
   activeTool = null;
   selectedFiles = [];
   organizePages = [];
+  if (updateHistory) {
+    try {
+      window.history.pushState({}, "", `/${currentLang}/`);
+    } catch (_) {}
+  }
+  if (!activeTask && !taskQueue.some(t => t.status === "processing" || t.status === "uploading")) {
+    updateTabTitle("idle");
+  }
 }
 
 // Render Options Panel per Tool (Clean & Minimalist)
@@ -1194,7 +1246,11 @@ function setupEventListeners() {
         const selected = opt.getAttribute("data-lang");
         if (selected && selected !== currentLang) {
           localStorage.setItem("podufu_lang", selected);
-          window.location.href = `/${selected}/`;
+          if (activeTool) {
+            window.location.href = `/${selected}/${activeTool.id}`;
+          } else {
+            window.location.href = `/${selected}/`;
+          }
         }
       });
     });
