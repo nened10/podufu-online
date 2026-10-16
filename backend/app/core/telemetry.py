@@ -13,6 +13,7 @@ _lock = Lock()
 # Mode 1: Supabase REST API (Free & Zero extra pip drivers required)
 SUPABASE_URL = os.getenv("SUPABASE_URL", "").rstrip("/")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY", "")
+SUPABASE_TABLE = os.getenv("SUPABASE_TABLE", "podufu_telemetry")
 
 # Mode 2: Generic Cloud Webhook or Telemetry Ingest URL
 TELEMETRY_WEBHOOK_URL = os.getenv("TELEMETRY_WEBHOOK_URL", "")
@@ -44,7 +45,7 @@ def _sync_to_cloud_database_async(tool_id: str, file_size_bytes: int):
         try:
             # 1. Supabase REST API support
             if SUPABASE_URL and SUPABASE_KEY:
-                endpoint = f"{SUPABASE_URL}/rest/v1/telemetry_events"
+                endpoint = f"{SUPABASE_URL}/rest/v1/{SUPABASE_TABLE}"
                 payload = json.dumps({
                     "tool_id": tool_id,
                     "bytes_processed": file_size_bytes,
