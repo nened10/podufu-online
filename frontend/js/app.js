@@ -251,6 +251,11 @@ function applyTranslations(loc) {
   if (resetBtn && loc.workspace?.new_action_btn) resetBtn.textContent = loc.workspace.new_action_btn;
   if (secNote && loc.workspace?.secure_note) secNote.textContent = `🔒 ${loc.workspace.secure_note}`;
 
+  const globalDragTitle = document.getElementById("global-drag-title");
+  const globalDragSub = document.getElementById("global-drag-sub");
+  if (globalDragTitle && loc.workspace?.global_drag_title) globalDragTitle.textContent = loc.workspace.global_drag_title;
+  if (globalDragSub && loc.workspace?.global_drag_sub) globalDragSub.textContent = loc.workspace.global_drag_sub;
+
   // SEO Section
   const seoH = document.getElementById("seo-heading");
   const seoP1 = document.getElementById("seo-p1");
@@ -462,8 +467,13 @@ function openToolModal(tool, updateHistory = true) {
   if (pageGridContainer) pageGridContainer.style.display = "none";
   if (pageGrid) pageGrid.innerHTML = "";
   fileList.innerHTML = "";
+  fileList.style.display = "none";
+  dropzone.style.display = "block";
+  const dropTitle = document.getElementById("workspace-drop-title");
+  if (dropTitle) dropTitle.textContent = currentLocale?.workspace?.drop_prompt || "Dosyaları buraya sürükleyin veya göz atmak için tıklayın";
+
   actionSubmitBtn.disabled = true;
-  submitBtnText.textContent = "İşlemi Başlat";
+  submitBtnText.textContent = currentLocale?.workspace?.start_btn || "İşlemi Başlat";
   submitSpinner.style.display = "none";
 
   if (progressContainer) {
@@ -658,14 +668,13 @@ async function handleFiles(files) {
   const newFiles = Array.from(files);
   if (!newFiles.length) return;
 
-  if (activeTool.multiple_files) {
+  if (activeTool && activeTool.multiple_files) {
     selectedFiles.push(...newFiles);
   } else {
     selectedFiles = [newFiles[0]];
   }
 
   renderFileList();
-  actionSubmitBtn.disabled = selectedFiles.length === 0;
 
   if (window.podufuTelemetry && selectedFiles.length > 0) {
     const f = selectedFiles[0];
@@ -676,39 +685,116 @@ async function handleFiles(files) {
     });
   }
 
-  if (activeTool.id === "organize" && selectedFiles.length > 0) {
+  if (activeTool && activeTool.id === "organize" && selectedFiles.length > 0) {
     await setupOrganizeGrid(selectedFiles[0]);
   }
 }
 
 function renderFileList() {
   fileList.innerHTML = "";
-  selectedFiles.forEach((file, index) => {
-    const item = document.createElement("div");
-    item.className = "file-item";
-    const sizeStr = (file.size / 1024 / 1024).toFixed(2) + " MB";
 
+  if (!selectedFiles || selectedFiles.length === 0) {
+    fileList.style.display = "none";
+    dropzone.style.display = "block";
+    const dropTitle = document.getElementById("workspace-drop-title");
+    if (dropTitle) dropTitle.textContent = currentLocale?.workspace?.drop_prompt || "Dosyaları buraya sürükleyin veya göz atmak için tıklayın";
+    actionSubmitBtn.disabled = true;
+    submitBtnText.textContent = currentLocale?.workspace?.start_btn || "İşlemi Başlat";
+    return;
+  }
+
+  fileList.style.display = "flex";
+
+  if (activeTool && !activeTool.multiple_files) {
+    // Single-file tool: hide dropzone so user never feels like it's asking for a file again
+    dropzone.style.display = "none";
+
+    const file = selectedFiles[0];
+    const sizeStr = (file.size / 1024 / 1024).toFixed(2) + " MB";
+    const item = document.createElement("div");
+    item.className = "file-item selected-file-card";
     item.innerHTML = `
       <div class="file-info">
-        <span style="color: var(--brand-primary);">${ICONS["file-text"]}</span>
-        <div>
-          <div class="file-name">${file.name}</div>
+        <div class="file-item-icon">
+          ${ICONS["file-text"] || ""}
+        </div>
+        <div class="file-meta">
+          <div class="file-name-row">
+            <span class="file-name" title="${file.name}">${file.name}</span>
+            <span class="file-badge-success">${currentLocale?.workspace?.file_uploaded || "✓ Yüklendi"}</span>
+          </div>
           <div class="file-size">${sizeStr}</div>
         </div>
       </div>
-      <button class="remove-file-btn" onclick="removeFile(${index})" title="Kaldır">
-        ${ICONS.trash}
-      </button>
+      <div class="file-actions">
+        <button type="button" class="btn-change-file" onclick="changeSelectedFile()" title="Başka dosya seç">
+          ${ICONS.rotate || ""} <span>${currentLocale?.workspace?.change_file || "Değiştir"}</span>
+        </button>
+        <button type="button" class="remove-file-btn" onclick="removeFile(0)" title="${currentLocale?.workspace?.remove_file || "Kaldır"}">
+          ${ICONS.trash || ""}
+        </button>
+      </div>
     `;
     fileList.appendChild(item);
-  });
+    actionSubmitBtn.disabled = false;
+    submitBtnText.textContent = currentLocale?.workspace?.start_btn || "İşlemi Başlat";
+  } else {
+    // Multi-file tool (merge, images-to-pdf)
+    dropzone.style.display = "block";
+    const dropTitle = document.getElementById("workspace-drop-title");
+    if (dropTitle) dropTitle.textContent = currentLocale?.workspace?.add_more_files || "+ Başka Dosyalar Ekleyin veya Sürükleyin";
+
+    selectedFiles.forEach((file, index) => {
+      const item = document.createElement("div");
+      item.className = "file-item";
+      const sizeStr = (file.size / 1024 / 1024).toFixed(2) + " MB";
+      item.innerHTML = `
+        <div class="file-info">
+          <span class="file-index-badge">#${index + 1}</span>
+          <div class="file-meta">
+            <div class="file-name" title="${file.name}">${file.name}</div>
+            <div class="file-size">${sizeStr}</div>
+          </div>
+        </div>
+        <div class="file-actions">
+          ${index > 0 ? `<button type="button" class="btn-icon-sm" onclick="moveSelectedFile(${index}, -1)" title="Yukarı Taşı">${ICONS.arrowLeft || "↑"}</button>` : ""}
+          ${index < selectedFiles.length - 1 ? `<button type="button" class="btn-icon-sm" onclick="moveSelectedFile(${index}, 1)" title="Aşağı Taşı">${ICONS.arrowRight || "↓"}</button>` : ""}
+          <button type="button" class="remove-file-btn" onclick="removeFile(${index})" title="${currentLocale?.workspace?.remove_file || "Kaldır"}">
+            ${ICONS.trash || ""}
+          </button>
+        </div>
+      `;
+      fileList.appendChild(item);
+    });
+
+    if (activeTool?.id === "merge") {
+      actionSubmitBtn.disabled = selectedFiles.length < 2;
+      submitBtnText.textContent = selectedFiles.length < 2 ? "En Az 2 PDF Ekleyin" : (currentLocale?.workspace?.start_btn || "İşlemi Başlat");
+    } else {
+      actionSubmitBtn.disabled = selectedFiles.length === 0;
+      submitBtnText.textContent = currentLocale?.workspace?.start_btn || "İşlemi Başlat";
+    }
+  }
+}
+
+function changeSelectedFile() {
+  fileInput.value = "";
+  fileInput.click();
+}
+
+function moveSelectedFile(index, dir) {
+  const target = index + dir;
+  if (target < 0 || target >= selectedFiles.length) return;
+  const temp = selectedFiles[index];
+  selectedFiles[index] = selectedFiles[target];
+  selectedFiles[target] = temp;
+  renderFileList();
 }
 
 function removeFile(index) {
   selectedFiles.splice(index, 1);
   renderFileList();
-  actionSubmitBtn.disabled = selectedFiles.length === 0;
-  if (activeTool.id === "organize") {
+  if (activeTool && activeTool.id === "organize") {
     pageGridContainer.style.display = "none";
     pageGrid.innerHTML = "";
     organizePages = [];
@@ -834,7 +920,12 @@ function handleHeroFile(file) {
   quickFileName.textContent = file.name;
   quickActionButtons.innerHTML = "";
 
-  const popularToolIds = ["compress", "pdf-to-word", "split", "organize", "rotate", "metadata", "pdf-to-images", "protect", "watermark", "page-numbers"];
+  const popularToolIds = [
+    "split", "compress", "organize", "pdf-to-word",
+    "pdf-to-images", "pdf-to-text", "rotate", "metadata",
+    "protect", "unlock", "watermark", "page-numbers",
+    "redact", "repair"
+  ];
   popularToolIds.forEach(id => {
     const t = allTools.find(tool => tool.id === id);
     if (t) {
@@ -1050,7 +1141,26 @@ function processQueue() {
     } else {
       activeTask.status = "error";
       updateTabTitle("idle");
-      showToast("İşlem sırasında sunucu hatası oluştu.", "error");
+      if (workspaceOverlay.classList.contains("active") && activeTool?.id === activeTask.toolId) {
+        actionSubmitBtn.disabled = false;
+        submitSpinner.style.display = "none";
+        submitBtnText.textContent = currentLocale?.workspace?.retry_btn || "Tekrar Dene";
+        if (progressContainer) progressContainer.style.display = "none";
+      }
+      try {
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            const err = JSON.parse(reader.result);
+            showToast(err.detail || "İşlem sırasında hata oluştu.", "error");
+          } catch (_) {
+            showToast("İşlem sırasında sunucu hatası oluştu.", "error");
+          }
+        };
+        reader.readAsText(xhr.response);
+      } catch (_) {
+        showToast("İşlem sırasında sunucu hatası oluştu.", "error");
+      }
     }
 
     activeTask = null;
@@ -1061,6 +1171,12 @@ function processQueue() {
   xhr.onerror = () => {
     activeTask.status = "error";
     updateTabTitle("idle");
+    if (workspaceOverlay.classList.contains("active") && activeTool?.id === activeTask.toolId) {
+      actionSubmitBtn.disabled = false;
+      submitSpinner.style.display = "none";
+      submitBtnText.textContent = currentLocale?.workspace?.retry_btn || "Tekrar Dene";
+      if (progressContainer) progressContainer.style.display = "none";
+    }
     showToast("Bağlantı hatası oluştu.", "error");
     activeTask = null;
     renderQueueDock();
@@ -1212,6 +1328,67 @@ function setupEventListeners() {
     if (e.dataTransfer && e.dataTransfer.files) {
       handleFiles(e.dataTransfer.files);
     }
+  });
+
+  // Full-Window Drag & Drop Events (Dragging anywhere on the browser window)
+  const globalDragOverlay = document.getElementById("global-drag-overlay");
+  let windowDragCounter = 0;
+
+  window.addEventListener("dragenter", (e) => {
+    e.preventDefault();
+    windowDragCounter++;
+    if (e.dataTransfer && e.dataTransfer.types && Array.from(e.dataTransfer.types).includes("Files")) {
+      if (globalDragOverlay) globalDragOverlay.classList.add("active");
+    }
+  });
+
+  window.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    if (e.dataTransfer) {
+      e.dataTransfer.dropEffect = "copy";
+    }
+  });
+
+  window.addEventListener("dragleave", (e) => {
+    e.preventDefault();
+    windowDragCounter--;
+    if (windowDragCounter <= 0) {
+      windowDragCounter = 0;
+      if (globalDragOverlay) globalDragOverlay.classList.remove("active");
+    }
+  });
+
+  window.addEventListener("drop", (e) => {
+    e.preventDefault();
+    windowDragCounter = 0;
+    if (globalDragOverlay) globalDragOverlay.classList.remove("active");
+
+    const files = e.dataTransfer ? e.dataTransfer.files : null;
+    if (!files || files.length === 0) return;
+
+    // 1. If workspace modal is open, feed files to active tool
+    if (workspaceOverlay && workspaceOverlay.classList.contains("active") && activeTool) {
+      handleFiles(files);
+      return;
+    }
+
+    // 2. Check if dropped directly over a specific tool card
+    const targetEl = document.elementFromPoint(e.clientX, e.clientY);
+    const toolCard = targetEl ? targetEl.closest(".tool-card") : null;
+    if (toolCard) {
+      const href = toolCard.getAttribute("href") || "";
+      const segments = href.split("/").filter(Boolean);
+      const toolId = segments[segments.length - 1];
+      const tool = allTools.find(t => t.id === toolId);
+      if (tool) {
+        openToolModal(tool);
+        handleFiles(files);
+        return;
+      }
+    }
+
+    // 3. Otherwise route to universal hero handler
+    handleHeroFile(files[0]);
   });
 
   // Close modals when clicking outside

@@ -114,7 +114,14 @@
     "ready_subtitle": "Der Vorgang wurde erfolgreich abgeschlossen. Sie können die Datei jetzt herunterladen.",
     "download_btn": "Datei herunterladen",
     "new_action_btn": "Neue Datei bearbeiten",
-    "secure_note": "Geschützt durch eine sichere Verbindung."
+    "secure_note": "Geschützt durch eine sichere Verbindung.",
+    "file_uploaded": "✓ Hochgeladen",
+    "change_file": "Ändern",
+    "remove_file": "Entfernen",
+    "add_more_files": "+ Weitere Dateien hinzufügen oder ablegen",
+    "retry_btn": "Erneut versuchen",
+    "global_drag_title": "Legen Sie Ihr Dokument hier ab 💜",
+    "global_drag_sub": "Pödüfü verarbeitet Ihre Datei sofort"
   },
   "queue": {
     "title_active": "Aufgaben ({count} aktiv)",

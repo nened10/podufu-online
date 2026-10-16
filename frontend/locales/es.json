@@ -114,7 +114,14 @@
     "ready_subtitle": "La operación se completó con éxito. Puedes descargar tu archivo ahora.",
     "download_btn": "Descargar archivo",
     "new_action_btn": "Procesar otro archivo",
-    "secure_note": "Protegido mediante conexión segura."
+    "secure_note": "Protegido mediante conexión segura.",
+    "file_uploaded": "✓ Subido",
+    "change_file": "Cambiar",
+    "remove_file": "Eliminar",
+    "add_more_files": "+ Añadir o arrastrar más archivos",
+    "retry_btn": "Reintentar",
+    "global_drag_title": "Suelta tu documento aquí 💜",
+    "global_drag_sub": "Pödüfü procesará tu archivo al instante"
   },
   "queue": {
     "title_active": "Tareas ({count} activas)",

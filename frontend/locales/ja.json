@@ -114,7 +114,14 @@
     "ready_subtitle": "処理が正常に完了しました。すぐにファイルをダウンロードできます。",
     "download_btn": "ファイルをダウンロード",
     "new_action_btn": "別のファイルを処理する",
-    "secure_note": "安全な暗号化通信で保護されています。"
+    "secure_note": "安全な暗号化通信で保護されています。",
+    "file_uploaded": "✓ アップロード完了",
+    "change_file": "変更",
+    "remove_file": "削除",
+    "add_more_files": "+ ファイルを追加またはドロップ",
+    "retry_btn": "再試行",
+    "global_drag_title": "ここにファイルをドロップしてください 💜",
+    "global_drag_sub": "Pödüfüがすぐにファイルを処理します"
   },
   "queue": {
     "title_active": "タスク ({count}件 実行中)",

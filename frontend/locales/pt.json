@@ -114,7 +114,14 @@
     "ready_subtitle": "A operação foi concluída com sucesso. Você já pode baixar seu arquivo.",
     "download_btn": "Baixar arquivo",
     "new_action_btn": "Processar outro arquivo",
-    "secure_note": "Protegido por conexão segura criptografada."
+    "secure_note": "Protegido por conexão segura criptografada.",
+    "file_uploaded": "✓ Carregado",
+    "change_file": "Alterar",
+    "remove_file": "Remover",
+    "add_more_files": "+ Adicionar ou arrastar mais arquivos",
+    "retry_btn": "Tentar novamente",
+    "global_drag_title": "Solte seu documento aqui 💜",
+    "global_drag_sub": "O Pödüfü processará seu arquivo instantaneamente"
   },
   "queue": {
     "title_active": "Tarefas ({count} ativas)",

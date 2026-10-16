@@ -114,7 +114,14 @@
     "ready_subtitle": "İşleminiz başarıyla tamamlandı. Dosyanızı hemen indirebilirsiniz.",
     "download_btn": "Dosyayı İndir",
     "new_action_btn": "Yeni İşlem Yap",
-    "secure_note": "Güvenli bağlantı ile korunmaktadır."
+    "secure_note": "Güvenli bağlantı ile korunmaktadır.",
+    "file_uploaded": "✓ Yüklendi",
+    "change_file": "Değiştir",
+    "remove_file": "Kaldır",
+    "add_more_files": "+ Başka Dosyalar Ekleyin veya Sürükleyin",
+    "retry_btn": "Tekrar Dene",
+    "global_drag_title": "Belgenizi buraya bırakın 💜",
+    "global_drag_sub": "Pödüfü belgenizi anında işleme alsın"
   },
   "queue": {
     "title_active": "İşlemler ({count} aktif)",

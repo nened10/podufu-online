@@ -114,7 +114,14 @@
     "ready_subtitle": "اكتملت العملية بنجاح. يمكنك الآن تنزيل ملفك مباشرة.",
     "download_btn": "تنزيل الملف",
     "new_action_btn": "معالجة ملف جديد",
-    "secure_note": "محمي باتصال مشفر بالكامل."
+    "secure_note": "محمي باتصال مشفر بالكامل.",
+    "file_uploaded": "✓ تم الرفع",
+    "change_file": "تغيير",
+    "remove_file": "إزالة",
+    "add_more_files": "+ إضافة أو سحب المزيد من الملفات",
+    "retry_btn": "إعادة المحاولة",
+    "global_drag_title": "أفلت مستندك هنا 💜",
+    "global_drag_sub": "سيبدأ Pödüfü في معالجة ملفك فوراً"
   },
   "queue": {
     "title_active": "المهام ({count} قيد التنفيذ)",
