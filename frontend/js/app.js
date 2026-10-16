@@ -249,12 +249,7 @@ function applyTranslations(loc) {
   if (readySubtitle && loc.workspace?.ready_subtitle) readySubtitle.textContent = loc.workspace.ready_subtitle;
   if (dlBtnText && loc.workspace?.download_btn) dlBtnText.textContent = loc.workspace.download_btn;
   if (resetBtn && loc.workspace?.new_action_btn) resetBtn.textContent = loc.workspace.new_action_btn;
-  if (secNote && loc.workspace?.secure_note) secNote.textContent = `🔒 ${loc.workspace.secure_note}`;
-
-  const globalDragTitle = document.getElementById("global-drag-title");
-  const globalDragSub = document.getElementById("global-drag-sub");
-  if (globalDragTitle && loc.workspace?.global_drag_title) globalDragTitle.textContent = loc.workspace.global_drag_title;
-  if (globalDragSub && loc.workspace?.global_drag_sub) globalDragSub.textContent = loc.workspace.global_drag_sub;
+  if (secNote && loc.workspace?.secure_note) secNote.textContent = loc.workspace.secure_note;
 
   // SEO Section
   const seoH = document.getElementById("seo-heading");
@@ -1330,39 +1325,13 @@ function setupEventListeners() {
     }
   });
 
-  // Full-Window Drag & Drop Events (Dragging anywhere on the browser window)
-  const globalDragOverlay = document.getElementById("global-drag-overlay");
-  let windowDragCounter = 0;
-
-  window.addEventListener("dragenter", (e) => {
-    e.preventDefault();
-    windowDragCounter++;
-    if (e.dataTransfer && e.dataTransfer.types && Array.from(e.dataTransfer.types).includes("Files")) {
-      if (globalDragOverlay) globalDragOverlay.classList.add("active");
-    }
-  });
-
+  // Window Drag & Drop (Allows dropping anywhere on blank page areas without extra overlay or animation)
   window.addEventListener("dragover", (e) => {
     e.preventDefault();
-    if (e.dataTransfer) {
-      e.dataTransfer.dropEffect = "copy";
-    }
-  });
-
-  window.addEventListener("dragleave", (e) => {
-    e.preventDefault();
-    windowDragCounter--;
-    if (windowDragCounter <= 0) {
-      windowDragCounter = 0;
-      if (globalDragOverlay) globalDragOverlay.classList.remove("active");
-    }
   });
 
   window.addEventListener("drop", (e) => {
     e.preventDefault();
-    windowDragCounter = 0;
-    if (globalDragOverlay) globalDragOverlay.classList.remove("active");
-
     const files = e.dataTransfer ? e.dataTransfer.files : null;
     if (!files || files.length === 0) return;
 
@@ -1372,7 +1341,7 @@ function setupEventListeners() {
       return;
     }
 
-    // 2. Check if dropped directly over a specific tool card
+    // 2. Check if dropped over a specific tool card
     const targetEl = document.elementFromPoint(e.clientX, e.clientY);
     const toolCard = targetEl ? targetEl.closest(".tool-card") : null;
     if (toolCard) {
@@ -1387,7 +1356,7 @@ function setupEventListeners() {
       }
     }
 
-    // 3. Otherwise route to universal hero handler
+    // 3. Otherwise (dropped on empty background/blank areas), handle via universal hero handler
     handleHeroFile(files[0]);
   });
 

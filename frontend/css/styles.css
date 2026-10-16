@@ -762,68 +762,6 @@ body {
   color: var(--accent-red);
 }
 
-/* Global Full-Window Drag & Drop Overlay */
-.global-drag-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 999999;
-  background: rgba(15, 17, 23, 0.82);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none !important;
-  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.global-drag-overlay.active {
-  opacity: 1;
-}
-
-.global-drag-content {
-  text-align: center;
-  padding: 3rem 4rem;
-  border: 3px dashed var(--brand-primary, #5B5CE5);
-  border-radius: 28px;
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 25px 60px rgba(91, 92, 229, 0.35);
-  max-width: 520px;
-  transform: scale(0.92);
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-  color: #FFFFFF;
-}
-
-.global-drag-overlay.active .global-drag-content {
-  transform: scale(1);
-}
-
-.global-drag-icon {
-  font-size: 3.5rem;
-  display: inline-block;
-  margin-bottom: 1rem;
-  animation: pulseIcon 1.6s infinite ease-in-out;
-}
-
-@keyframes pulseIcon {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.12); }
-}
-
-.global-drag-content h3 {
-  font-size: 1.6rem;
-  font-weight: 800;
-  margin-bottom: 0.5rem;
-  color: #FFFFFF;
-}
-
-.global-drag-content p {
-  font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.82);
-  margin: 0;
-}
-
 /* Interactive Page Grid */
 .page-grid-container {
   margin-top: 1.25rem;
