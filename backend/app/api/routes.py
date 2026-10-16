@@ -240,7 +240,7 @@ async def handle_merge(files: List[UploadFile] = File(...)):
         await save_upload_file(f, target)
         saved_paths.append(target)
         
-    out_path = workspace / "birlestirilmis_podufu.online.pdf"
+    out_path = workspace / "merged_podufu.online.pdf"
     merge_pdfs(saved_paths, out_path)
     
     return FileResponse(
@@ -268,10 +268,10 @@ async def handle_split(
         return FileResponse(
             output_files[0],
             media_type="application/pdf",
-            filename=f"{input_path.stem}_podufu.online.pdf"
+            filename=f"{input_path.stem}_split_podufu.online.pdf"
         )
     else:
-        zip_path = workspace / f"{input_path.stem}_bolumler_podufu.online.zip"
+        zip_path = workspace / f"{input_path.stem}_split_podufu.online.zip"
         create_zip_archive(output_files, zip_path)
         return FileResponse(
             zip_path,
@@ -295,7 +295,7 @@ async def handle_organize(
     except Exception:
         raise HTTPException(status_code=400, detail="Geçersiz sayfa düzeni verisi.")
         
-    out_path = workspace / f"{input_path.stem}_duzenlenmis_podufu.online.pdf"
+    out_path = workspace / f"{input_path.stem}_organized_podufu.online.pdf"
     organize_and_rotate_pages(input_path, parsed_instructions, out_path)
     
     return FileResponse(
@@ -315,7 +315,7 @@ async def handle_compress(
     input_path = workspace / sanitize_filename(file.filename)
     await save_upload_file(file, input_path)
     
-    out_path = workspace / f"{input_path.stem}_sikistirilmis_podufu.online.pdf"
+    out_path = workspace / f"{input_path.stem}_compressed_podufu.online.pdf"
     compress_pdf(input_path, out_path, level=level)
     
     return FileResponse(
@@ -399,7 +399,7 @@ async def handle_images_to_pdf(files: List[UploadFile] = File(...)):
         await save_upload_file(f, target)
         saved_images.append(target)
         
-    out_path = workspace / "gorseller_podufu.online.pdf"
+    out_path = workspace / "images_podufu.online.pdf"
     images_to_pdf(saved_images, out_path)
     
     return FileResponse(
@@ -421,7 +421,7 @@ async def handle_pdf_to_images(
     await save_upload_file(file, input_path)
     
     images = pdf_to_images(input_path, workspace, dpi=dpi, img_format=img_format)
-    zip_path = workspace / f"{input_path.stem}_gorseller_podufu.online.zip"
+    zip_path = workspace / f"{input_path.stem}_images_podufu.online.zip"
     create_zip_archive(images, zip_path)
     
     return FileResponse(
@@ -458,7 +458,7 @@ async def handle_pdf_to_text(file: UploadFile = File(...)):
     input_path = workspace / sanitize_filename(file.filename)
     await save_upload_file(file, input_path)
     
-    out_path = workspace / f"{input_path.stem}_metin_podufu.online.md"
+    out_path = workspace / f"{input_path.stem}_extracted_podufu.online.md"
     pdf_to_markdown_or_text(input_path, out_path)
     
     return FileResponse(
@@ -478,7 +478,7 @@ async def handle_protect(
     input_path = workspace / sanitize_filename(file.filename)
     await save_upload_file(file, input_path)
     
-    out_path = workspace / f"{input_path.stem}_sifreli_podufu.online.pdf"
+    out_path = workspace / f"{input_path.stem}_protected_podufu.online.pdf"
     try:
         protect_pdf(input_path, out_path, user_password=password)
     except Exception as e:
@@ -501,7 +501,7 @@ async def handle_unlock(
     input_path = workspace / sanitize_filename(file.filename)
     await save_upload_file(file, input_path)
     
-    out_path = workspace / f"{input_path.stem}_kilitsiz_podufu.online.pdf"
+    out_path = workspace / f"{input_path.stem}_unlocked_podufu.online.pdf"
     try:
         unlock_pdf(input_path, out_path, password=password)
     except Exception as e:
@@ -516,7 +516,7 @@ async def handle_unlock(
 @router.post("/watermark")
 async def handle_watermark(
     file: UploadFile = File(...),
-    text: str = Form("GİZLİ / KOPYALANAMAZ"),
+    text: str = Form("CONFIDENTIAL"),
     opacity: float = Form(0.25),
     rotation: int = Form(45),
     color: str = Form("#FF0000"),
@@ -528,7 +528,7 @@ async def handle_watermark(
     input_path = workspace / sanitize_filename(file.filename)
     await save_upload_file(file, input_path)
     
-    out_path = workspace / f"{input_path.stem}_filigranli_podufu.online.pdf"
+    out_path = workspace / f"{input_path.stem}_watermarked_podufu.online.pdf"
     add_watermark_text(
         input_path,
         out_path,
@@ -549,7 +549,7 @@ async def handle_watermark(
 async def handle_page_numbers(
     file: UploadFile = File(...),
     position: str = Form("bottom-center"),
-    pattern: str = Form("Sayfa {n} / {total}")
+    pattern: str = Form("Page {n} / {total}")
 ):
     """Adds page numbers to PDF."""
     job_id = uuid.uuid4().hex
@@ -557,7 +557,7 @@ async def handle_page_numbers(
     input_path = workspace / sanitize_filename(file.filename)
     await save_upload_file(file, input_path)
     
-    out_path = workspace / f"{input_path.stem}_numarali_podufu.online.pdf"
+    out_path = workspace / f"{input_path.stem}_numbered_podufu.online.pdf"
     add_page_numbers(input_path, out_path, position=position, format_pattern=pattern)
     
     return FileResponse(
@@ -577,7 +577,7 @@ async def handle_redact(
     input_path = workspace / sanitize_filename(file.filename)
     await save_upload_file(file, input_path)
     
-    out_path = workspace / f"{input_path.stem}_sansurlu_podufu.online.pdf"
+    out_path = workspace / f"{input_path.stem}_redacted_podufu.online.pdf"
     try:
         _, count = redact_text_occurrences(input_path, out_path, search_term=search_term)
     except Exception as e:
@@ -598,7 +598,7 @@ async def handle_repair(file: UploadFile = File(...)):
     input_path = workspace / sanitize_filename(file.filename)
     await save_upload_file(file, input_path)
     
-    out_path = workspace / f"{input_path.stem}_onarilmis_podufu.online.pdf"
+    out_path = workspace / f"{input_path.stem}_repaired_podufu.online.pdf"
     try:
         repair_pdf(input_path, out_path)
     except Exception as e:

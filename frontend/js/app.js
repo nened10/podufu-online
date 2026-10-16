@@ -43,6 +43,21 @@ const resetToolBtn = document.getElementById("reset-tool-btn");
 const themeToggleBtn = document.getElementById("theme-toggle-btn");
 const toastContainer = document.getElementById("toast-container");
 
+// Progress & Queue DOM References
+const progressContainer = document.getElementById("progress-container");
+const progressStatus = document.getElementById("progress-status");
+const progressPercent = document.getElementById("progress-percent");
+const progressBarFill = document.getElementById("progress-bar-fill");
+const progressSubtext = document.getElementById("progress-subtext");
+const minimizeModalBtn = document.getElementById("minimize-modal-btn");
+const floatingQueueDock = document.getElementById("floating-queue-dock");
+const queueDockText = document.getElementById("queue-dock-text");
+const queueDockViewBtn = document.getElementById("queue-dock-view-btn");
+
+let isOperationRunning = false;
+let activeTaskInfo = null;
+let processingInterval = null;
+
 // Icon mapping
 const ICONS = {
   combine: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/><rect x="7" y="7" width="10" height="10" rx="1"/></svg>`,
@@ -181,18 +196,46 @@ function openToolModal(tool) {
   pageGridContainer.style.display = "none";
   pageGrid.innerHTML = "";
   fileList.innerHTML = "";
+  fileList.style.display = "flex";
+  dropzone.style.display = "flex";
   actionSubmitBtn.disabled = true;
+
+  // Reset Progress
+  if (progressContainer) {
+    progressContainer.style.display = "none";
+    progressBarFill.style.width = "0%";
+    progressPercent.textContent = "0%";
+  }
 
   renderToolOptions(tool);
   workspaceOverlay.classList.add("active");
 }
 
+function minimizeToQueue() {
+  workspaceOverlay.classList.remove("active");
+  if (isOperationRunning && activeTaskInfo) {
+    floatingQueueDock.style.display = "flex";
+    queueDockText.textContent = `1 Belge İşleniyor (%${activeTaskInfo.percent || 10})`;
+  }
+}
+
+function restoreFromQueue() {
+  workspaceOverlay.classList.add("active");
+  floatingQueueDock.style.display = "none";
+}
+
 // Close Modal
 function closeModal() {
+  if (isOperationRunning) {
+    minimizeToQueue();
+    showToast("İşleminiz arka planda devam ediyor...", "info");
+    return;
+  }
   workspaceOverlay.classList.remove("active");
   activeTool = null;
   selectedFiles = [];
   organizePages = [];
+  floatingQueueDock.style.display = "none";
 }
 
 // Render Options Panel per Tool
@@ -583,49 +626,155 @@ async function submitOperation() {
       formData.append("file", selectedFiles[0]);
     }
 
-    const response = await fetch(endpoint, {
-      method: "POST",
-      body: formData
+    // Processing UI state
+    isOperationRunning = true;
+    actionSubmitBtn.disabled = true;
+    submitSpinner.style.display = "inline-block";
+    submitBtnText.textContent = "İşleniyor...";
+
+    dropzone.style.display = "none";
+    fileList.style.display = "none";
+    toolOptions.style.display = "none";
+    pageGridContainer.style.display = "none";
+
+    progressContainer.style.display = "flex";
+    progressStatus.textContent = "Dosya sunucuya aktarılıyor...";
+    progressPercent.textContent = "0%";
+    progressBarFill.style.width = "0%";
+    progressSubtext.textContent = "Yükleme başlatılıyor...";
+
+    // Trigger in-modal targeted ad
+    if (window.PödufuAds && typeof window.PödufuAds.renderWaitingAd === "function") {
+      window.PödufuAds.renderWaitingAd();
+    }
+
+    const firstFileName = selectedFiles[0].name;
+    const totalBytes = selectedFiles.reduce((acc, f) => acc + f.size, 0);
+    const totalMB = (totalBytes / 1048576).toFixed(1);
+
+    activeTaskInfo = {
+      filename: firstFileName,
+      percent: 0,
+      totalMB
+    };
+
+    // Perform upload via XMLHttpRequest to monitor exact progress
+    const result = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", endpoint, true);
+      xhr.responseType = "blob";
+
+      xhr.upload.onprogress = (e) => {
+        if (e.lengthComputable) {
+          const uploadPercent = Math.round((e.loaded / e.total) * 100);
+          // Scale upload progress to 0% - 65%
+          const scaled = Math.round(uploadPercent * 0.65);
+          activeTaskInfo.percent = scaled;
+
+          const loadedMB = (e.loaded / 1048576).toFixed(1);
+          progressPercent.textContent = `${scaled}%`;
+          progressBarFill.style.width = `${scaled}%`;
+          progressSubtext.textContent = `${loadedMB} MB / ${totalMB} MB aktarıldı (%${uploadPercent})`;
+
+          if (floatingQueueDock.style.display !== "none") {
+            queueDockText.textContent = `Yükleniyor: ${firstFileName} (%${scaled})`;
+          }
+
+          if (uploadPercent >= 100) {
+            progressStatus.textContent = "PDF İşleniyor & Optimize Ediliyor...";
+            progressSubtext.textContent = "İşlem yapılıyor, lütfen bekleyin...";
+
+            // Heartbeat ticker advancing 65% -> 92% smoothly
+            let fakeProgress = 65;
+            if (processingInterval) clearInterval(processingInterval);
+            processingInterval = setInterval(() => {
+              if (fakeProgress < 92) {
+                fakeProgress += 1;
+                activeTaskInfo.percent = fakeProgress;
+                progressPercent.textContent = `${fakeProgress}%`;
+                progressBarFill.style.width = `${fakeProgress}%`;
+                if (floatingQueueDock.style.display !== "none") {
+                  queueDockText.textContent = `İşleniyor: ${firstFileName} (%${fakeProgress})`;
+                }
+              }
+            }, 300);
+          }
+        }
+      };
+
+      xhr.onload = () => {
+        if (processingInterval) clearInterval(processingInterval);
+        if (xhr.status >= 200 && xhr.status < 300) {
+          progressPercent.textContent = "100%";
+          progressBarFill.style.width = "100%";
+          progressStatus.textContent = "Tamamlandı!";
+          activeTaskInfo.percent = 100;
+
+          const disposition = xhr.getResponseHeader("content-disposition") || "";
+          let filename = "podufu.online_belge.pdf";
+          const match = disposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
+          if (match && match[1]) {
+            filename = match[1].replace(/['"]/g, "");
+          } else {
+            filename = firstFileName.replace(/\.[^/.]+$/, "") + "_podufu.online.pdf";
+          }
+
+          resolve({ blob: xhr.response, filename });
+        } else {
+          const reader = new FileReader();
+          reader.onload = () => {
+            try {
+              const err = JSON.parse(reader.result);
+              reject(new Error(err.detail || "İşlem sırasında sunucu hatası oluştu."));
+            } catch (e) {
+              reject(new Error(`Sunucu hatası: HTTP ${xhr.status}`));
+            }
+          };
+          reader.readAsText(xhr.response);
+        }
+      };
+
+      xhr.onerror = () => {
+        if (processingInterval) clearInterval(processingInterval);
+        reject(new Error("Sunucuya bağlanılamadı. Lütfen bağlantınızı kontrol edin."));
+      };
+
+      xhr.send(formData);
     });
 
-    if (!response.ok) {
-      let errDetail = "Sunucu hatası oluştu.";
-      try {
-        const errJson = await response.json();
-        errDetail = errJson.detail || errDetail;
-      } catch (e) {}
-      throw new Error(errDetail);
-    }
+    // Processing finished successfully
+    const downloadUrl = window.URL.createObjectURL(result.blob);
 
-    // Get filename from Content-Disposition header
-    const disposition = response.headers.get("content-disposition");
-    let filename = "podufu.online_belge.pdf";
-    if (disposition && disposition.includes("filename=")) {
-      const match = disposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
-      if (match && match[1]) {
-        filename = match[1].replace(/['"]/g, "");
-      }
-    }
-
-    const blob = await response.blob();
-    const downloadUrl = window.URL.createObjectURL(blob);
-
-    // Show Result Screen
     workspaceBody.style.display = "none";
     workspaceFooter.style.display = "none";
     resultScreen.style.display = "flex";
 
     downloadLink.href = downloadUrl;
-    downloadLink.download = filename;
+    downloadLink.download = result.filename;
 
-    showToast("İşlem başarıyla tamamlandı! Dosyanız hazır.", "success");
+    if (floatingQueueDock.style.display !== "none") {
+      queueDockText.textContent = `✅ ${result.filename} Hazır!`;
+      showToast(`✅ "${result.filename}" hazır! Tıklayarak indirebilirsiniz.`, "success");
+    } else {
+      showToast("İşlem başarıyla tamamlandı! Dosyanız hazır.", "success");
+    }
+
   } catch (err) {
-    showToast(err.message, "error");
+    if (processingInterval) clearInterval(processingInterval);
+    showToast(err.message || "İşlem başarısız.", "error");
+
+    dropzone.style.display = "flex";
+    fileList.style.display = "flex";
+    toolOptions.style.display = "flex";
+    progressContainer.style.display = "none";
+    floatingQueueDock.style.display = "none";
   } finally {
+    isOperationRunning = false;
     actionSubmitBtn.disabled = false;
     submitBtnText.textContent = "İşlemi Başlat";
     submitSpinner.style.display = "none";
   }
+}
 }
 
 // Reset tool modal back to file upload
@@ -655,6 +804,12 @@ function setupEventListeners() {
   });
 
   closeModalBtn.addEventListener("click", closeModal);
+  if (minimizeModalBtn) {
+    minimizeModalBtn.addEventListener("click", minimizeToQueue);
+  }
+  if (queueDockViewBtn) {
+    queueDockViewBtn.addEventListener("click", restoreFromQueue);
+  }
   closeQuickModalBtn.addEventListener("click", () => quickActionModal.classList.remove("active"));
   resetToolBtn.addEventListener("click", resetActiveTool);
   actionSubmitBtn.addEventListener("click", submitOperation);

@@ -29,6 +29,8 @@ workspaces/
 
 # Local Stats & Logs
 stats.json
+*.db
+*.sqlite3
 *.log
 
 # IDE & OS
