@@ -119,9 +119,7 @@
     "change_file": "Изменить",
     "remove_file": "Удалить",
     "add_more_files": "+ Добавить еще файлы",
-    "retry_btn": "Повторить попытку",
-    "global_drag_title": "Перетащите документ сюда 💜",
-    "global_drag_sub": "Pödüfü мгновенно обработает ваш файл"
+    "retry_btn": "Повторить попытку"
   },
   "queue": {
     "title_active": "Задачи ({count} активных)",

@@ -285,7 +285,11 @@ async def handle_split(
     input_path = workspace / sanitize_filename(file.filename)
     await save_upload_file(file, input_path)
     
-    output_files = split_pdf(input_path, ranges, workspace)
+    try:
+        output_files = split_pdf(input_path, ranges, workspace)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+        
     if not output_files:
         raise HTTPException(status_code=400, detail="Belirtilen aralıkta sayfa bulunamadı.")
         

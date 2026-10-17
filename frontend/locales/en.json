@@ -119,9 +119,7 @@
     "change_file": "Change",
     "remove_file": "Remove",
     "add_more_files": "+ Add or Drop More Files",
-    "retry_btn": "Try Again",
-    "global_drag_title": "Drop your document here 💜",
-    "global_drag_sub": "Pödüfü will process your file instantly"
+    "retry_btn": "Try Again"
   },
   "queue": {
     "title_active": "Tasks ({count} active)",

@@ -119,9 +119,7 @@
     "change_file": "Alterar",
     "remove_file": "Remover",
     "add_more_files": "+ Adicionar ou arrastar mais arquivos",
-    "retry_btn": "Tentar novamente",
-    "global_drag_title": "Solte seu documento aqui 💜",
-    "global_drag_sub": "O Pödüfü processará seu arquivo instantaneamente"
+    "retry_btn": "Tentar novamente"
   },
   "queue": {
     "title_active": "Tarefas ({count} ativas)",

@@ -49,6 +49,9 @@ def split_pdf(file_path: Path, ranges: str, output_dir: Path) -> list[Path]:
     total_pages = len(reader.pages)
     groups = parse_page_ranges(ranges, total_pages)
     
+    if not groups:
+        raise ValueError(f"Geçersiz sayfa aralığı: '{ranges}'. Belgeniz {total_pages} sayfadan oluşuyor.")
+    
     output_files = []
     base_name = file_path.stem
     

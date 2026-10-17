@@ -119,9 +119,7 @@
     "change_file": "Değiştir",
     "remove_file": "Kaldır",
     "add_more_files": "+ Başka Dosyalar Ekleyin veya Sürükleyin",
-    "retry_btn": "Tekrar Dene",
-    "global_drag_title": "Belgenizi buraya bırakın 💜",
-    "global_drag_sub": "Pödüfü belgenizi anında işleme alsın"
+    "retry_btn": "Tekrar Dene"
   },
   "queue": {
     "title_active": "İşlemler ({count} aktif)",

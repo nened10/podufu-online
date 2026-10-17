@@ -119,9 +119,7 @@
     "change_file": "تغيير",
     "remove_file": "إزالة",
     "add_more_files": "+ إضافة أو سحب المزيد من الملفات",
-    "retry_btn": "إعادة المحاولة",
-    "global_drag_title": "أفلت مستندك هنا 💜",
-    "global_drag_sub": "سيبدأ Pödüfü في معالجة ملفك فوراً"
+    "retry_btn": "إعادة المحاولة"
   },
   "queue": {
     "title_active": "المهام ({count} قيد التنفيذ)",

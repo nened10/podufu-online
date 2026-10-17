@@ -95,19 +95,45 @@ def redact_text_occurrences(file_path: Path, output_path: Path, search_term: str
     """
     Permanently erases sensitive terms from the PDF content stream.
     Replaces matched text with solid black box and strips text completely.
+    Performs case-insensitive and multi-locale (e.g. Turkish) variant matching.
     """
-    if not search_term or not search_term.strip():
+    clean_term = search_term.strip()
+    if not clean_term:
         raise ValueError("Sansürlenecek metin boş olamaz.")
         
     doc = fitz.open(file_path)
     total_redacted = 0
+
+    # Build comprehensive case variants so 'gizli', 'GİZLİ', 'Gizli', 'secret', 'SECRET' all match
+    variants = {clean_term, clean_term.lower(), clean_term.upper(), clean_term.title()}
+    # Turkish-specific casing:
+    tr_upper = str.maketrans({"i": "İ", "ı": "I"})
+    tr_lower = str.maketrans({"İ": "i", "I": "ı"})
+    variants.add(clean_term.translate(tr_upper).upper())
+    variants.add(clean_term.translate(tr_lower).lower())
+    # ASCII transliteration fallback:
+    ascii_map = str.maketrans({
+        "İ": "I", "ı": "i", "ş": "s", "Ş": "S",
+        "ğ": "g", "Ğ": "G", "ü": "u", "Ü": "U",
+        "ö": "o", "Ö": "O", "ç": "c", "Ç": "C"
+    })
+    variants.add(clean_term.translate(ascii_map))
+    variants.add(clean_term.translate(ascii_map).upper())
+    variants.add(clean_term.translate(ascii_map).lower())
+    search_variants = [v for v in variants if v]
+
     try:
         for page in doc:
-            rects = page.search_for(search_term)
-            for r in rects:
-                page.add_redact_annot(r, fill=(0, 0, 0))  # Black box
-                total_redacted += 1
-            if rects:
+            page_rects = []
+            for v in search_variants:
+                rects = page.search_for(v)
+                for r in rects:
+                    # Avoid duplicate overlapping redaction rectangles
+                    if not any(r.intersects(existing) for existing in page_rects):
+                        page_rects.append(r)
+                        page.add_redact_annot(r, fill=(0, 0, 0))  # Black box
+                        total_redacted += 1
+            if page_rects:
                 page.apply_redactions()
                 
         doc.save(str(output_path))

@@ -2,6 +2,7 @@ from pathlib import Path
 import pymupdf as fitz
 from PIL import Image
 import io
+from pypdf import PdfReader, PdfWriter
 
 def compress_pdf(file_path: Path, output_path: Path, level: str = "medium") -> Path:
     """
@@ -52,15 +53,64 @@ def compress_pdf(file_path: Path, output_path: Path, level: str = "medium") -> P
         doc.close()
 
 def repair_pdf(file_path: Path, output_path: Path) -> Path:
-    """Reconstructs cross-reference (xref) tables and cleans broken stream structures."""
+    """
+    Reconstructs cross-reference (xref) tables, repairs missing EOF markers,
+    and salvages undamaged pages from corrupted PDF documents.
+    """
+    # 1. Standard PyMuPDF deep clean
+    try:
+        doc = fitz.open(file_path)
+        try:
+            doc.save(str(output_path), garbage=4, deflate=True, clean=True)
+            doc.close()
+            return output_path
+        except Exception:
+            # clean=True failed on corrupted object streams, try safe garbage collection
+            try:
+                doc.save(str(output_path), garbage=2, deflate=True)
+                doc.close()
+                return output_path
+            except Exception:
+                pass
+        
+        # 2. Try page-by-page salvage into a pristine document
+        new_doc = fitz.open()
+        recovered_pages = 0
+        for i in range(len(doc)):
+            try:
+                new_doc.insert_pdf(doc, from_page=i, to_page=i)
+                recovered_pages += 1
+            except Exception:
+                continue
+        doc.close()
+        if recovered_pages > 0:
+            new_doc.save(str(output_path), garbage=3, deflate=True)
+            new_doc.close()
+            return output_path
+        new_doc.close()
+    except Exception:
+        pass
+
+    # 3. Fallback: pypdf with non-strict parsing
+    try:
+        reader = PdfReader(str(file_path), strict=False)
+        writer = PdfWriter()
+        for p in reader.pages:
+            try:
+                writer.add_page(p)
+            except Exception:
+                continue
+        if len(writer.pages) > 0:
+            with open(output_path, "wb") as f_out:
+                writer.write(f_out)
+            return output_path
+    except Exception:
+        pass
+
+    # 4. If all salvage attempts fail, re-open with fitz to raise the descriptive error
     doc = fitz.open(file_path)
     try:
-        doc.save(
-            str(output_path),
-            garbage=4,
-            deflate=True,
-            clean=True
-        )
+        doc.save(str(output_path), garbage=4)
         return output_path
     finally:
         doc.close()

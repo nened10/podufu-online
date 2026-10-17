@@ -119,9 +119,7 @@
     "change_file": "変更",
     "remove_file": "削除",
     "add_more_files": "+ ファイルを追加またはドロップ",
-    "retry_btn": "再試行",
-    "global_drag_title": "ここにファイルをドロップしてください 💜",
-    "global_drag_sub": "Pödüfüがすぐにファイルを処理します"
+    "retry_btn": "再試行"
   },
   "queue": {
     "title_active": "タスク ({count}件 実行中)",

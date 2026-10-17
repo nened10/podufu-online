@@ -119,9 +119,7 @@
     "change_file": "Changer",
     "remove_file": "Supprimer",
     "add_more_files": "+ Ajouter ou glisser d'autres fichiers",
-    "retry_btn": "Réessayer",
-    "global_drag_title": "Déposez votre document ici 💜",
-    "global_drag_sub": "Pödüfü traitera votre fichier instantanément"
+    "retry_btn": "Réessayer"
   },
   "queue": {
     "title_active": "Tâches ({count} actives)",
