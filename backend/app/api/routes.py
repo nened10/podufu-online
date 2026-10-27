@@ -364,8 +364,10 @@ async def handle_word_to_pdf(file: UploadFile = File(...)):
     out_path = workspace / f"{input_path.stem}_podufu.pdf"
     try:
         word_to_pdf(input_path, out_path)
+        if not out_path.exists():
+            raise FileNotFoundError("Dönüştürülen dosya diskte bulunamadı.")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Word dönüştürme hatası: {str(e)}")
+        raise HTTPException(status_code=400, detail=f"Word dönüştürme hatası: {str(e)}")
         
     return FileResponse(
         out_path,
@@ -384,8 +386,10 @@ async def handle_ppt_to_pdf(file: UploadFile = File(...)):
     out_path = workspace / f"{input_path.stem}_podufu.pdf"
     try:
         powerpoint_to_pdf(input_path, out_path)
+        if not out_path.exists():
+            raise FileNotFoundError("Dönüştürülen dosya diskte bulunamadı.")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"PowerPoint dönüştürme hatası: {str(e)}")
+        raise HTTPException(status_code=400, detail=f"PowerPoint dönüştürme hatası: {str(e)}")
         
     return FileResponse(
         out_path,
@@ -404,8 +408,10 @@ async def handle_excel_to_pdf(file: UploadFile = File(...)):
     out_path = workspace / f"{input_path.stem}_podufu.pdf"
     try:
         excel_to_pdf(input_path, out_path)
+        if not out_path.exists():
+            raise FileNotFoundError("Dönüştürülen dosya diskte bulunamadı.")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Excel dönüştürme hatası: {str(e)}")
+        raise HTTPException(status_code=400, detail=f"Excel dönüştürme hatası: {str(e)}")
         
     return FileResponse(
         out_path,
@@ -471,7 +477,7 @@ async def handle_pdf_to_word(file: UploadFile = File(...)):
     try:
         pdf_to_docx_file(input_path, out_path)
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Word dönüştürme hatası: {str(e)}")
+        raise HTTPException(status_code=400, detail=f"Word dönüştürme hatası: {str(e)}")
         
     return FileResponse(
         out_path,
